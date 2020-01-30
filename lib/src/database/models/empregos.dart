@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:marcaii_flutter/src/database/models/diferenciadas.dart';
+import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/database/models/model.dart';
+import 'package:marcaii_flutter/src/database/models/salarios.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/column_types.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_column.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_table.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:marcaii_flutter/src/utils/json_utils.dart';
 
 part 'empregos.g.dart';
@@ -21,10 +24,16 @@ class Empregos implements Model<Empregos> {
     this.saida = "17:00",
     this.carga_horaria = 220,
     this.ativo = true,
+    this.horas,
+    this.diferenciadas,
+    this.salarios
   });
 
   final String nome, saida;
   final int id, porc, porc_completa, fechamento, carga_horaria;
+  final List<Horas> horas;
+  final List<Diferenciadas> diferenciadas;
+  final List<Salarios> salarios;
 
   @JsonKey(toJson: boolToInt, fromJson: intToBool)
   final bool banco_horas;

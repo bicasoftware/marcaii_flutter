@@ -7,7 +7,7 @@ import 'package:retrofit/retrofit.dart';
 
 part 'horas_client.g.dart';
 
-@RestApi(baseUrl: '${Api.url}/horas')
+@RestApi(baseUrl: '${Api.localhost}/horas')
 abstract class HorasClient {
   factory HorasClient(Dio dio) = _HorasClient;
 

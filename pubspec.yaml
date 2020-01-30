@@ -25,6 +25,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  test: any
   build_runner: any
   retrofit_generator: any
 
