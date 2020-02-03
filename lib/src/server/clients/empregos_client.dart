@@ -12,7 +12,10 @@ abstract class EmpregosClient {
   factory EmpregosClient(Dio dio) = _EmpregosClient;
 
   @GET('/{id}')
-  Future<List<Empregos>> fetch(@Path() int id);
+  Future<Empregos> fetchById();
+
+  @GET('/{id}')
+  Future<List<Empregos>> fetch();
 
   @PUT('/{id}')
   Future<UpdateDto> put(@Path() int id, @Body() Empregos model);

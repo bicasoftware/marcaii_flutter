@@ -1,21 +1,46 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:marcaii_flutter/src/server/clients/user_client.dart';
 import 'package:marcaii_flutter/src/server/connector.dart';
+import 'package:marcaii_flutter/src/server/models/refresh_token_dto.dart';
 import 'package:marcaii_flutter/src/server/models/user_data_dto.dart';
 import 'package:marcaii_flutter/src/server/models/user_dto.dart';
+import 'package:marcaii_flutter/src/utils/helpers/nullable_helper.dart';
 
 void main() {
-  test('authenticate', () async {
-    final dio = Connector.connect();
-    final cliente = UserClient(dio);
+  final user = UserDto(email: "saulo@test.com", password: "S17h05a8", username: "sauloandrioli");
+  final dio = Connector.connect();
+  final cliente = UserClient(dio);
 
-    final UserDataDto result = await cliente.authenticate(
-        UserDto(email: "saulo@test.com", password: "S17h05a8", username: "sauloandrioli"));
+  test('authentication routine', () async {
+    try {
+      final registerData = await cliente.register(user);
+      assert(registerData.email.isNotNull);
+      assert(registerData.token.isNotEmpty);
 
-    print(result.email);
-    print(result.token);
-    result.empregos.forEach((e) {
-      print(e.nome);
-    });
+      final UserDataDto authData = await cliente.authenticate(user);
+      assert(authData.email.isNotNull);
+      assert(authData.email.isNotEmpty);
+      assert(authData.token.isNotNull);
+      assert(authData.token.isNotEmpty);
+
+      final refreshToken = await cliente.refreshToken(
+        RefreshTokenDto(refresh_token: authData.refresh_token),
+      );
+
+      assert(refreshToken.token.isNotNull && refreshToken.token.isNotEmpty);
+      assert(refreshToken.token != authData.token);
+
+      final dio = Dio();
+      dio.options.headers['Authorization'] = "Bearer ${authData.token}";
+      final unregisterClient = UserClient(dio);
+
+      final unregisterDto = await unregisterClient.unregister();
+      assert(unregisterDto.removed == true);
+    } catch (e) {
+      if (e is DioError) {
+        print(e.response.data);
+      }
+    }
   });
 }

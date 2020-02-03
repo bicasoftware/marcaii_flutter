@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:marcaii_flutter/src/server/models/refresh_token_dto.dart';
 import 'package:marcaii_flutter/src/server/models/refresh_token_result_dto.dart';
+import 'package:marcaii_flutter/src/server/models/unregister_dto.dart';
 import 'package:marcaii_flutter/src/server/models/user_dto.dart';
 import 'package:marcaii_flutter/strings.dart';
 import 'package:retrofit/retrofit.dart';
@@ -19,7 +20,7 @@ abstract class UserClient {
   Future<UserDataDto> register(@Body() UserDto model);
 
   @POST('/unregister')
-  Future<void> unregister();
+  Future<UnregisterDto> unregister();
 
   @POST('/refresh')
   Future<RefreshTokenResultDto> refreshToken(@Body() RefreshTokenDto refreshToken);
