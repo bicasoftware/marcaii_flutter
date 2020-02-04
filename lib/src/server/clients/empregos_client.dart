@@ -7,7 +7,7 @@ import 'package:retrofit/retrofit.dart';
 
 part 'empregos_client.g.dart';
 
-@RestApi(baseUrl: '${Api.localhost}/empregos')
+@RestApi(baseUrl: '${Api.url}/empregos')
 abstract class EmpregosClient {
   factory EmpregosClient(Dio dio) = _EmpregosClient;
 

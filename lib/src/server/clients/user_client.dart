@@ -9,7 +9,7 @@ import '../models/user_data_dto.dart';
 
 part 'user_client.g.dart';
 
-@RestApi(baseUrl: '${Api.localhost}/auth')
+@RestApi(baseUrl: '${Api.url}/auth')
 abstract class UserClient {
   factory UserClient(Dio dio) = _UserClient;
 

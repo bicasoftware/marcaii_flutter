@@ -7,7 +7,7 @@ import 'package:retrofit/retrofit.dart';
 
 part 'diferenciadas_client.g.dart';
 
-@RestApi(baseUrl: '${Api.localhost}/diferencidas')
+@RestApi(baseUrl: '${Api.url}/diferencidas')
 abstract class DiferenciadasClient {
   factory DiferenciadasClient(Dio dio) = _DiferenciadasClient;
 

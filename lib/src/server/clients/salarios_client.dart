@@ -7,7 +7,7 @@ import 'package:retrofit/retrofit.dart';
 
 part 'salarios_client.g.dart';
 
-@RestApi(baseUrl: '${Api.localhost}/salarios')
+@RestApi(baseUrl: '${Api.url}/salarios')
 abstract class SalariosClient {
   factory SalariosClient(Dio dio) = _SalariosClient;
 
