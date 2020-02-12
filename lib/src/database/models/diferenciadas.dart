@@ -22,7 +22,7 @@ class Diferenciadas implements Model<Diferenciadas> {
 
   final int id, emprego_id, porc, weekday;
   final String vigencia;
-  @JsonKey(toJson: boolToInt, fromJson: intToBool)
+  // @JsonKey(toJson: boolToInt, fromJson: intToBool)
   final bool ativo;
 
   static const String ID = "id";

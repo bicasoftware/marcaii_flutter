@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:marcaii_flutter/src/views/dialogs/awainting_dialog.dart';
 
 /* Future<void> showAwaitingDialog({
   @required BuildContext context,
@@ -32,10 +31,10 @@ Future<void> showAwaitingDialog({
           key: key,
           children: <Widget>[
             Column(
-              children: [
-                const CircularProgressIndicator(),
-                const SizedBox(height: 10),
-                const Text("Acessando servidor, aguarde...")
+              children: const [
+                CircularProgressIndicator(),
+                SizedBox(height: 10),
+                Text("Acessando servidor, aguarde...")
               ],
             )
           ],

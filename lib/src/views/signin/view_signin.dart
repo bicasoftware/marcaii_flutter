@@ -2,8 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:marcaii_flutter/src/server/clients/user_client.dart';
 import 'package:marcaii_flutter/src/server/models/user_dto.dart';
+import 'package:marcaii_flutter/src/utils/dialogs/dialogs.dart';
 import 'package:marcaii_flutter/src/utils/token_manager.dart';
-import 'package:marcaii_flutter/src/views/dialogs/dialogs.dart';
+import 'package:marcaii_flutter/src/views/shared/form_validation.dart';
+import 'package:marcaii_flutter/src/views/shared/link_button.dart';
 import 'package:marcaii_flutter/src/views/shared/primary_color_view.dart';
 import 'package:marcaii_flutter/src/views/shared/rounded_button.dart';
 import 'package:marcaii_flutter/src/views/splash/splash_view.dart';
@@ -11,54 +13,74 @@ import 'package:marcaii_flutter/strings.dart';
 import 'package:marcaii_flutter/src/server/models/user_data_dto.dart';
 
 class ViewSignin extends StatefulWidget {
+  const ViewSignin({
+    @required this.setPosition,
+    Key key,
+  }) : super(key: key);
+
+  final Function(int position) setPosition;
+
   @override
   _ViewSigninState createState() => _ViewSigninState();
 }
 
 class _ViewSigninState extends State<ViewSignin> {
   TextEditingController txtEmail, txtPass, txtUsername;
-  final GlobalKey<State> _globalKey = GlobalKey<State>();
+  String emailError;
+  final _globalKey = GlobalKey<State>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     txtEmail = TextEditingController();
     txtPass = TextEditingController();
     txtUsername = TextEditingController();
+    emailError = "";
     super.initState();
   }
 
   Future _doSignin(BuildContext context) async {
-    // ignore: unawaited_futures
-    showAwaitingDialog(context: context, key: _globalKey);
-    try {
-      final dio = Dio();
-      final client = UserClient(dio);
-      final result = await client.register(
-        UserDto(
-          email: txtEmail.text,
-          password: txtPass.text,
-          username: txtUsername.text,
-        ),
-      );
-
-      if (result is UserDataDto) {
-        final manager = TokenManager();
-        await manager.setAuthData(token: result.token, refreshToken: result.refresh_token);
-        Navigator.of(_globalKey.currentContext, rootNavigator: true).pop();
-        await Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            fullscreenDialog: false,
-            builder: (_) => SplashView(),
+    if (_formKey.currentState.validate()) {
+      // ignore: unawaited_futures
+      showAwaitingDialog(context: context, key: _globalKey);
+      try {
+        final dio = Dio();
+        final client = UserClient(dio);
+        final result = await client.register(
+          UserDto(
+            email: txtEmail.text,
+            password: txtPass.text,
+            username: txtUsername.text,
           ),
         );
-      }
-    } catch (e) {
-      if (e is DioError) {
-        print(e.response.data);
-      }
-    }
 
-    Navigator.of(_globalKey.currentContext, rootNavigator: true).pop();
+        if (result is UserDataDto) {
+          final manager = TokenManager();
+          await manager.setAuthData(token: result.token, refreshToken: result.refresh_token);
+          Navigator.of(_globalKey.currentContext, rootNavigator: true).pop();
+          await Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              fullscreenDialog: false,
+              builder: (_) => SplashView(),
+            ),
+          );
+        }
+      } catch (e) {
+        if (e is DioError) {
+          Scaffold.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Colors.white,
+              content: Text(
+                e.response.data[0]['message'],
+                style: Theme.of(context).textTheme.caption.copyWith(color: Colors.red),
+              ),
+            ),
+          );
+        }
+      }
+
+      Navigator.of(_globalKey.currentContext, rootNavigator: true).pop();
+    }
   }
 
   @override
@@ -92,46 +114,61 @@ class _ViewSigninState extends State<ViewSignin> {
               color: Colors.white,
               child: Container(
                 padding: const EdgeInsets.all(8),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextField(
-                      controller: txtUsername,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "Apelido/Username",
-                        hintText: 'user.user',
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextFormField(
+                        controller: txtUsername,
+                        autofocus: false,
+                        validator: validateUsername,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Apelido/Username",
+                          hintText: 'user.user',
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    TextField(
-                      controller: txtEmail,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "Email",
-                        hintText: "email@test.com",
+                      const SizedBox(height: 8),
+                      TextFormField(
+                        autofocus: false,
+                        controller: txtEmail,
+                        validator: validateEmail,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Email",
+                          hintText: "email@test.com",
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    TextField(
-                      controller: txtPass,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "Senha",
-                        hintText: 'Digite a senha',
+                      const SizedBox(height: 8),
+                      TextFormField(
+                        autofocus: false,
+                        controller: txtPass,
+                        validator: validatePassword,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Senha",
+                          hintText: 'Digite a senha',
+                        ),
+                        obscureText: true,
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: RoundedButton(
-              label: "Cadastrar!",
-              onPressed: () => _doSignin(context),
-            ),
+          RoundedButton(
+            padding: const EdgeInsets.all(8),
+            label: "Cadastrar!",
+            onPressed: () {
+              FocusScope.of(context).requestFocus(FocusNode());
+              _doSignin(context);
+            },
+          ),
+          LinkButton(
+            label: "Voltar",
+            onPressed: () => widget.setPosition(0),
           ),
         ],
       ),

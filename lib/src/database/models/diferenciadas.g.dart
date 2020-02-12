@@ -13,7 +13,7 @@ Diferenciadas _$DiferenciadasFromJson(Map<String, dynamic> json) {
     porc: json['porc'] as int,
     weekday: json['weekday'] as int,
     vigencia: json['vigencia'] as String,
-    ativo: intToBool(json['ativo'] as int),
+    ativo: json['ativo'] as bool,
   );
 }
 
@@ -24,5 +24,5 @@ Map<String, dynamic> _$DiferenciadasToJson(Diferenciadas instance) =>
       'porc': instance.porc,
       'weekday': instance.weekday,
       'vigencia': instance.vigencia,
-      'ativo': boolToInt(instance.ativo),
+      'ativo': instance.ativo,
     };

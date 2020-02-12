@@ -12,12 +12,12 @@ void main() {
       final authClient = UserClient(dio);
 
       final user = await authClient.authenticate(
-          UserDto(email: "saulo@teste.com", password: "S17h05a8", username: "sauloandrioli"));
+          UserDto(email: "saulo@test.com", password: "S17h05a8", username: "sauloandrioli"));
 
       dio.options.headers['Authorization'] = "Bearer ${user.token}";
       final empregosClient = EmpregosClient(dio);
 
-      var emprego = Empregos(
+      var emprego = const Empregos(
           ativo: true,
           banco_horas: false,
           carga_horaria: 220,
@@ -43,6 +43,8 @@ void main() {
     } catch (e) {
       if (e is DioError) {
         print(e.response.data);
+      } else {
+        print(e);
       }
     }
   });

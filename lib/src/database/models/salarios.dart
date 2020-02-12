@@ -22,9 +22,10 @@ class Salarios implements Model<Salarios> {
   });
 
   final int id, emprego_id;
+  @JsonKey(fromJson: double.tryParse)
   final double valor;
   final String vigencia;
-  @JsonKey(toJson: boolToInt, fromJson: intToBool)
+  // @JsonKey(toJson: boolToInt, fromJson: intToBool)
   final bool ativo;
 
   static const String ID = "id";

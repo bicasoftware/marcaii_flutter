@@ -14,20 +14,19 @@ part 'empregos.g.dart';
 @immutable
 @JsonSerializable(nullable: true)
 class Empregos implements Model<Empregos> {
-  const Empregos({
-    this.nome,
-    this.id,
-    this.porc = 50,
-    this.porc_completa = 100,
-    this.fechamento = 25,
-    this.banco_horas = false,
-    this.saida = "17:00",
-    this.carga_horaria = 220,
-    this.ativo = true,
-    this.horas,
-    this.diferenciadas,
-    this.salarios
-  });
+  const Empregos(
+      {this.nome,
+      this.id,
+      this.porc = 50,
+      this.porc_completa = 100,
+      this.fechamento = 25,
+      this.banco_horas = false,
+      this.saida = "17:00",
+      this.carga_horaria = 220,
+      this.ativo = true,
+      this.horas,
+      this.diferenciadas,
+      this.salarios});
 
   final String nome, saida;
   final int id, porc, porc_completa, fechamento, carga_horaria;
@@ -35,13 +34,14 @@ class Empregos implements Model<Empregos> {
   final List<Diferenciadas> diferenciadas;
   final List<Salarios> salarios;
 
-  @JsonKey(toJson: boolToInt, fromJson: intToBool)
+  // @JsonKey(toJson: boolToInt, fromJson: intToBool)
   final bool banco_horas;
 
-  @JsonKey(toJson: boolToInt, fromJson: intToBool)
+  // @JsonKey(toJson: boolToInt, fromJson: intToBool)
   final bool ativo;
 
   static const String ID = "id";
+  static const String NOME = "nome";
   static const String PORC = "porc";
   static const String PORC_COMPLETA = "porc_completa";
   static const String FECHAMENTO = "fechamento";
@@ -76,6 +76,7 @@ class Empregos implements Model<Empregos> {
 
   static const columns = [
     ID,
+    NOME,
     PORC,
     PORC_COMPLETA,
     FECHAMENTO,
@@ -89,6 +90,7 @@ class Empregos implements Model<Empregos> {
   String get createSQL {
     return SqliteTable(tableName, columns: {
       ID: SqliteColumn(ColumnTypes.PRIMARY_KEY),
+      NOME: SqliteColumn(ColumnTypes.TEXT, nullable: false, defaultValue: "Emprego"),
       PORC: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 50),
       PORC_COMPLETA: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 100),
       FECHAMENTO: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 25),
@@ -106,4 +108,19 @@ class Empregos implements Model<Empregos> {
   static const String tableName = "empregos";
 
   Map<String, Object> toJson() => _$EmpregosToJson(this);
+
+  ///Usar com Sqlite
+  Map<String, Object> toMap() {
+    return {
+      ID: this.id,
+      NOME: this.nome,
+      SAIDA: this.saida,
+      PORC: this.porc,
+      PORC_COMPLETA: this.porc_completa,
+      FECHAMENTO: this.fechamento,
+      CARGA_HORARIA: this.carga_horaria,
+      BANCO_HORAS: this.banco_horas,
+      ATIVO: this.ativo,
+    };
+  }
 }
