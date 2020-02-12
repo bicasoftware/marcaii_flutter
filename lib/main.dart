@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:marcaii_flutter/src/utils/token_manager.dart';
 import 'package:marcaii_flutter/src/views/branch_view/branch_view.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-class MyApp extends StatelessWidget {
+  final manager = TokenManager();
+  final token = await manager.getToken();
+
+  runApp(Marcaii(token: token));
+}
+
+class Marcaii extends StatelessWidget {
+  const Marcaii({Key key, this.token}) : super(key: key);
+  final String token;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,11 +26,12 @@ class MyApp extends StatelessWidget {
       supportedLocales: const [Locale('pt', 'BR')],
       title: 'Flutter Demo',
       theme: ThemeData(
-          primarySwatch: Colors.deepOrange,
-          primaryColor: Colors.deepOrange,
-          accentColor: Colors.teal,
-          fontFamily: "Montserrat"),
-      home: BranchView(),
+        primarySwatch: Colors.deepOrange,
+        primaryColor: Colors.deepOrange,
+        accentColor: Colors.teal,
+        fontFamily: "Montserrat",
+      ),
+      home: BranchView(token: token),
     );
   }
 }

@@ -12,7 +12,6 @@ import 'package:marcaii_flutter/src/views/shared/form_validation.dart';
 import 'package:marcaii_flutter/src/views/shared/link_button.dart';
 import 'package:marcaii_flutter/src/views/shared/primary_color_view.dart';
 import 'package:marcaii_flutter/src/views/shared/rounded_button.dart';
-import 'package:marcaii_flutter/src/views/splash/splash_view.dart';
 import 'package:marcaii_flutter/strings.dart';
 
 class LoginView extends StatefulWidget {
@@ -63,9 +62,7 @@ class _LoginViewState extends State<LoginView> {
           await DaoEmpregos().syncFromServer(result.empregos);
 
           Navigator.of(_globalKey.currentContext, rootNavigator: true).pop();
-          await Navigator.of(context).pushReplacement(
-            MaterialPageRoute(fullscreenDialog: false, builder: (_) => SplashView()),
-          );
+          widget.setPosition(2);
         }
       } catch (e) {
         if (e is DioError) {
@@ -84,12 +81,6 @@ class _LoginViewState extends State<LoginView> {
 
         Navigator.of(_globalKey.currentContext, rootNavigator: true).pop();
       }
-
-      /* await Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (_) => SplashView(),
-        ),
-      ); */
     }
   }
 

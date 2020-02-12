@@ -7,7 +7,6 @@ import 'package:marcaii_flutter/src/database/models/salarios.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/column_types.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_column.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_table.dart';
-import 'package:marcaii_flutter/src/utils/json_utils.dart';
 
 part 'empregos.g.dart';
 

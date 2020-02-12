@@ -49,7 +49,7 @@ class TokenManager {
 
   Future<String> getToken() async {
     final store = _getStorage();
-    return await store.read(key: TOKEN);
+    return await store.read(key: TOKEN) ?? "";
   }
 
   Future<String> getRefreshToken() async {

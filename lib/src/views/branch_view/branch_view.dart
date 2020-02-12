@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:marcaii_flutter/src/utils/token_manager.dart';
+import 'package:marcaii_flutter/src/views/home_view/view_home.dart';
 import 'package:marcaii_flutter/src/views/login/view_login.dart';
 import 'package:marcaii_flutter/src/views/signin/view_signin.dart';
 import 'package:marcaii_flutter/src/views/splash/splash_view.dart';
 import 'package:morpheus/morpheus.dart';
 
 class BranchView extends StatefulWidget {
+  const BranchView({Key key, this.token}) : super(key: key);
+  final String token;
+
   @override
   _BranchViewState createState() => _BranchViewState();
 }
@@ -21,6 +25,11 @@ class _BranchViewState extends State<BranchView> {
       case 1:
         return ViewSignin(setPosition: setPosition);
         break;
+      case 2:
+        //TODO - adicionar isso dentro de um Provider
+        //TODO - Criar MOBX!
+        return const ViewHome();
+        break;
       default:
         return SplashView();
     }
@@ -28,7 +37,7 @@ class _BranchViewState extends State<BranchView> {
 
   @override
   void initState() {
-    position = 0;
+    position = widget.token.isNotEmpty ? 2 : 0;
     super.initState();
   }
 
@@ -44,7 +53,7 @@ class _BranchViewState extends State<BranchView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: MorpheusTabView(
+      body: MorpheusTabView(        
         child: getActualView(position),
       ),
     );

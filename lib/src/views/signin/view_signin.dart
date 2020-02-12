@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:marcaii_flutter/src/server/clients/user_client.dart';
+import 'package:marcaii_flutter/src/server/models/user_data_dto.dart';
 import 'package:marcaii_flutter/src/server/models/user_dto.dart';
 import 'package:marcaii_flutter/src/utils/dialogs/dialogs.dart';
 import 'package:marcaii_flutter/src/utils/token_manager.dart';
@@ -8,9 +9,7 @@ import 'package:marcaii_flutter/src/views/shared/form_validation.dart';
 import 'package:marcaii_flutter/src/views/shared/link_button.dart';
 import 'package:marcaii_flutter/src/views/shared/primary_color_view.dart';
 import 'package:marcaii_flutter/src/views/shared/rounded_button.dart';
-import 'package:marcaii_flutter/src/views/splash/splash_view.dart';
 import 'package:marcaii_flutter/strings.dart';
-import 'package:marcaii_flutter/src/server/models/user_data_dto.dart';
 
 class ViewSignin extends StatefulWidget {
   const ViewSignin({
@@ -58,12 +57,14 @@ class _ViewSigninState extends State<ViewSignin> {
           final manager = TokenManager();
           await manager.setAuthData(token: result.token, refreshToken: result.refresh_token);
           Navigator.of(_globalKey.currentContext, rootNavigator: true).pop();
-          await Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              fullscreenDialog: false,
-              builder: (_) => SplashView(),
-            ),
-          );
+          widget.setPosition(2);
+
+          // await Navigator.of(context).pushReplacement(
+          //   MaterialPageRoute(
+          //     fullscreenDialog: false,
+          //     builder: (_) => SplashView(),
+          //   ),
+          // );
         }
       } catch (e) {
         if (e is DioError) {
