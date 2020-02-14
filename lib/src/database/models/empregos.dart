@@ -13,19 +13,20 @@ part 'empregos.g.dart';
 @immutable
 @JsonSerializable(nullable: true)
 class Empregos implements Model<Empregos> {
-  const Empregos(
-      {this.nome,
-      this.id,
-      this.porc = 50,
-      this.porc_completa = 100,
-      this.fechamento = 25,
-      this.banco_horas = false,
-      this.saida = "17:00",
-      this.carga_horaria = 220,
-      this.ativo = true,
-      this.horas,
-      this.diferenciadas,
-      this.salarios});
+  const Empregos({
+    this.id,
+    this.nome,
+    this.porc = 50,
+    this.porc_completa = 100,
+    this.fechamento = 25,
+    this.banco_horas = false,
+    this.saida = "17:00",
+    this.carga_horaria = 220,
+    this.ativo = true,
+    this.horas,
+    this.diferenciadas,
+    this.salarios,
+  });
 
   final String nome, saida;
   final int id, porc, porc_completa, fechamento, carga_horaria;

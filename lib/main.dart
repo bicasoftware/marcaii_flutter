@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:marcaii_flutter/src/utils/token_manager.dart';
 import 'package:marcaii_flutter/src/views/branch_view/branch_view.dart';
+import 'package:marcaii_flutter/strings.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,11 +25,11 @@ class Marcaii extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate
       ],
       supportedLocales: const [Locale('pt', 'BR')],
-      title: 'Flutter Demo',
+      title: Strings.appName,
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
         primaryColor: Colors.deepOrange,
-        accentColor: Colors.teal,
+        accentColor: Colors.indigo,
         fontFamily: "Montserrat",
       ),
       home: BranchView(token: token),

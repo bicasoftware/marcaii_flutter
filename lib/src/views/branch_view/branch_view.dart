@@ -53,7 +53,7 @@ class _BranchViewState extends State<BranchView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: MorpheusTabView(        
+      body: MorpheusTabView(
         child: getActualView(position),
       ),
     );

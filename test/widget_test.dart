@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
-import 'package:marcaii_flutter/singleton_test.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/column_types.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_column.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_table.dart';
@@ -49,15 +48,6 @@ void main() {
       print("salarios: \n $salarios");
       print("diferenciadas: \n $diferenciada");
     });
-  });
-  
-  test('singleton', () {
-    final Obsidia obs1 = Obsidia();
-    final obs2 = Obsidia();
-
-    assert(obs1 == obs2);
-    print(obs1.hashCode);
-    print(obs2.hashCode);
   });
 
   test('number format', () {
