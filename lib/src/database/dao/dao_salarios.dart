@@ -12,14 +12,14 @@ class DaoSalarios {
       limit: 1,
     );
 
-    return Salarios.fromJson(result[0]);
+    return Salarios.fromMap(result[0]);
   }
 
   static Future<List<Salarios>> fetchAll() async {
     final db = await getDB();
     final result = await db.query(Salarios.tableName);
 
-    return result.map(Salarios.fromJson).toList();
+    return result.map(Salarios.fromMap).toList();
   }
 
   static Future<Salarios> insert(Salarios salario) async {
@@ -42,9 +42,20 @@ class DaoSalarios {
     );
   }
 
-  Future<void> updateSalario(Salarios salario) async {
+  static Future<void> updateSalario(Salarios salario) async {
     assert(salario.id.isNotNull);
     final db = await DbHelper().db;
     await db.update(Salarios.tableName, salario.toJson(), where: "id = ?", whereArgs: [salario.id]);
+  }
+
+  static Future<List<Salarios>> fetchByEmprego(int empregoId) async {
+    final db = await getDB();
+    final result = await db.query(
+      Salarios.tableName,
+      where: "${Salarios.EMPREGO_ID} = ?",
+      whereArgs: [empregoId],
+    );
+
+    return result.map(Salarios.fromMap).toList();
   }
 }

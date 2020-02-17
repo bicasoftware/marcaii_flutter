@@ -40,4 +40,15 @@ class DaoHoras implements BaseDao<Horas> {
       whereArgs: [model.id],
     );
   }
+
+  static Future<List<Horas>> fetchByEmprego(int empregoId) async {
+    final db = await getDB();
+    final result = await db.query(
+      Horas.tableName,
+      where: "${Horas.EMPREGO_ID} = ?",
+      whereArgs: [empregoId],
+    );
+
+    return result.map(Horas.fromJson).toList();
+  }
 }

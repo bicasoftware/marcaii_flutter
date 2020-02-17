@@ -183,20 +183,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.3"
-  date_range_picker:
-    dependency: transitive
-    description:
-      name: date_range_picker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.6"
-  datetime_picker_formfield:
-    dependency: transitive
-    description:
-      name: datetime_picker_formfield
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
   dio:
     dependency: "direct main"
     description:
@@ -216,13 +202,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_chips_input:
-    dependency: transitive
-    description:
-      name: flutter_chips_input
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.7.0"
   flutter_colorpicker:
     dependency: transitive
     description:
@@ -237,20 +216,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.0"
-  flutter_form_builder:
-    dependency: "direct main"
-    description:
-      name: flutter_form_builder
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.6.1"
-  flutter_keyboard_visibility:
-    dependency: transitive
-    description:
-      name: flutter_keyboard_visibility
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.7.0"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
@@ -282,13 +247,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_typeahead:
-    dependency: transitive
-    description:
-      name: flutter_typeahead
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.8.0"
   glob:
     dependency: transitive
     description:
@@ -380,6 +338,22 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.2.5"
+  lib_observer:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "03d423921ee4132ba7c2a5581819b493ad4fc074"
+      url: "https://github.com/bicasoftware/lib_observer"
+    source: git
+    version: "0.0.2"
+  line_awesome_icons:
+    dependency: "direct main"
+    description:
+      name: line_awesome_icons
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.4+2"
   logging:
     dependency: transitive
     description:
@@ -408,20 +382,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.6+3"
-  mobx:
-    dependency: "direct main"
-    description:
-      name: mobx
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.2"
-  mobx_codegen:
-    dependency: "direct dev"
-    description:
-      name: mobx_codegen
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
   morpheus:
     dependency: "direct main"
     description:
@@ -562,6 +522,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2+2"
+  rxdart:
+    dependency: "direct main"
+    description:
+      name: rxdart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.23.1"
   shelf:
     dependency: transitive
     description:
@@ -658,13 +625,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
-  sy_flutter_widgets:
-    dependency: transitive
-    description:
-      name: sy_flutter_widgets
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.4"
   synchronized:
     dependency: transitive
     description:
@@ -721,13 +681,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.6"
-  validators:
-    dependency: transitive
-    description:
-      name: validators
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0+1"
   vector_math:
     dependency: transitive
     description:

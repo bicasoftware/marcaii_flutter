@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:marcaii_flutter/src/database/models/model.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/column_types.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_column.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_table.dart';
-import 'package:json_annotation/json_annotation.dart';
-import 'package:marcaii_flutter/src/utils/json_utils.dart';
 
 part 'diferenciadas.g.dart';
 

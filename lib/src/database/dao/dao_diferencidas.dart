@@ -40,4 +40,15 @@ class DaoDiferenciadas implements BaseDao<Diferenciadas> {
       whereArgs: [model.id],
     );
   }
+
+  static Future<List<Diferenciadas>> fetchByEmprego(int empregoId) async {
+    final db = await getDB();
+    final result = await db.query(
+      Diferenciadas.tableName,
+      where: "${Diferenciadas.EMPREGO_ID} = ?",
+      whereArgs: [empregoId],
+    );
+
+    return result.map(Diferenciadas.fromJson).toList();
+  }
 }

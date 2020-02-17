@@ -1,4 +1,3 @@
-import 'package:card_settings/widgets/card_settings_field.dart';
 import 'package:card_settings/widgets/card_settings_panel.dart';
 import 'package:card_settings/widgets/information_fields/card_settings_header.dart';
 import 'package:card_settings/widgets/numeric_fields/card_settings_switch.dart';

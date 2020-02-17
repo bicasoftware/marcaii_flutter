@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Strings {
   static const String appName = "Marcaii";
   static const String calendario = "Calendário";
@@ -8,7 +10,6 @@ class Strings {
   static const String diferenciada = "diferenciada";
   static const String diaSemana = "Dia da Semana";
   static const String porcentagem = "Porcentagem";
-
 
   static const String descricao = "Descrição";
   static const String porc = "% Normal";
@@ -37,6 +38,15 @@ class Consts {
     "SEX",
     "SAB",
   ];
+  static const List<String> weekDayShort = [
+    "D",
+    "S",
+    "T",
+    "Q",
+    "Q",
+    "S",
+    "S",
+  ];
   static const List<String> weekDayExtenso = [
     "Domingo",
     "Segunda",
@@ -53,5 +63,32 @@ class Consts {
     180,
     150,
     120,
+  ];
+
+  static const tipoHora = <String>[
+    "Normal",
+    "Feriado",
+    "Diferenciada",
+  ];
+
+  static const horaColor = <Color>[
+    Colors.green,
+    Colors.indigo,
+    Colors.red,
+  ];
+
+  static const meses = <String>[
+    "Janeiro",
+    "Fevereiro",
+    "Março",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro",
   ];
 }

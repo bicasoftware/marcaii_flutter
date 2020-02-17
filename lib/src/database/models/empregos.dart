@@ -7,6 +7,8 @@ import 'package:marcaii_flutter/src/database/models/salarios.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/column_types.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_column.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_table.dart';
+import 'package:marcaii_flutter/src/state/calendario.dart';
+import 'package:marcaii_flutter/src/utils/json_utils.dart';
 
 part 'empregos.g.dart';
 
@@ -26,13 +28,30 @@ class Empregos implements Model<Empregos> {
     this.horas,
     this.diferenciadas,
     this.salarios,
+    this.calendario,
   });
+
+  factory Empregos.fromMap(Map<String, dynamic> map) {
+    return Empregos(
+      id: map['id'] as int,
+      nome: map['nome'] as String,
+      porc: map['porc'] as int,
+      porc_completa: map['porc_completa'] as int,
+      fechamento: map['fechamento'] as int,
+      banco_horas: intToBool(map['banco_horas'] as int),
+      saida: map['saida'] as String,
+      carga_horaria: map['carga_horaria'] as int,
+      ativo: intToBool(map['ativo'] as int),
+    );
+  }
 
   final String nome, saida;
   final int id, porc, porc_completa, fechamento, carga_horaria;
   final List<Horas> horas;
   final List<Diferenciadas> diferenciadas;
   final List<Salarios> salarios;
+  @JsonKey(ignore: true)
+  final List<Calendario> calendario;
 
   // @JsonKey(toJson: boolToInt, fromJson: intToBool)
   final bool banco_horas;
@@ -60,6 +79,10 @@ class Empregos implements Model<Empregos> {
     String saida,
     int carga_horaria,
     bool ativo,
+    List<Horas> horas,
+    List<Salarios> salarios,
+    List<Diferenciadas> diferenciadas,
+    List<Calendario> calendario,
   }) {
     return Empregos(
       id: id ?? this.id,
@@ -71,6 +94,10 @@ class Empregos implements Model<Empregos> {
       saida: saida ?? this.saida,
       carga_horaria: carga_horaria ?? this.carga_horaria,
       ativo: ativo ?? this.ativo,
+      horas: horas ?? this.horas,
+      diferenciadas: diferenciadas ?? this.diferenciadas,
+      salarios: this.salarios,
+      calendario: calendario ?? this.calendario,
     );
   }
 
@@ -119,8 +146,8 @@ class Empregos implements Model<Empregos> {
       PORC_COMPLETA: this.porc_completa,
       FECHAMENTO: this.fechamento,
       CARGA_HORARIA: this.carga_horaria,
-      BANCO_HORAS: this.banco_horas,
-      ATIVO: this.ativo,
+      BANCO_HORAS: boolToInt(this.banco_horas),
+      ATIVO: boolToInt(this.ativo),
     };
   }
 }

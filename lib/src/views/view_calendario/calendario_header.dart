@@ -6,10 +6,9 @@ class CalendarioHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.deepOrange,
-      padding: const EdgeInsets.all(4),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
       child: Row(children: [
-        for (final d in Consts.weekDay)
+        for (final d in Consts.weekDayShort)
           Expanded(
             child: CalendarioHeaderItem(weekDay: d),
           )

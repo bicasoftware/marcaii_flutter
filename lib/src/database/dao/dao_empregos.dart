@@ -16,7 +16,23 @@ class DaoEmpregos implements BaseDao<Empregos> {
   Future<List<Empregos>> fetchAll() async {
     final db = await getDB();
     final result = await db.query(Empregos.tableName);
-    return result.map(Empregos.fromJson).toList();
+    final empregos = result.map((e) => Empregos.fromMap(e)).toList();
+    final resultList = <Empregos>[];
+
+    for (final e in empregos) {
+      final horas = await DaoHoras.fetchByEmprego(e.id);
+      final salarios = await DaoSalarios.fetchByEmprego(e.id);
+      final diferenciadas = await DaoDiferenciadas.fetchByEmprego(e.id);
+      resultList.add(
+        e.copyWith(
+          horas: horas,
+          salarios: salarios,
+          diferenciadas: diferenciadas,
+        ),
+      );
+    }
+
+    return resultList;
   }
 
   @override
@@ -46,6 +62,7 @@ class DaoEmpregos implements BaseDao<Empregos> {
   }
 
   Future<void> syncFromServer(List<Empregos> empregos) async {
+    //TODO - Gerar lista de datas, calendario e parciais
     for (var emprego in empregos) {
       final e = await insert(emprego.copyWith());
 

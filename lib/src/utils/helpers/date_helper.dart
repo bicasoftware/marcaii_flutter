@@ -32,5 +32,11 @@ extension DateHelper on DateTime {
     }
   }
 
+  bool isSameDate(DateTime otherDate) {
+    return this.year == otherDate.year &&
+        this.month == otherDate.month &&
+        this.day == otherDate.day;
+  }
+
   String paddedWeekday(int padLen) => this.day.toString().padLeft(padLen, "0");
 }

@@ -6,6 +6,7 @@ import 'package:marcaii_flutter/src/database/models/model.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/column_types.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_column.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_table.dart';
+import 'package:marcaii_flutter/src/utils/json_utils.dart';
 
 part 'salarios.g.dart';
 
@@ -19,6 +20,17 @@ class Salarios implements Model<Salarios> {
     this.vigencia,
     this.ativo,
   });
+
+  // ignore: prefer_constructors_over_static_methods
+  static Salarios fromMap(Map<String, dynamic> map) {
+    return Salarios(
+      id: map['id'] as int,
+      emprego_id: map['emprego_id'] as int,
+      valor: map['valor'] as double,
+      vigencia: map['vigencia'] as String,
+      ativo: intToBool(map['ativo'] as int),
+    );
+  }
 
   final int id, emprego_id;
   @JsonKey(fromJson: double.tryParse)

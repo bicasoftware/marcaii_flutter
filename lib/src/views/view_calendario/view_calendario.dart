@@ -3,6 +3,7 @@ import 'package:marcaii_flutter/helpers.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/calendario_header.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/calendario_item.dart';
+import 'package:marcaii_flutter/src/views/view_calendario/calendario_navigator.dart';
 
 class ViewCalendario extends StatelessWidget {
   const ViewCalendario({Key key}) : super(key: key);
@@ -11,6 +12,7 @@ class ViewCalendario extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        CalendarioNavigator(),
         CalendarioHeader(),
         Container(
           padding: const EdgeInsets.all(1),
@@ -23,9 +25,7 @@ class ViewCalendario extends StatelessWidget {
               for (int i = 0; i < DateTime(2020, 5, 1).indexWeekday(); i++)
                 AspectRatio(
                   aspectRatio: 1.1,
-                  child: Container(
-                    color: Colors.deepOrangeAccent,
-                  ),
+                  child: Container(),
                 ),
               for (int i = 0; i < 31; i++)
                 CalendarioItem(

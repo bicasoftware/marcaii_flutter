@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/views/shared/squared_card.dart';
 import 'package:marcaii_flutter/helpers.dart';
@@ -17,24 +18,16 @@ class ParciaisListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SquaredCard(
-      child: ListTile(
-        onTap: () => onPressed(hora),
-        leading: CircleAvatar(
-          backgroundColor: hora.getColor(),
-          child: Icon(
-            Icons.access_time,
-          ),
-        ),
-        title: Text(hora.data.asString()),
-        subtitle: Text("${hora.inicio} | ${hora.termino} | 60 minutos"),
-        trailing: IconButton(
-          icon: Icon(
-            Icons.delete_sweep,
-            color: Colors.red,
-          ),
-          onPressed: () => onDelete(hora),
-        ),
+    return ListTile(
+      onTap: () => onPressed(hora),
+      leading: Icon(
+        LineAwesomeIcons.calendar_o,
+      ),
+      title: Text(hora.data.asString()),
+      subtitle: Text("${hora.inicio} | ${hora.termino} | 60 minutos"),
+      trailing: Text(
+        hora.getTipo(),
+        style: Theme.of(context).textTheme.caption.copyWith(color: hora.getColor()),
       ),
     );
   }

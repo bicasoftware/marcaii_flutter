@@ -110,7 +110,7 @@ class ViewHomeDrawer extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: <Widget>[
-                  //TODO - carregar lista de empregos vindos do Store
+                  //TODO - carregar lista de empregos vindos do BLOC
                   for (int i = 0; i < 3; i++)
                     ListTile(
                       leading: Icon(Icons.work),

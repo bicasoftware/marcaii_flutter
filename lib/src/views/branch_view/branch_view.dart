@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:lib_observer/lib_observer.dart';
+import 'package:marcaii_flutter/src/database/dao/dao_empregos.dart';
+import 'package:marcaii_flutter/src/database/models/empregos.dart';
+import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
 import 'package:marcaii_flutter/src/utils/token_manager.dart';
 import 'package:marcaii_flutter/src/views/home_view/view_home.dart';
 import 'package:marcaii_flutter/src/views/login/view_login.dart';
 import 'package:marcaii_flutter/src/views/signin/view_signin.dart';
 import 'package:marcaii_flutter/src/views/splash/splash_view.dart';
 import 'package:morpheus/morpheus.dart';
+import 'package:provider/provider.dart';
 
 class BranchView extends StatefulWidget {
-  const BranchView({Key key, this.token}) : super(key: key);
+  const BranchView({
+    @required this.token,
+    Key key,
+  }) : super(key: key);
+
   final String token;
 
   @override
@@ -26,9 +35,20 @@ class _BranchViewState extends State<BranchView> {
         return ViewSignin(setPosition: setPosition);
         break;
       case 2:
-        //TODO - adicionar isso dentro de um Provider
-        //TODO - Criar MOBX!
-        return const ViewHome();
+        //TODO - testar fetchAll()
+        return FutureObserver<List<Empregos>>(
+          future: DaoEmpregos().fetchAll(),
+          onSuccess: (_, List<Empregos> empregos) {
+            return Provider<BlocMain>(
+              create: (_) => BlocMain(
+                token: widget.token,
+                empregos: empregos,
+              ),
+              dispose: (_, BlocMain b) => b.dispose(),
+              child: const ViewHome(),
+            );
+          },
+        );
         break;
       default:
         return SplashView();

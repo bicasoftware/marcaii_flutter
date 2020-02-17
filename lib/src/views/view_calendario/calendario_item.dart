@@ -17,9 +17,7 @@ class CalendarioItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Container(
-      color: Colors.deepOrangeAccent,
       padding: const EdgeInsets.all(8),
       child: AspectRatio(
         aspectRatio: 1.1,
@@ -31,10 +29,7 @@ class CalendarioItem extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       date.paddedWeekday(2),
-                      style: theme.textTheme.subhead.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: Theme.of(context).textTheme.subhead,
                     ),
                     const SizedBox(height: 4),
                     if (hora != null)

@@ -11,10 +11,8 @@ class CalendarioHeaderItem extends StatelessWidget {
     return Container(
       child: Text(
         weekDay,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 14,
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
         ),
         textAlign: TextAlign.center,
       ),

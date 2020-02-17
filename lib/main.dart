@@ -27,6 +27,14 @@ class Marcaii extends StatelessWidget {
       supportedLocales: const [Locale('pt', 'BR')],
       title: Strings.appName,
       theme: ThemeData(
+        appBarTheme: AppBarTheme(
+          color: Colors.white,
+          elevation: 2,
+          brightness: Brightness.light,
+          iconTheme: ThemeData.light().iconTheme,
+          textTheme: customTheme.textTheme,
+          // textTheme: ThemeData.light().textTheme,
+        ),
         primarySwatch: Colors.deepOrange,
         primaryColor: Colors.deepOrange,
         accentColor: Colors.indigo,
@@ -36,3 +44,16 @@ class Marcaii extends StatelessWidget {
     );
   }
 }
+
+ThemeData customTheme = ThemeData(
+  appBarTheme: AppBarTheme(
+    color: Colors.white,
+    elevation: 2,
+    brightness: Brightness.light,
+    iconTheme: ThemeData.light().iconTheme,
+  ),
+  primarySwatch: Colors.deepOrange,
+  primaryColor: Colors.deepOrange,
+  accentColor: Colors.indigo,
+  fontFamily: "Montserrat",
+);

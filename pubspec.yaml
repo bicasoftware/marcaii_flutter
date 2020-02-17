@@ -12,10 +12,13 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  flutter_form_builder: 
+  lib_observer:
+    git:
+      url: "https://github.com/bicasoftware/lib_observer"
+
   cupertino_icons: ^0.1.2
   provider: ^4.0.2
-  mobx: ^1.0.2
+  rxdart: ^0.23.1
   dio: ^3.0.8
   retrofit: ^1.0.1+1
   sqflite: ^1.2.0
@@ -27,7 +30,7 @@ dependencies:
   flutter_secure_storage: ^3.3.1+1
   card_settings: ^1.5.5
   intl:
-  
+  line_awesome_icons: ^1.0.4+2
 
 dev_dependencies:
   flutter_test:
@@ -35,7 +38,6 @@ dev_dependencies:
   test: any
   build_runner: any
   retrofit_generator: any
-  mobx_codegen: ^1.0.1
 
 flutter:
   uses-material-design: true
