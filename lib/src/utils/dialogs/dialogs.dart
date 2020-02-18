@@ -44,3 +44,32 @@ Future<void> showAwaitingDialog({
   );
 }
 
+Future<bool> showCanCloseDialog({
+  @required BuildContext context,
+  @required String title,
+  @required String message,
+  String negativeCaption = "Não",
+  String positiveCaption = "Sim",
+}) async {
+  return await showDialog(
+    context: context,
+    child: AlertDialog(
+      title: Text(title),
+      content: Text(message),
+      actions: <Widget>[
+        FlatButton(
+          child: Text(negativeCaption),
+          onPressed: () {
+            Navigator.of(context).pop(false);
+          },
+        ),
+        FlatButton(
+          child: Text(positiveCaption),
+          onPressed: () {
+            Navigator.of(context).pop(true);
+          },
+        ),
+      ],
+    ),
+  );
+}

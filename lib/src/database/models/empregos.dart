@@ -150,4 +150,16 @@ class Empregos implements Model<Empregos> {
       ATIVO: boolToInt(this.ativo),
     };
   }
+
+  bool equals(Empregos emprego) {
+    return this.id == emprego.id &&
+        this.nome == emprego.nome &&
+        this.porc == emprego.porc &&
+        this.porc_completa == emprego.porc_completa &&
+        this.fechamento == emprego.fechamento &&
+        this.banco_horas == emprego.banco_horas &&
+        this.saida == emprego.saida &&
+        this.carga_horaria == emprego.carga_horaria &&
+        this.ativo == emprego.ativo;
+  }
 }

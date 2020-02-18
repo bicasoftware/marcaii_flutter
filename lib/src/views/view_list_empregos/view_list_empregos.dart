@@ -12,13 +12,14 @@ class ViewListEmpregos extends StatelessWidget {
     final b = Provider.of<BlocMain>(context);
 
     return Container(
+      //TODO - implementar rotina para NOVO emprego
       padding: const EdgeInsets.all(8),
       child: StreamObserver<List<Empregos>>(
         stream: b.outEmpregos,
         onSuccess: (_, empregos) {
           return ListView(
             shrinkWrap: true,
-            children: [
+            children: [              
               for (final e in empregos)
                 ListTile(
                   leading: Icon(LineAwesomeIcons.suitcase),
@@ -32,6 +33,7 @@ class ViewListEmpregos extends StatelessWidget {
                     },
                   ),
                   onTap: () async {
+                    ///TODO - aplicar [MorpheusPageRoute]
                     final result = await Navigator.of(context).push(
                       MaterialPageRoute(
                         fullscreenDialog: true,
@@ -40,7 +42,9 @@ class ViewListEmpregos extends StatelessWidget {
                     );
 
                     if (result != null && result is Empregos) {
-                      print(result);
+                      //TODO - implementar atualização do emprego no bloc
+                      print(result.nome);
+                      result.diferenciadas.forEach(print);
                     }
                   },
                 ),

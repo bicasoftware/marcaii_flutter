@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class Strings {
   static const String appName = "Marcaii";
   static const String salvar = "Salvar";
+  static const String atencao = "Atenção";
+  static const String descartar = "Descartar!";
 
 
   static const String calendario = "Calendário";
@@ -26,6 +28,7 @@ class Strings {
   static const String cargaHoraria = "Carga Horaria";
   static const String ativo = "Ativo";
   static const String atual = "Emprego Atual";
+  static const String descartarAlteracoes = "Deseja descartar as alterações feitas?";
 }
 
 class Api {
@@ -61,6 +64,16 @@ class Consts {
     "Quinta",
     "Sexta",
     "Sábado",
+  ];
+
+  static const weekdayColors = <Color>[
+    Colors.red,
+    Colors.blue,
+    Colors.orange,
+    Colors.green,
+    Colors.teal,
+    Colors.amber,
+    Colors.purple,
   ];
 
   static const cargasHoraria = <int>[
