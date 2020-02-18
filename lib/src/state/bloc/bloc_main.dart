@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/state/app_state.dart';
 import 'package:marcaii_flutter/src/state/bloc/base_bloc.dart';
+import 'package:marcaii_flutter/strings.dart';
 import 'package:rxdart/rxdart.dart';
 
 class BlocMain with BaseBloc {
@@ -29,6 +30,11 @@ class BlocMain with BaseBloc {
       inVigencia.add(state.vigencia);
     });
 
+    _bhsNavPosition.listen((int pos) {
+      _appBarTitle.sink.add(Consts.appBarTitles[pos]);
+    });
+
+    _bhsNavPosition.sink.add(state.navPosition);
     inEmpregos.add(state.empregos);
     inToken.add(state.token);
     inAno.add(state.ano);
@@ -61,6 +67,12 @@ class BlocMain with BaseBloc {
   Stream<String> get outVigencia => _bhsVigencia.stream;
   Sink<String> get inVigencia => _bhsVigencia.sink;
 
+  final BehaviorSubject<int> _bhsNavPosition = BehaviorSubject<int>();
+  Stream<int> get outNavPosition => _bhsNavPosition.stream;
+
+  final _appBarTitle = StreamController<String>();
+  get outAppbarTitle => _appBarTitle.stream;
+
   @override
   void dispose() {
     _bhsToken.close();
@@ -69,6 +81,8 @@ class BlocMain with BaseBloc {
     _bhsMes.close();
     _bhsAno.close();
     _bhsVigencia.close();
+    _bhsNavPosition.close();
+    _appBarTitle.close();
   }
 
   void incMes() {
@@ -84,5 +98,10 @@ class BlocMain with BaseBloc {
   void setAno(int year) {
     state.setAno(year);
     inAno.add(state.ano);
+  }
+
+  void setNavPosition(int pos) {
+    state.setNavPosition(pos);
+    _bhsNavPosition.add(state.navPosition);
   }
 }

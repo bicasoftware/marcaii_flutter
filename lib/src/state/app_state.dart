@@ -9,18 +9,20 @@ class AppState {
     final dt = DateTime.now();
     ano = dt.year;
     mes = dt.month;
+    navPosition = empregos.isNotEmpty ? 1 : 0;
   }
 
   String token;
   List<Empregos> empregos;
 
-  int mes, ano;
-  String get vigencia => "${Consts.meses[mes-1]}/$ano";
+  int mes, ano, navPosition;
+
+  String get vigencia => "${Consts.meses[mes - 1]}/$ano";
 
   void addMes() {
     if (mes == 12) {
       mes = 1;
-      ano = ano+1;
+      ano = ano + 1;
     } else {
       mes++;
     }
@@ -29,11 +31,13 @@ class AppState {
   void decMes() {
     if (mes == 1) {
       mes = 12;
-      ano = ano -1;
+      ano = ano - 1;
     } else {
       mes--;
     }
   }
 
   void setAno(int ano) => this.ano = ano;
+
+  void setNavPosition(int pos) => this.navPosition = pos;
 }

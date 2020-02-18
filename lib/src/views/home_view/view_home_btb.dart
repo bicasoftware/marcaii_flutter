@@ -19,6 +19,10 @@ class ViewHomeBottombar extends StatelessWidget {
       currentIndex: pos,
       items: [
         BottomNavigationBarItem(
+          icon: Icon(LineAwesomeIcons.suitcase),
+          title: const Text(Strings.empregos),
+        ),
+        BottomNavigationBarItem(
           icon: Icon(LineAwesomeIcons.calendar),
           title: const Text(Strings.calendario),
         ),

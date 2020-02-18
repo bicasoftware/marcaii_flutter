@@ -2,18 +2,24 @@ import 'package:flutter/material.dart';
 
 class Strings {
   static const String appName = "Marcaii";
+  static const String salvar = "Salvar";
+
+
   static const String calendario = "Calendário";
   static const String parciais = "Parciais";
+  static const String emprego = "Emprego";
   static const String empregos = "Empregos";
   static const String sair = "Sair";
   static const String adicionar = "Adicionar";
   static const String diferenciada = "diferenciada";
+  static const String diferenciadas = "Horas Diferenciadas";
   static const String diaSemana = "Dia da Semana";
   static const String porcentagem = "Porcentagem";
 
   static const String descricao = "Descrição";
   static const String porc = "% Normal";
   static const String porcCompleta = "% Feriados";
+  static const String porcDifer = "% Diferenciada";
   static const String fechamento = "Dia Fechamento";
   static const String bancoHoras = "Banco Horas";
   static const String saida = "Saída";
@@ -57,7 +63,7 @@ class Consts {
     "Sábado",
   ];
 
-  static const CargasHoraria = <int>[
+  static const cargasHoraria = <int>[
     220,
     200,
     180,
@@ -90,5 +96,11 @@ class Consts {
     "Outubro",
     "Novembro",
     "Dezembro",
+  ];
+
+  static const appBarTitles = [
+    Strings.empregos,
+    Strings.calendario,
+    Strings.parciais,
   ];
 }

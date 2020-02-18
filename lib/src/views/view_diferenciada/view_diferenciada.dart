@@ -1,6 +1,8 @@
 import 'package:card_settings/card_settings.dart';
 import 'package:card_settings/widgets/card_settings_panel.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:marcaii_flutter/src/views/shared/config_tiles/drop_down_tile.dart';
 import 'package:marcaii_flutter/strings.dart';
 
 class ViewDiferenciada extends StatefulWidget {
@@ -22,34 +24,35 @@ class _ViewDiferenciadaState extends State<ViewDiferenciada> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(Strings.diferenciada),
-      ),
-      body: CardSettings(
-        labelWidth: 250,
-        shrinkWrap: true,
-        children: <Widget>[
-          CardSettingsNumberPicker(
-            
-            icon: Icon(Icons.confirmation_number),
-            label: Strings.porcentagem,
+    return SafeArea(            
+      //TODO - Testar safeArea
+      child: Scaffold(
+        body: Container(
+          padding: const EdgeInsets.all(8),
+          child: DropdownTile<int>(
+            icon: Icon(
+              FontAwesomeIcons.percentage,
+              color: Consts.horaColor.first,
+            ),
+            label: Strings.porcDifer,
             initialValue: _percent,
-            min: 100,
-            max: 999,
-            onChanged: (p) => setState(() => _percent = p),
+            items: [for (int i = 50; i <= 300; i++) i],
+            formatter: (int i) => "$i %",
+            onChanged: (p) {
+              setState(() => _percent = p);
+            },
           ),
-        ],
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton.extended(
-        label: const Text("Salvar"),
-        icon: Icon(Icons.save),
-        onPressed: () {
-          Navigator.of(context).pop(
-            {"weekDay": widget.weekday, "percent": _percent},
-          );
-        },
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: FloatingActionButton.extended(
+          label: const Text("Salvar"),
+          icon: Icon(Icons.save),
+          onPressed: () {
+            Navigator.of(context).pop(
+              {"weekDay": widget.weekday, "percent": _percent},
+            );
+          },
+        ),
       ),
     );
   }

@@ -6,83 +6,161 @@ import 'package:card_settings/widgets/picker_fields/card_settings_number_picker.
 import 'package:card_settings/widgets/picker_fields/card_settings_time_picker.dart';
 import 'package:card_settings/widgets/text_fields/card_settings_text.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:line_awesome_icons/line_awesome_icons.dart';
+import 'package:marcaii_flutter/src/database/models/empregos.dart';
+import 'package:marcaii_flutter/src/utils/helpers/time_helper.dart';
+import 'package:marcaii_flutter/src/views/shared/config_tiles/drop_down_tile.dart';
+import 'package:marcaii_flutter/src/views/shared/config_tiles/switch_tile.dart';
+import 'package:marcaii_flutter/src/views/shared/config_tiles/text_tile.dart';
+import 'package:marcaii_flutter/src/views/shared/config_tiles/time_tile.dart';
 import 'package:marcaii_flutter/src/views/view_diferenciada/view_diferenciada.dart';
 import 'package:marcaii_flutter/strings.dart';
 
-class ViewEmpregos extends StatelessWidget {
-  final txtDesc = TextEditingController(text: "Emprego");
+class ViewEmpregos extends StatefulWidget {
+  const ViewEmpregos({
+    @required this.emprego,
+    Key key,
+  }) : super(key: key);
+  final Empregos emprego;
+
+  @override
+  _ViewEmpregosState createState() => _ViewEmpregosState();
+}
+
+class _ViewEmpregosState extends State<ViewEmpregos> {
+  TextEditingController txtDesc;
+  Empregos _emprego;
+
+  @override
+  void initState() {
+    _emprego = widget.emprego.copyWith();
+    txtDesc = TextEditingController(text: _emprego.nome);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(Strings.empregos),
+        title: Text(_emprego.nome),
+        actions: <Widget>[
+          FlatButton(
+            child: Text(
+              Strings.salvar,
+              style: theme.textTheme.subhead,
+            ),
+            onPressed: () {},
+          )
+        ],
       ),
-      body: CardSettings(
-        cardElevation: 2,
-        shrinkWrap: true,
-        contentAlign: TextAlign.end,
-        labelAlign: TextAlign.start,
-        labelWidth: 180,
+      body: ListView(
         children: <Widget>[
-          CardSettingsHeader(label: "Informações Básicas"),
-          CardSettingsText(
+          TextTile(
+            icon: Icon(
+              LineAwesomeIcons.file_text_o,
+              color: Colors.lightBlue,
+            ),
+            label: Strings.descricao,
             controller: txtDesc,
-            icon: Icon(Icons.person),
-            label: "Domingo",
-            hintText: "Estoquista",
+            hint: "Emprego 1",
           ),
-          CardSettingsNumberPicker(
-            icon: Icon(Icons.confirmation_number),
+          DropdownTile<int>(
+            icon: Icon(
+              FontAwesomeIcons.percentage,
+              color: Consts.horaColor.first,
+            ),
             label: Strings.porc,
-            initialValue: 50,
-            min: 50,
-            max: 999,
+            initialValue: _emprego.porc,
+            items: [for (int i = 50; i <= 300; i++) i],
+            formatter: (int i) => "$i %",
+            onChanged: (p) {
+              setState(() {
+                _emprego = _emprego.copyWith(porc: p);
+              });
+            },
           ),
-          CardSettingsNumberPicker(
-            icon: Icon(Icons.confirmation_number),
+          DropdownTile<int>(
+            icon: Icon(
+              FontAwesomeIcons.percentage,
+              color: Consts.horaColor[1],
+            ),
             label: Strings.porcCompleta,
-            initialValue: 100,
-            min: 100,
-            max: 999,
+            initialValue: _emprego.porc_completa,
+            items: [for (int i = 100; i <= 300; i++) i],
+            formatter: (int i) => "$i %",
+            onChanged: (p) {
+              setState(() {
+                _emprego = _emprego.copyWith(porc: p);
+              });
+            },
           ),
-          CardSettingsListPicker(
-            icon: Icon(Icons.timelapse),
+          DropdownTile<int>(
+            icon: Icon(
+              FontAwesomeIcons.clock,
+              color: Colors.orange,
+            ),
             label: Strings.cargaHoraria,
-            initialValue: "220",
-            options: Consts.CargasHoraria.map(
-              (i) => i.toString(),
-            ).toList(),
+            initialValue: _emprego.carga_horaria,
+            items: <int>[for (final c in Consts.cargasHoraria) c],
+            onChanged: (int value) {
+              setState(() {
+                _emprego = _emprego.copyWith(carga_horaria: value);
+              });
+            },
           ),
-          CardSettingsTimePicker(
-            initialValue: const TimeOfDay(hour: 18, minute: 0),
-            icon: Icon(Icons.timer),
+          TimePickerTile(
+            icon: Icon(
+              FontAwesomeIcons.businessTime,
+              color: Colors.pink,
+            ),
+            initialTime: stringToTimeOfDay(_emprego.saida),
             label: Strings.saida,
-            onChanged: (t) {
-              //TODO - implementar
+            onTimeSet: (time) {
+              setState(() => _emprego = _emprego.copyWith(saida: time.toShortString()));
             },
           ),
-          CardSettingsSwitch(
-            icon: Icon(Icons.share),
-            initialValue: true,
+          SwitchTile(
+            initialValue: _emprego.banco_horas,
+            icon: Icon(
+              Icons.offline_pin,
+              color: Colors.teal,
+            ),
             label: Strings.bancoHoras,
-            falseLabel: "Não",
-            trueLabel: "Sim",
             onChanged: (b) {
-              //TODO - implementar
+              setState(() => _emprego = _emprego.copyWith(banco_horas: b));
             },
           ),
-          CardSettingsSwitch(
-            icon: Icon(Icons.info),
-            initialValue: true,
+          SwitchTile(
+            icon: Icon(
+              FontAwesomeIcons.envira,
+              color: Colors.red,
+            ),
+            initialValue: _emprego.ativo,
             label: Strings.atual,
-            falseLabel: "Não",
-            trueLabel: "Sim",
             onChanged: (b) {
-              //TODO - implementar
+              setState(() => _emprego = _emprego.copyWith(ativo: b));
             },
           ),
-          CardSettingsHeader(label: "Horas diferenciadas"),
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 8,
+            ),
+            width: double.maxFinite,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const Divider(),
+                Text(Strings.diferenciadas,
+                    style: theme.textTheme.caption.copyWith(
+                      color: theme.accentColor,
+                    ))
+              ],
+            ),
+          ),
           Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -98,12 +176,13 @@ class ViewEmpregos extends StatelessWidget {
                     );
 
                     if (result != null && result is Map<String, dynamic>) {
+                      //TODO - Aplicar diferenciada aqui
                       print(result);
                     }
                   },
                 )
             ],
-          )
+          ),
         ],
       ),
     );
