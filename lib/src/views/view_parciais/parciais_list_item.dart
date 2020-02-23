@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
-import 'package:marcaii_flutter/src/database/models/horas.dart';
-import 'package:marcaii_flutter/src/views/shared/squared_card.dart';
 import 'package:marcaii_flutter/helpers.dart';
+import 'package:marcaii_flutter/src/database/models/horas.dart';
 
 class ParciaisListItem extends StatelessWidget {
   const ParciaisListItem({

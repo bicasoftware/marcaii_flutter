@@ -40,4 +40,16 @@ class AppState {
   void setAno(int ano) => this.ano = ano;
 
   void setNavPosition(int pos) => this.navPosition = pos;
+
+  void addEmprego(Empregos e) {
+    //TODO - implementar
+  }
+
+  void removeEmprego(Empregos e) {
+    //TODO - implementar
+  }
+
+  void updateEmprego(Empregos e) {
+    //TODO - implementar
+  }
 }

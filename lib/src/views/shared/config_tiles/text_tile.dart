@@ -1,40 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:marcaii_flutter/src/views/shared/config_tiles/base_config_tile.dart';
 
-class TextTile extends StatelessWidget {
-  const TextTile({
-    @required this.label,
-    @required this.icon,
-    @required this.hint,
-    this.controller,
-    this.initialValue,
-    this.validator,
-    this.onSaved,
-    Key key,
-  })  : assert(controller != null || initialValue != null),
-        super(key: key);
+class TextTile extends FormField<String> {
+  TextTile({
+    @required Icon icon,
+    @required String label,
+    @required String hint,
+    @required FormFieldSetter<String> onSaved,
+    @required FormFieldValidator<String> validator,
+    @required String initialValue,
+    TextInputType inputType = TextInputType.text,
+    double trailingWidth = 120,
+    bool autoValidate = false,
+  }) : super(
+          onSaved: onSaved,
+          validator: validator,
+          initialValue: initialValue,
+          autovalidate: autoValidate,
+          builder: (FormFieldState<String> state) {
+            return ListTile(
+              leading: icon,
+              title: Text(label),
+              trailing: Container(
+                width: trailingWidth,
+                child: Container(
+                  width: trailingWidth,
+                  child: TextFormField(
+                    keyboardType: inputType,
+                    initialValue: initialValue,
+                    onChanged: (s) => state.didChange(s),
+                    textAlign: TextAlign.end,
+                    decoration: InputDecoration(
+                      isDense: true,
+                      hintText: hint,
+                    ),
+                  ),
+                ),
+              ),
+              subtitle: state.hasError ? _ErrorText(state.errorText) : null,
+            );
+          },
+        );
+}
 
-  final String label;
-  final Icon icon;
-  final String hint;
-  final String initialValue;
-  final TextEditingController controller;
-  final void Function(String value) validator, onSaved;
+class _ErrorText extends StatelessWidget {
+  const _ErrorText(this.errorText, {Key key}) : super(key: key);
+  final String errorText;
 
   @override
   Widget build(BuildContext context) {
-    return BaseConfigTile(
-      label: label,
-      icon: icon,
-      trailing: TextFormField(
-        initialValue: initialValue,
-        controller: controller,
-        validator: validator,
-        onSaved: onSaved,
-        decoration: InputDecoration.collapsed(
-          hintText: hint,
-        ),
-      ),
+    return Text(
+      errorText,
+      style: Theme.of(context).textTheme.caption.copyWith(color: Colors.red),
     );
   }
 }

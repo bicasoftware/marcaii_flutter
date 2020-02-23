@@ -22,7 +22,6 @@ dependencies:
   dio: ^3.0.8
   retrofit: ^1.0.1+1
   sqflite: ^1.2.0
-  morpheus: ^1.2.2+1
   jiffy: ^2.2.0
   json_serializable: ^3.2.5
   path_provider: ^1.5.1

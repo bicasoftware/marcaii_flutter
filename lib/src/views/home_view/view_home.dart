@@ -3,12 +3,10 @@ import 'package:lib_observer/lib_observer.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
 import 'package:marcaii_flutter/src/views/home_view/view_home_btb.dart';
-import 'package:marcaii_flutter/src/views/home_view/view_home_drawer.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/view_calendario.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/view_empregos.dart';
 import 'package:marcaii_flutter/src/views/view_list_empregos/view_list_empregos.dart';
 import 'package:marcaii_flutter/src/views/view_parciais/view_parciais.dart';
-import 'package:morpheus/widgets/morpheus_tab_view.dart';
 import 'package:provider/provider.dart';
 
 class ViewHome extends StatefulWidget {
@@ -18,8 +16,9 @@ class ViewHome extends StatefulWidget {
   _ViewHomeState createState() => _ViewHomeState();
 }
 
-class _ViewHomeState extends State<ViewHome> {
+class _ViewHomeState extends State<ViewHome> with SingleTickerProviderStateMixin {
   int pos;
+  TabController controller;
 
   final pages = [
     ViewListEmpregos(),
@@ -30,6 +29,11 @@ class _ViewHomeState extends State<ViewHome> {
   @override
   void initState() {
     pos = 0;
+    controller = TabController(
+      vsync: this,
+      initialIndex: pos,
+      length: pages.length,
+    );
     super.initState();
   }
 
@@ -64,15 +68,22 @@ class _ViewHomeState extends State<ViewHome> {
         ),
         elevation: 1,
       ),
-      bottomNavigationBar: ViewHomeBottombar(
-        onTapped: (pos) {
-          setState(() => this.pos = pos);
-          b.setNavPosition(pos);
+      bottomNavigationBar: StreamObserver<int>(
+        stream: b.outNavPosition,
+        onSuccess: (_, p) {
+          return ViewHomeBottombar(
+            onTapped: (pos) {
+              controller.animateTo(pos);
+              b.setNavPosition(pos);
+            },
+            pos: p,
+          );
         },
-        pos: pos,
       ),
-      body: MorpheusTabView(
-        child: pages[pos],
+      body: TabBarView(
+        controller: controller,
+        physics: const NeverScrollableScrollPhysics(),
+        children: pages,
       ),
     );
   }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:marcaii_flutter/src/views/shared/config_tiles/base_config_tile.dart';
-import 'package:marcaii_flutter/src/views/shared/dropdown_base.dart';
 
 class DropdownTile<T> extends StatelessWidget {
   const DropdownTile({
@@ -9,10 +8,13 @@ class DropdownTile<T> extends StatelessWidget {
     @required this.initialValue,
     @required this.items,
     @required this.onChanged,
+    this.trailingWidth,
     this.formatter,
+
     Key key,
   }) : super(key: key);
 
+  final double trailingWidth;
   final String label;
   final Icon icon;
   final T initialValue;
@@ -27,7 +29,7 @@ class DropdownTile<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseConfigTile(
-      trailingWidth: 100,
+      trailingWidth: trailingWidth ?? 100,
       icon: icon,
       label: label,
       trailing: DropdownButtonHideUnderline(

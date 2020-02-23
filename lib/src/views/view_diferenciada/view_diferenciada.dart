@@ -1,57 +1,94 @@
-import 'package:card_settings/card_settings.dart';
-import 'package:card_settings/widgets/card_settings_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:marcaii_flutter/src/views/shared/config_tiles/drop_down_tile.dart';
+import 'package:marcaii_flutter/src/database/models/diferenciadas.dart';
+import 'package:marcaii_flutter/src/utils/dialogs/dialogs.dart';
+import 'package:marcaii_flutter/src/views/shared/config_tiles/text_tile.dart';
+import 'package:marcaii_flutter/src/views/view_empregos/emprego_validate.dart';
 import 'package:marcaii_flutter/strings.dart';
 
 class ViewDiferenciada extends StatefulWidget {
-  const ViewDiferenciada({Key key, this.weekday, this.percent}) : super(key: key);
-  final int weekday, percent;
+  const ViewDiferenciada({Key key, this.diferenciada}) : super(key: key);
+  final Diferenciadas diferenciada;
 
   @override
   _ViewDiferenciadaState createState() => _ViewDiferenciadaState();
 }
 
 class _ViewDiferenciadaState extends State<ViewDiferenciada> {
-  int _percent;
+  Diferenciadas _diferenciada;
+  GlobalKey<FormState> _formKey;
 
   @override
   void initState() {
-    _percent = widget.percent;
+    _diferenciada = widget.diferenciada;
+    _formKey = GlobalKey<FormState>();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(            
-      //TODO - Testar safeArea
-      child: Scaffold(
-        body: Container(
-          padding: const EdgeInsets.all(8),
-          child: DropdownTile<int>(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(Strings.diferenciadas),
+        actions: <Widget>[
+          IconButton(
             icon: Icon(
-              FontAwesomeIcons.percentage,
-              color: Consts.horaColor.first,
+              Icons.delete_sweep,
+              color: Colors.orange,
             ),
-            label: Strings.porcDifer,
-            initialValue: _percent,
-            items: [for (int i = 50; i <= 300; i++) i],
-            formatter: (int i) => "$i %",
-            onChanged: (p) {
-              setState(() => _percent = p);
+            onPressed: () async {
+              final result = await showCanCloseDialog(
+                context: context,
+                title: "Aviso - Remoção",
+                message: "Deseja remover o valor diferenciado?",
+              );
+
+              if (result != null && result) {
+                Navigator.of(context).pop(_diferenciada.copyWith(porc: 0));
+              }
+              
             },
           ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: FloatingActionButton.extended(
-          label: const Text("Salvar"),
-          icon: Icon(Icons.save),
+        ],
+      ),
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.all(8),
+        child: MaterialButton(
+          child: Text(
+            Strings.salvar,
+            style: Theme.of(context).textTheme.button.copyWith(color: Colors.white),
+          ),
+          color: Theme.of(context).accentColor,
           onPressed: () {
-            Navigator.of(context).pop(
-              {"weekDay": widget.weekday, "percent": _percent},
-            );
+            final formState = _formKey.currentState;
+            if (formState.validate()) {
+              formState.save();
+              Navigator.of(context).pop(_diferenciada);
+            }
           },
+        ),
+      ),
+      body: Container(
+        padding: const EdgeInsets.all(8),
+        child: Form(
+          key: _formKey,
+          child: TextTile(
+            trailingWidth: 32,
+            initialValue: _diferenciada.porc.toString(),
+            label: Strings.porcentagem,
+            hint: "100",
+            inputType: TextInputType.number,
+            icon: Icon(
+              FontAwesomeIcons.calendarWeek,
+              color: Colors.red,
+            ),
+            onSaved: (String value) {
+              _diferenciada = _diferenciada.copyWith(porc: int.tryParse(value));
+            },
+            validator: (String s) {
+              return EmpregoValidate.validatePorc(s, 50);
+            },
+          ),
         ),
       ),
     );

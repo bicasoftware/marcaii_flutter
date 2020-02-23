@@ -1,102 +1,74 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:line_awesome_icons/line_awesome_icons.dart';
-import 'package:marcaii_flutter/src/database/models/diferenciadas.dart';
-import 'package:marcaii_flutter/src/database/models/empregos.dart';
+import 'package:flutter/services.dart';
+import 'package:lib_observer/lib_observer.dart';
+import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
 import 'package:marcaii_flutter/src/utils/dialogs/dialogs.dart';
 import 'package:marcaii_flutter/src/utils/helpers/time_helper.dart';
+import 'package:marcaii_flutter/src/views/shared/config_tiles/composed_text_tile.dart';
 import 'package:marcaii_flutter/src/views/shared/config_tiles/drop_down_tile.dart';
 import 'package:marcaii_flutter/src/views/shared/config_tiles/switch_tile.dart';
 import 'package:marcaii_flutter/src/views/shared/config_tiles/text_tile.dart';
 import 'package:marcaii_flutter/src/views/shared/config_tiles/time_tile.dart';
+import 'package:marcaii_flutter/src/views/view_empregos/emprego_validate.dart';
+import 'package:marcaii_flutter/src/views/view_empregos/view_emprego_diferenciadas.dart';
 import 'package:marcaii_flutter/strings.dart';
+import 'package:provider/provider.dart';
 
 class ViewEmpregos extends StatefulWidget {
-  const ViewEmpregos({
-    @required this.emprego,
-    Key key,
-  }) : super(key: key);
-  final Empregos emprego;
-
   @override
   _ViewEmpregosState createState() => _ViewEmpregosState();
 }
 
 class _ViewEmpregosState extends State<ViewEmpregos> {
-  TextEditingController txtDesc;
-  Empregos _emprego;
-
   static final porcentagens = [for (int i = 50; i <= 300; i++) i];
-  static final porcDiferenciadas = [0]..addAll(porcentagens);
-  final diferenciadas = <Diferenciadas>[];
 
-  fillDiferenciadas() {
-    for (int dia = 0; dia <= 6; dia++) {
-      final Diferenciadas dif = _emprego.diferenciadas.firstWhere(
-        (d) => d.weekday == dia,
-        orElse: () => null,
-      );
+  GlobalKey<FormState> _formKey;
+  BlocEmprego b;
 
-      if (dif != null) {
-        diferenciadas.add(dif.copyWith());
-      } else {
-        diferenciadas.add(
-          Diferenciadas(
-            weekday: dia,
-            porc: 0,
-          ),
-        );
-      }
-    }
+  @override
+  void initState() {
+    _formKey = GlobalKey<FormState>();
+    super.initState();
   }
 
   void validateEmprego() {
-    Navigator.of(context).pop(_emprego.copyWith(
-      diferenciadas: diferenciadas.where((f) => f.porc != 0).toList(),
-      nome: txtDesc.text,
-    ));
+    Navigator.of(context).pop(b.resultEmprego());
   }
 
-  Future<bool> canClose() async {
+  Future<bool> _willPop() async {
     ///Se o [_emprego] for alterado e for diferente de [widget.emprego]
     ///mostra um dialog confirmando se o usuário quer descartar as alterações feitas
     ///Se a resposta for true, retorna [widget.emprego] que a instancia anterior, sem alterações
-    if (!_emprego.equals(widget.emprego)) {
-      final r = await showCanCloseDialog(
-        context: context,
-        title: Strings.atencao,
-        message: Strings.descartarAlteracoes,
-        positiveCaption: Strings.descartar,
-      );
 
-      if (r != null && r == true) {
-        Navigator.of(context).pop(widget.emprego);
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      if (b.didChange()) {
+        final r = await showCanCloseDialog(
+          context: context,
+          title: Strings.atencao,
+          message: Strings.descartarAlteracoes,
+          positiveCaption: Strings.descartar,
+        );
+
+        if (r != null && r == true) {
+          Navigator.of(context).pop(b.resultEmprego());
+        }
+      } else {
+        return true;
       }
-    } else {
-      return true;
     }
 
     return false;
   }
 
   @override
-  void initState() {
-    _emprego = widget.emprego.copyWith();
-    txtDesc = TextEditingController(text: _emprego.nome);
-    txtDesc.addListener(() {
-      setState(() => _emprego = _emprego.copyWith(nome: txtDesc.text));
-    });
-    fillDiferenciadas();
-
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    b = Provider.of<BlocEmprego>(context);
+    // final b = Provider.of<BlocEmprego>(context);
 
     return WillPopScope(
-      onWillPop: canClose,
+      onWillPop: _willPop,
       child: Scaffold(
         body: CustomScrollView(
           slivers: <Widget>[
@@ -110,140 +82,145 @@ class _ViewEmpregosState extends State<ViewEmpregos> {
                     Strings.salvar,
                     style: theme.textTheme.subhead,
                   ),
-                  onPressed: validateEmprego,
+                  onPressed: () {
+                    final state = _formKey.currentState;
+                    if (state.validate()) {
+                      state.save();
+                      Navigator.of(context).pop(b.emprego);
+                    }
+                  },
                 )
               ],
             ),
             SliverList(
               delegate: SliverChildListDelegate(
                 [
-                  TextTile(
-                    icon: Icon(
-                      LineAwesomeIcons.file_text_o,
-                      color: Colors.lightBlue,
-                    ),
-                    label: Strings.descricao,
-                    controller: txtDesc,
-                    hint: "Emprego",
-                  ),
-                  DropdownTile<int>(
-                    icon: Icon(
-                      FontAwesomeIcons.percentage,
-                      color: Consts.horaColor.first,
-                    ),
-                    label: Strings.porc,
-                    initialValue: _emprego.porc,
-                    items: porcentagens,
-                    formatter: (int i) => "$i %",
-                    onChanged: (p) {
-                      setState(() {
-                        _emprego = _emprego.copyWith(porc: p);
-                      });
-                    },
-                  ),
-                  DropdownTile<int>(
-                    icon: Icon(
-                      FontAwesomeIcons.percentage,
-                      color: Consts.horaColor[1],
-                    ),
-                    label: Strings.porcCompleta,
-                    initialValue: _emprego.porc_completa,
-                    items: porcentagens,
-                    formatter: (int i) => "$i %",
-                    onChanged: (p) {
-                      setState(() {
-                        _emprego = _emprego.copyWith(porc: p);
-                      });
-                    },
-                  ),
-                  DropdownTile<int>(
-                    icon: Icon(
-                      FontAwesomeIcons.clock,
-                      color: Colors.orange,
-                    ),
-                    label: Strings.cargaHoraria,
-                    initialValue: _emprego.carga_horaria,
-                    items: <int>[for (final c in Consts.cargasHoraria) c],
-                    onChanged: (int value) {
-                      setState(() {
-                        _emprego = _emprego.copyWith(carga_horaria: value);
-                      });
-                    },
-                  ),
-                  TimePickerTile(
-                    icon: Icon(
-                      FontAwesomeIcons.businessTime,
-                      color: Colors.pink,
-                    ),
-                    initialTime: stringToTimeOfDay(_emprego.saida),
-                    label: Strings.saida,
-                    onTimeSet: (time) {
-                      setState(() => _emprego = _emprego.copyWith(saida: time.toShortString()));
-                    },
-                  ),
-                  SwitchTile(
-                    initialValue: _emprego.banco_horas,
-                    icon: Icon(
-                      Icons.offline_pin,
-                      color: Colors.teal,
-                    ),
-                    label: Strings.bancoHoras,
-                    onChanged: (b) {
-                      setState(() => _emprego = _emprego.copyWith(banco_horas: b));
-                    },
-                  ),
-                  SwitchTile(
-                    icon: Icon(
-                      FontAwesomeIcons.envira,
-                      color: Colors.red,
-                    ),
-                    initialValue: _emprego.ativo,
-                    label: Strings.atual,
-                    onChanged: (b) {
-                      setState(() => _emprego = _emprego.copyWith(ativo: b));
-                    },
-                  ),
-                  if (!_emprego.banco_horas)
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
-                      ),
-                      width: double.maxFinite,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          const Divider(),
-                          Text(
-                            Strings.diferenciadas,
-                            style: theme.textTheme.caption.copyWith(color: theme.accentColor),
-                          )
-                        ],
-                      ),
-                    ),
-                  if (!_emprego.banco_horas)
-                    Column(
+                  Form(
+                    key: _formKey,
+                    child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        for (final dif in diferenciadas)
-                          DropdownTile<int>(
-                            label: Consts.weekDayExtenso[dif.weekday],
-                            icon: Icon(
-                              FontAwesomeIcons.calendarWeek,
-                              color: Consts.weekdayColors[dif.weekday],
-                            ),
-                            items: porcDiferenciadas,
-                            initialValue: dif.porc,
-                            formatter: (d) => "$d %",
-                            onChanged: (int newPorc) {
-                              final index = diferenciadas.indexOf(dif);
-                              setState(() {
-                                diferenciadas[index] = diferenciadas[index].copyWith(porc: newPorc);
-                              });
-                            },
-                          ),
+                        StreamObserver<String>(
+                          stream: b.nome,
+                          onSuccess: (_, nome) {
+                            return ComposedTextTile(
+                              icon: Icon(
+                                Icons.work,
+                                color: Colors.lightBlue,
+                              ),
+                              hint: "Emprego",
+                              label: Strings.descricao,
+                              initialValue: nome,
+                              onSaved: b.setNome,
+                              validator: (String s) {
+                                if (s.isEmpty) {
+                                  return "Descrição obrigatória";
+                                } else {
+                                  return null;
+                                }
+                              },
+                            );
+                          },
+                        ),
+                        StreamObserver<int>(
+                          stream: b.porcNormal,
+                          onSuccess: (_, porc) {
+                            return TextTile(
+                              trailingWidth: 32,
+                              icon: Icon(
+                                Icons.info,
+                                color: Consts.horaColor.first,
+                              ),
+                              hint: "50",
+                              label: Strings.porc,
+                              initialValue: porc.toString(),
+                              onSaved: (s) => b.setPorcNormal(int.tryParse(s)),
+                              validator: (s) {
+                                return EmpregoValidate.validatePorc(s, 50);
+                              },
+                            );
+                          },
+                        ),
+                        StreamObserver<int>(
+                          stream: b.porcCompleta,
+                          onSuccess: (_, porc) {
+                            return TextTile(
+                              trailingWidth: 32,
+                              icon: Icon(
+                                Icons.info,
+                                color: Consts.horaColor[1],
+                              ),
+                              label: Strings.porcCompleta,
+                              initialValue: porc.toString(),
+                              hint: "100",
+                              inputType: TextInputType.number,
+                              validator: (String s) => EmpregoValidate.validatePorc(s, 50),
+                              onSaved: (String s) => b.setPorcCompleta(int.tryParse(s)),
+                            );
+                          },
+                        ),
                       ],
                     ),
+                  ),
+                  StreamObserver<int>(
+                    stream: b.cargaHoraria,
+                    onAwaiting: (_) => Container(),
+                    onSuccess: (_, carga) {
+                      return DropdownTile<int>(
+                        icon: Icon(
+                          Icons.date_range,
+                          color: Colors.orange,
+                        ),
+                        label: Strings.cargaHoraria,
+                        initialValue: carga,
+                        items: <int>[for (final c in Consts.cargasHoraria) c],
+                        onChanged: b.setCargaHoraria,
+                        trailingWidth: 60,
+                      );
+                    },
+                  ),
+                  StreamObserver<String>(
+                    stream: b.saida,
+                    onAwaiting: (_) => Container(),
+                    onSuccess: (_, saida) => TimePickerTile(
+                      icon: Icon(
+                        Icons.time_to_leave,
+                        color: Colors.pink,
+                      ),
+                      initialTime: stringToTimeOfDay(saida),
+                      label: Strings.saida,
+                      onTimeSet: b.setSaida,
+                    ),
+                  ),
+                  StreamObserver<bool>(
+                    stream: b.bancoHoras,
+                    onAwaiting: (_) => Container(),
+                    onSuccess: (_, bancoHoras) {
+                      return SwitchTile(
+                        initialValue: bancoHoras,
+                        icon: Icon(
+                          Icons.offline_pin,
+                          color: Colors.teal,
+                        ),
+                        label: Strings.bancoHoras,
+                        onChanged: b.setBancoHora,
+                      );
+                    },
+                  ),
+                  StreamObserver<bool>(
+                    stream: b.ativo,
+                    onAwaiting: (_) => Container(),
+                    onSuccess: (_, ativo) => SwitchTile(
+                      icon: Icon(
+                        Icons.favorite,
+                        color: Colors.red,
+                      ),
+                      initialValue: ativo,
+                      label: Strings.atual,
+                      onChanged: b.setAtivo,
+                    ),
+                  ),
+                  ViewEmpregoDiferenciadas(),
                 ],
               ),
             )

@@ -8,7 +8,6 @@ import 'package:marcaii_flutter/src/views/home_view/view_home.dart';
 import 'package:marcaii_flutter/src/views/login/view_login.dart';
 import 'package:marcaii_flutter/src/views/signin/view_signin.dart';
 import 'package:marcaii_flutter/src/views/splash/splash_view.dart';
-import 'package:morpheus/morpheus.dart';
 import 'package:provider/provider.dart';
 
 class BranchView extends StatefulWidget {
@@ -23,8 +22,9 @@ class BranchView extends StatefulWidget {
   _BranchViewState createState() => _BranchViewState();
 }
 
-class _BranchViewState extends State<BranchView> {
+class _BranchViewState extends State<BranchView> with SingleTickerProviderStateMixin {
   int position;
+  TabController controller;
 
   Widget getActualView(int pos) {
     switch (pos) {
@@ -35,7 +35,6 @@ class _BranchViewState extends State<BranchView> {
         return ViewSignin(setPosition: setPosition);
         break;
       case 2:
-        //TODO - testar fetchAll()
         return FutureObserver<List<Empregos>>(
           future: DaoEmpregos().fetchAll(),
           onSuccess: (_, List<Empregos> empregos) {
@@ -58,6 +57,11 @@ class _BranchViewState extends State<BranchView> {
   @override
   void initState() {
     position = widget.token.isNotEmpty ? 2 : 0;
+    controller = TabController(
+      length: 3,
+      vsync: this,
+      initialIndex: position,
+    );
     super.initState();
   }
 
@@ -73,9 +77,30 @@ class _BranchViewState extends State<BranchView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: MorpheusTabView(
-        child: getActualView(position),
+      body: TabBarView(
+        children: <Widget>[
+          LoginView(setPosition: setPosition),
+          ViewSignin(setPosition: setPosition),
+          FutureObserver<List<Empregos>>(
+            future: DaoEmpregos().fetchAll(),
+            onSuccess: (_, List<Empregos> empregos) {
+              return Provider<BlocMain>(
+                create: (_) => BlocMain(
+                  token: widget.token,
+                  empregos: empregos,
+                ),
+                dispose: (_, BlocMain b) => b.dispose(),
+                child: const ViewHome(),
+              );
+            },
+          ),
+        ],
+        controller: controller,
+        physics: const NeverScrollableScrollPhysics(),
       ),
+      /* body: MorpheusTabView(
+        child: getActualView(position),
+      ), */
     );
   }
 }

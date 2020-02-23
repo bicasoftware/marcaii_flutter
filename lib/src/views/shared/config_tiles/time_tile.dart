@@ -22,7 +22,10 @@ class TimePickerTile extends StatelessWidget {
       trailingWidth: 50,
       label: label,
       icon: icon,
-      trailing: Text(initialTime.toShortString()),
+      trailing: Text(
+        initialTime.toShortString(),
+        style: Theme.of(context).textTheme.subhead,
+      ),
       onTap: () async {
         final newTime = await showTimePicker(
           context: context,

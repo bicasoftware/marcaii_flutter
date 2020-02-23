@@ -104,4 +104,16 @@ class BlocMain with BaseBloc {
     state.setNavPosition(pos);
     _bhsNavPosition.add(state.navPosition);
   }
+
+  void addEmprego(Empregos emprego) {
+    //TODO - implementar
+  }
+
+  void removeEmprego(Empregos emprego) {
+    //TODO - implementar
+  }
+
+  void updateEmprego(Empregos emprego) {
+    //TODO - implementar
+  }
 }

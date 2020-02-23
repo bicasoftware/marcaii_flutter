@@ -389,13 +389,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.6+3"
-  morpheus:
-    dependency: "direct main"
-    description:
-      name: morpheus
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.2.2+1"
   multi_server_socket:
     dependency: transitive
     description:
