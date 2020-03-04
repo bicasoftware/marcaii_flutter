@@ -97,4 +97,15 @@ class Salarios implements Model<Salarios> {
   Map<String, Object> toJson() {
     return _$SalariosToJson(this);
   }
+
+  @override
+  // ignore: hash_and_equals
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        other is Salarios &&
+            runtimeType == other.runtimeType &&
+            this.valor == other.valor &&
+            this.vigencia == other.vigencia &&
+            this.ativo == other.ativo;
+  }
 }

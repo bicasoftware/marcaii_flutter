@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter/services.dart';
 import 'package:marcaii_flutter/src/database/models/diferenciadas.dart';
 import 'package:marcaii_flutter/src/utils/dialogs/dialogs.dart';
+import 'package:marcaii_flutter/src/views/shared/appbar_save_button.dart';
 import 'package:marcaii_flutter/src/views/shared/config_tiles/text_tile.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/emprego_validate.dart';
 import 'package:marcaii_flutter/strings.dart';
@@ -31,6 +32,15 @@ class _ViewDiferenciadaState extends State<ViewDiferenciada> {
       appBar: AppBar(
         title: Text(Strings.diferenciadas),
         actions: <Widget>[
+          AppbarSaveButton(
+            onPressed: () {
+              final formState = _formKey.currentState;
+              if (formState.validate()) {
+                formState.save();
+                Navigator.of(context).pop(_diferenciada);
+              }
+            },
+          ),
           IconButton(
             icon: Icon(
               Icons.delete_sweep,
@@ -46,40 +56,26 @@ class _ViewDiferenciadaState extends State<ViewDiferenciada> {
               if (result != null && result) {
                 Navigator.of(context).pop(_diferenciada.copyWith(porc: 0));
               }
-              
             },
           ),
         ],
-      ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.all(8),
-        child: MaterialButton(
-          child: Text(
-            Strings.salvar,
-            style: Theme.of(context).textTheme.button.copyWith(color: Colors.white),
-          ),
-          color: Theme.of(context).accentColor,
-          onPressed: () {
-            final formState = _formKey.currentState;
-            if (formState.validate()) {
-              formState.save();
-              Navigator.of(context).pop(_diferenciada);
-            }
-          },
-        ),
       ),
       body: Container(
         padding: const EdgeInsets.all(8),
         child: Form(
           key: _formKey,
           child: TextTile(
+            inputFormatters: [
+              WhitelistingTextInputFormatter.digitsOnly,
+              LengthLimitingTextInputFormatter(3),
+            ],
             trailingWidth: 32,
             initialValue: _diferenciada.porc.toString(),
             label: Strings.porcentagem,
             hint: "100",
             inputType: TextInputType.number,
             icon: Icon(
-              FontAwesomeIcons.calendarWeek,
+              Icons.date_range,
               color: Colors.red,
             ),
             onSaved: (String value) {

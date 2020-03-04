@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lib_observer/lib_observer.dart';
-import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
 import 'package:provider/provider.dart';
 
@@ -16,18 +15,18 @@ class CalendarioNavigator extends StatelessWidget {
           StreamObserver<String>(
             stream: b.outVigencia,
             onSuccess: (_, vig) => FlatButton.icon(
-              icon: Icon(LineAwesomeIcons.calendar),
+              icon: Icon(Icons.date_range),
               label: Text(vig),
               onPressed: () {},
             ),
           ),
           const Spacer(),
           IconButton(
-            icon: Icon(LineAwesomeIcons.angle_left),
+            icon: Icon(Icons.keyboard_arrow_left),
             onPressed: b.decMes,
           ),
           IconButton(
-            icon: Icon(LineAwesomeIcons.angle_right),
+            icon: Icon(Icons.keyboard_arrow_right),
             onPressed: b.incMes,
           ),
         ],

@@ -4,6 +4,7 @@ import 'package:marcaii_flutter/src/database/models/model.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/column_types.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_column.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_table.dart';
+import 'package:marcaii_flutter/src/utils/json_utils.dart';
 
 part 'diferenciadas.g.dart';
 
@@ -19,9 +20,24 @@ class Diferenciadas implements Model<Diferenciadas> {
     this.ativo = true,
   });
 
+  static Diferenciadas fromJson(Map<String, Object> json) {
+    return _$DiferenciadasFromJson(json);
+  }
+
+  // ignore: prefer_constructors_over_static_methods
+  static Diferenciadas fromMap(Map<String, dynamic> map) {
+    return Diferenciadas(
+      id: map['id'] as int,
+      emprego_id: map['emprego_id'] as int,
+      porc: map['porc'] as int,
+      weekday: map['weekday'] as int,
+      vigencia: map['vigencia'] as String,
+      ativo: intToBool(map['ativo'] as int),
+    );
+  }
+
   final int id, emprego_id, porc, weekday;
   final String vigencia;
-  // @JsonKey(toJson: boolToInt, fromJson: intToBool)
   final bool ativo;
 
   static const String ID = "id";
@@ -63,11 +79,19 @@ class Diferenciadas implements Model<Diferenciadas> {
     }).generateCreateQuery();
   }
 
-  static Diferenciadas fromJson(Map<String, Object> json) {
-    return _$DiferenciadasFromJson(json);
-  }
-
   static String tableName = "diferenciadas";
 
   Map<String, Object> toJson() => _$DiferenciadasToJson(this);
+
+  @override
+  // ignore: hash_and_equals
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        other is Diferenciadas &&
+            runtimeType == other.runtimeType &&
+            this.porc == other.porc &&
+            this.weekday == other.weekday &&
+            this.vigencia == other.vigencia &&
+            this.ativo == other.ativo;
+  }
 }

@@ -49,6 +49,6 @@ class DaoDiferenciadas implements BaseDao<Diferenciadas> {
       whereArgs: [empregoId],
     );
 
-    return result.map(Diferenciadas.fromJson).toList();
+    return result.map(Diferenciadas.fromMap).toList();
   }
 }

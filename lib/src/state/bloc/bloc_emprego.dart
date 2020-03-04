@@ -1,38 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:marcaii_flutter/helpers.dart';
 import 'package:marcaii_flutter/src/database/models/diferenciadas.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
+import 'package:marcaii_flutter/src/database/models/salarios.dart';
 import 'package:marcaii_flutter/src/state/bloc/base_bloc.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:marcaii_flutter/helpers.dart';
 
 class BlocEmprego with BaseBloc {
   BlocEmprego({
-    this.emprego,
+    @required this.emprego,
+    @required this.isCreating,
   }) {
     _inNome.add(emprego.nome ?? "");
     _inPorcNormal.add(emprego.porc);
     _inPorcCompleta.add(emprego.porc_completa);
-    _inFechamento.add(emprego.fechamento);
+    _inFechamento.add(emprego.fechamento ?? 25);
     _inBancoHoras.add(emprego.banco_horas);
     _inCargaHoraria.add(emprego.carga_horaria);
     _inAtivo.add(emprego.ativo);
     _inSaida.add(emprego.saida);
-    _fillDiferenciadas();
     _oldEmprego = emprego.copyWith();
+    _fillDiferenciadas();
+    _fillSalarios();
   }
 
   Empregos emprego, _oldEmprego;
   List<Diferenciadas> _diferenciadas;
-
-  Empregos resultEmprego() {
-    final actualDif = _diferenciadas.where((d) => d.porc != 0).toList();
-    return emprego.copyWith(
-      diferenciadas: actualDif,
-    );
-  }
+  List<Salarios> _salarios;
+  double _salarioInicial;
+  bool isCreating;
 
   bool didChange() {
-    return !_oldEmprego.equals(emprego);
+    if (isCreating) {
+      return true;
+    } else {
+      return !_oldEmprego.equals(
+        emprego,
+        _salarios,
+        _diferenciadas.where((d) => d.porc != 0).toList(),
+      );
+    }
   }
 
   _fillDiferenciadas() {
@@ -56,6 +63,16 @@ class BlocEmprego with BaseBloc {
     }
 
     _inDiferenciadas.add(_diferenciadas);
+  }
+
+  _fillSalarios() {
+    if (isCreating) {
+      _salarioInicial = 998.00;
+      _inInitSalario.add(_salarioInicial);
+    } else {
+      _salarios = <Salarios>[]..addAll(emprego.salarios ?? []);
+      _inSalarios.add(_salarios);
+    }
   }
 
   final BehaviorSubject<String> _bhsDesc = BehaviorSubject<String>();
@@ -94,6 +111,14 @@ class BlocEmprego with BaseBloc {
   Stream<List<Diferenciadas>> get outDiferenciadas => _bhsDiferenciadas.stream;
   get _inDiferenciadas => _bhsDiferenciadas.sink;
 
+  final BehaviorSubject<List<Salarios>> _bhsSalarios = BehaviorSubject<List<Salarios>>();
+  Stream<List<Salarios>> get salarios => _bhsSalarios.stream;
+  Sink<List<Salarios>> get _inSalarios => _bhsSalarios.sink;
+
+  final BehaviorSubject<double> _bhsinitSalario = BehaviorSubject<double>();
+  Stream<double> get initSalario => _bhsinitSalario.stream;
+  Sink<double> get _inInitSalario => _bhsinitSalario.sink;
+
   @override
   void dispose() {
     _bhsDesc.close();
@@ -105,6 +130,8 @@ class BlocEmprego with BaseBloc {
     _bhsCarga.close();
     _bhsAtivo.close();
     _bhsDiferenciadas.close();
+    _bhsSalarios.close();
+    _bhsinitSalario.close();
   }
 
   void setNome(String nome) {
@@ -151,5 +178,57 @@ class BlocEmprego with BaseBloc {
     final index = _diferenciadas.indexOf(dif);
     _diferenciadas[index] = _diferenciadas[index].copyWith(porc: newPorc);
     _inDiferenciadas.add(_diferenciadas);
+  }
+
+  void addSalario({String vigencia, double valor}) {
+    _salarios.add(
+      Salarios(
+        valor: valor,
+        vigencia: vigencia,
+        ativo: true,
+        emprego_id: emprego.id,
+      ),
+    );
+    _inSalarios.add(_salarios);
+  }
+
+  void deleteSalario(Salarios sal) {
+    _salarios.remove(sal);
+    _inSalarios.add(_salarios);
+  }
+
+  void updateSalario({
+    @required Salarios salario,
+    @required String vigencia,
+    @required double valor,
+  }) {
+    final index = _salarios.indexOf(salario);
+    _salarios[index] = _salarios[index].copyWith(
+      vigencia: vigencia,
+      valor: valor,
+    );
+
+    _inSalarios.add(_salarios);
+  }
+
+  void setSalarioInit(double s) {
+    _salarioInicial = s;
+    _inInitSalario.add(_salarioInicial);
+  }
+
+  Empregos provideResult() {
+    if (isCreating) {
+      return emprego.copyWith(salarios: [
+        Salarios(
+          valor: _salarioInicial,
+          vigencia: "01/2010",
+        ),
+      ], diferenciadas: _diferenciadas.where((d) => d.porc != 0).toList());
+    } else {
+      return emprego.copyWith(
+        salarios: _salarios,
+        diferenciadas: _diferenciadas.where((d) => d.porc != 0).toList(),
+      );
+    }
   }
 }

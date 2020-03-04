@@ -1,6 +1,6 @@
+import 'package:marcaii_flutter/helpers.dart';
 import 'package:marcaii_flutter/src/database/db_helper.dart';
 import 'package:marcaii_flutter/src/database/models/salarios.dart';
-import 'package:marcaii_flutter/helpers.dart';
 
 class DaoSalarios {
   static Future<Salarios> salarios(int id) async {

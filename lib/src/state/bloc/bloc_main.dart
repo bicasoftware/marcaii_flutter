@@ -23,11 +23,11 @@ class BlocMain with BaseBloc {
 
     _bhsMes.listen((int m) {
       //TODO - implementar mudança do calendário aqui
-      inVigencia.add(state.vigencia);
+      _inVigencia.add(state.vigencia);
     });
 
     _bhsAno.listen((int a) {
-      inVigencia.add(state.vigencia);
+      _inVigencia.add(state.vigencia);
     });
 
     _bhsNavPosition.listen((int pos) {
@@ -35,37 +35,37 @@ class BlocMain with BaseBloc {
     });
 
     _bhsNavPosition.sink.add(state.navPosition);
-    inEmpregos.add(state.empregos);
-    inToken.add(state.token);
-    inAno.add(state.ano);
-    inMes.add(state.mes);
-    inVigencia.add(state.vigencia);
+    _inEmpregos.add(state.empregos);
+    _inToken.add(state.token);
+    _inAno.add(state.ano);
+    _inMes.add(state.mes);
+    _inVigencia.add(state.vigencia);
   }
 
   AppState state;
 
   final BehaviorSubject<String> _bhsToken = BehaviorSubject<String>();
   Stream<String> get outToken => _bhsToken.stream;
-  Sink<String> get inToken => _bhsToken.sink;
+  get _inToken => _bhsToken.sink;
 
   final BehaviorSubject<List<Empregos>> _bhsEmpregos = BehaviorSubject<List<Empregos>>();
   Stream<List<Empregos>> get outEmpregos => _bhsEmpregos.stream;
-  Sink<List<Empregos>> get inEmpregos => _bhsEmpregos.sink;
+  get _inEmpregos => _bhsEmpregos.sink;
 
   final _countEmpregos = StreamController<int>();
   get outCount => _countEmpregos.stream;
 
   final BehaviorSubject<int> _bhsMes = BehaviorSubject<int>();
   Stream<int> get outMes => _bhsMes.stream;
-  Sink<int> get inMes => _bhsMes.sink;
+  get _inMes => _bhsMes.sink;
 
   final BehaviorSubject<int> _bhsAno = BehaviorSubject<int>();
   Stream<int> get outAno => _bhsAno.stream;
-  Sink<int> get inAno => _bhsAno.sink;
+  get _inAno => _bhsAno.sink;
 
   final BehaviorSubject<String> _bhsVigencia = BehaviorSubject<String>();
   Stream<String> get outVigencia => _bhsVigencia.stream;
-  Sink<String> get inVigencia => _bhsVigencia.sink;
+  get _inVigencia => _bhsVigencia.sink;
 
   final BehaviorSubject<int> _bhsNavPosition = BehaviorSubject<int>();
   Stream<int> get outNavPosition => _bhsNavPosition.stream;
@@ -87,17 +87,17 @@ class BlocMain with BaseBloc {
 
   void incMes() {
     state.addMes();
-    inMes.add(state.mes);
+    _inMes.add(state.mes);
   }
 
   void decMes() {
     state.decMes();
-    inMes.add(state.mes);
+    _inMes.add(state.mes);
   }
 
   void setAno(int year) {
     state.setAno(year);
-    inAno.add(state.ano);
+    _inAno.add(state.ano);
   }
 
   void setNavPosition(int pos) {
@@ -106,14 +106,17 @@ class BlocMain with BaseBloc {
   }
 
   void addEmprego(Empregos emprego) {
-    //TODO - implementar
+    state.addEmprego(emprego);
+    _inEmpregos.add(state.empregos);
   }
 
   void removeEmprego(Empregos emprego) {
-    //TODO - implementar
+    state.removeEmprego(emprego);
+    _inEmpregos.add(state.empregos);
   }
 
   void updateEmprego(Empregos emprego) {
-    //TODO - implementar
+    state.updateEmprego(emprego);
+    _inEmpregos.add(state.empregos);
   }
 }

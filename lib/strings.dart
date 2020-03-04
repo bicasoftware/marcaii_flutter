@@ -29,11 +29,20 @@ class Strings {
   static const String ativo = "Ativo";
   static const String atual = "Emprego Atual";
   static const String descartarAlteracoes = "Deseja descartar as alterações feitas?";
+
+  static const String salarios = "Salários";
+  static const String salario = "Salário";
+  static const String vigencia = "Vigencia";
 }
 
 class Validations {
   static const String porcentagemRequerida = "Porcentagem requerida";
   static const String porcentagemInvalida = "Valores apenas acima de 30%";
+  static const String salarioRequerido = "Salário obrigatório";
+  static const String salarioZerado = "Salário não pode ser menor que zero";
+  static const String fechamentoRequerido = "Dia obrigatório";
+  static const String fechamentoInvalido = "Apenas dia entre 1 e 30";
+  
 }
 
 class Api {

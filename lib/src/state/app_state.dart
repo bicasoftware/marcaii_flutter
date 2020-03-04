@@ -1,3 +1,4 @@
+import 'package:marcaii_flutter/src/database/dao/dao_empregos.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/strings.dart';
 
@@ -41,15 +42,29 @@ class AppState {
 
   void setNavPosition(int pos) => this.navPosition = pos;
 
-  void addEmprego(Empregos e) {
-    //TODO - implementar
+  void addEmprego(Empregos e) async {
+    final newEmprego = await DaoEmpregos().insert(e);
+    empregos.add(newEmprego);
   }
 
-  void removeEmprego(Empregos e) {
-    //TODO - implementar
+  void removeEmprego(Empregos e) async {
+    await DaoEmpregos().delete(e.id);
+    empregos.removeWhere((emprego) => emprego.id == e.id);
   }
 
   void updateEmprego(Empregos e) {
-    //TODO - implementar
+    final index = empregos.indexWhere((emprego) => emprego.id == e.id);
+    empregos[index] = empregos[index].copyWith(
+      nome: e.nome,
+      ativo: e.ativo,
+      banco_horas: e.banco_horas,
+      carga_horaria: e.carga_horaria,
+      fechamento: e.fechamento,
+      porc: e.porc,
+      porc_completa: e.porc_completa,
+      saida: e.saida,
+      diferenciadas: e.diferenciadas,
+      salarios: e.salarios,
+    );
   }
 }

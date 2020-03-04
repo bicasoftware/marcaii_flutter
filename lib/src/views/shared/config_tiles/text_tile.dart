@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TextTile extends FormField<String> {
   TextTile({
@@ -8,6 +9,7 @@ class TextTile extends FormField<String> {
     @required FormFieldSetter<String> onSaved,
     @required FormFieldValidator<String> validator,
     @required String initialValue,
+    List<TextInputFormatter> inputFormatters,
     TextInputType inputType = TextInputType.text,
     double trailingWidth = 120,
     bool autoValidate = false,
@@ -25,10 +27,11 @@ class TextTile extends FormField<String> {
                 child: Container(
                   width: trailingWidth,
                   child: TextFormField(
+                    inputFormatters: inputFormatters,
                     keyboardType: inputType,
-                    initialValue: initialValue,
-                    onChanged: (s) => state.didChange(s),
+                    initialValue: initialValue,                    
                     textAlign: TextAlign.end,
+                    onChanged: (s) => state.didChange(s),
                     decoration: InputDecoration(
                       isDense: true,
                       hintText: hint,

@@ -1,3 +1,4 @@
+import 'package:marcaii_flutter/src/utils/double_utils.dart';
 import 'package:marcaii_flutter/strings.dart';
 
 class EmpregoValidate {
@@ -11,5 +12,21 @@ class EmpregoValidate {
     } else {
       return null;
     }
+  }
+
+  static String validateFechamento(String fechamento) {
+    final dia = int.tryParse(fechamento);
+    if (dia == null) {
+      return Validations.fechamentoRequerido;
+    } else if (dia > 30 || dia < 1) {
+      return Validations.fechamentoInvalido;
+    } else {
+      return null;
+    }
+  }
+
+  static String validateSalario(String salario) {
+    final s = currencyStringToDouble(salario);
+    return s == 0 ? Validations.salarioRequerido : null;
   }
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:marcaii_flutter/src/database/models/diferenciadas.dart';
@@ -96,7 +97,7 @@ class Empregos implements Model<Empregos> {
       ativo: ativo ?? this.ativo,
       horas: horas ?? this.horas,
       diferenciadas: diferenciadas ?? this.diferenciadas,
-      salarios: this.salarios,
+      salarios: salarios ?? this.salarios,
       calendario: calendario ?? this.calendario,
     );
   }
@@ -151,8 +152,8 @@ class Empregos implements Model<Empregos> {
     };
   }
 
-  bool equals(Empregos emprego) {
-    return this.id == emprego.id &&
+  bool equals(Empregos emprego, List<Salarios> salarios, List<Diferenciadas> diferenciadas) {
+    final isSameEmprego = 
         this.nome == emprego.nome &&
         this.porc == emprego.porc &&
         this.porc_completa == emprego.porc_completa &&
@@ -161,5 +162,11 @@ class Empregos implements Model<Empregos> {
         this.saida == emprego.saida &&
         this.carga_horaria == emprego.carga_horaria &&
         this.ativo == emprego.ativo;
+    
+    final changedSalarios = listEquals(this.salarios, salarios);
+    final changedDiferenciadas = listEquals(emprego.diferenciadas, diferenciadas);
+
+    return isSameEmprego && changedSalarios && changedDiferenciadas;
+
   }
 }

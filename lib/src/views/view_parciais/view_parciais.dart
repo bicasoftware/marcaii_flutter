@@ -34,7 +34,6 @@ class ViewParciais extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO - ler lista de horas vindas do Store
     return Container(
       padding: const EdgeInsets.all(8),
       child: ListView(

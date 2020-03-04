@@ -17,7 +17,10 @@ class ViewListEmpregos extends StatelessWidget {
         fullscreenDialog: true,
         builder: (_) {
           return Provider<BlocEmprego>(
-            create: (BuildContext context) => BlocEmprego(emprego: const Empregos()),
+            create: (BuildContext context) => BlocEmprego(
+              emprego: const Empregos(),
+              isCreating: true,
+            ),
             dispose: (_, b) => b.dispose(),
             child: ViewEmpregos(),
           );
@@ -41,12 +44,15 @@ class ViewListEmpregos extends StatelessWidget {
         fullscreenDialog: true,
         builder: (BuildContext context) {
           return Provider<BlocEmprego>(
-            create: (_) => BlocEmprego(emprego: emprego),
+            create: (_) => BlocEmprego(
+              emprego: emprego,
+              isCreating: false,
+            ),
             dispose: (_, b) => b.dispose(),
             child: ViewEmpregos(),
           );
         },
-      ),      
+      ),
     );
 
     if (result != null && result is Empregos) {

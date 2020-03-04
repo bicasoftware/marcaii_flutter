@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lib_observer/lib_observer.dart';
 import 'package:marcaii_flutter/src/database/models/diferenciadas.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
 import 'package:marcaii_flutter/src/views/shared/config_tiles/base_config_tile.dart';
-import 'package:marcaii_flutter/src/views/view_diferenciada/view_diferenciada.dart';
+import 'package:marcaii_flutter/src/views/shared/list_separator.dart';
+import 'package:marcaii_flutter/src/views/view_empregos/diferenciada/view_diferenciada.dart';
 import 'package:marcaii_flutter/strings.dart';
 import 'package:provider/provider.dart';
 
-class ViewEmpregoDiferenciadas extends StatelessWidget {
+class ListDiferenciadas extends StatelessWidget {
+  const ListDiferenciadas({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final b = Provider.of<BlocEmprego>(context);
-    final theme = Theme.of(context);
 
     return MergedStreamObserver(
       streams: [b.bancoHoras, b.outDiferenciadas],
@@ -23,29 +24,13 @@ class ViewEmpregoDiferenciadas extends StatelessWidget {
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
-                width: double.maxFinite,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const Divider(),
-                    Text(
-                      Strings.diferenciadas,
-                      style: theme.textTheme.caption.copyWith(color: theme.accentColor),
-                    )
-                  ],
-                ),
-              ),
+              ListSeparator(label: Strings.diferenciadas),
               for (Diferenciadas dif in diferenciadas)
                 BaseConfigTile(
                   trailingWidth: 30,
                   label: Consts.weekDayExtenso[dif.weekday],
                   icon: Icon(
-                    FontAwesomeIcons.calendarWeek,
+                    Icons.date_range,
                     color: Consts.weekdayColors[dif.weekday],
                   ),
                   trailing: Text("${dif.porc}"),

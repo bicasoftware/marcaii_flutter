@@ -36,13 +36,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0"
-  auto_size_text:
-    dependency: transitive
-    description:
-      name: auto_size_text
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -106,13 +99,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.0.8"
-  card_settings:
-    dependency: "direct main"
-    description:
-      name: card_settings
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.6.1"
   charcode:
     dependency: transitive
     description:
@@ -202,39 +188,11 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_colorpicker:
-    dependency: transitive
-    description:
-      name: flutter_colorpicker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.6"
-  flutter_cupertino_settings:
-    dependency: transitive
-    description:
-      name: flutter_cupertino_settings
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.0"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_masked_text:
-    dependency: transitive
-    description:
-      name: flutter_masked_text
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.8.0"
-  flutter_material_pickers:
-    dependency: transitive
-    description:
-      name: flutter_material_pickers
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.2.0"
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -247,13 +205,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  font_awesome_flutter:
-    dependency: "direct main"
-    description:
-      name: font_awesome_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "8.5.0"
   glob:
     dependency: transitive
     description:
@@ -354,13 +305,6 @@ packages:
       url: "https://github.com/bicasoftware/lib_observer"
     source: git
     version: "0.0.2"
-  line_awesome_icons:
-    dependency: "direct main"
-    description:
-      name: line_awesome_icons
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.4+2"
   logging:
     dependency: transitive
     description:
@@ -725,4 +669,4 @@ packages:
     version: "2.2.0"
 sdks:
   dart: ">=2.7.0 <3.0.0"
-  flutter: ">=1.12.13-hotfix.5 <2.0.0"
+  flutter: ">=1.12.1 <2.0.0"

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/helpers.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
 
@@ -19,9 +18,7 @@ class ParciaisListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () => onPressed(hora),
-      leading: Icon(
-        LineAwesomeIcons.calendar_o,
-      ),
+      leading: Icon(Icons.date_range),
       title: Text(hora.data.asString()),
       subtitle: Text("${hora.inicio} | ${hora.termino} | 60 minutos"),
       trailing: Text(
