@@ -26,7 +26,7 @@ class SalarioTile extends StatelessWidget {
           icon: Icon(Icons.monetization_on, color: Colors.indigo),
           label: Strings.salario,
           hint: "R\$ 1000,00",
-          onSaved: (s ) => b.setSalarioInit(currencyStringToDouble(s)),
+          onChanged: (s) => b.setSalarioInit(currencyStringToDouble(s)),
           validator: EmpregoValidate.validateSalario,
           inputType: const TextInputType.numberWithOptions(
             decimal: true,

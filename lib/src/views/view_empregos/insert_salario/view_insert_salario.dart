@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:marcaii_flutter/src/utils/currency_formatter.dart';
-import 'package:marcaii_flutter/src/utils/dialogs/dialogs.dart';
 import 'package:marcaii_flutter/src/utils/double_utils.dart';
+import 'package:marcaii_flutter/src/utils/form_view.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
 import 'package:marcaii_flutter/src/views/shared/appbar_save_button.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/emprego_validate.dart';
@@ -10,7 +10,7 @@ import 'package:marcaii_flutter/strings.dart';
 
 class ViewInsertSalario extends StatefulWidget {
   const ViewInsertSalario({
-    @required this.isInsert,
+    @required this.isCreating,
     this.salario,
     this.vigencia,
     Key key,
@@ -18,19 +18,19 @@ class ViewInsertSalario extends StatefulWidget {
 
   final double salario;
   final String vigencia;
-  final bool isInsert;
+  final bool isCreating;
 
   @override
   _ViewInsertSalarioState createState() => _ViewInsertSalarioState();
 }
 
-class _ViewInsertSalarioState extends State<ViewInsertSalario> {
+class _ViewInsertSalarioState extends State<ViewInsertSalario> with WillPopForm {
   final anos = List.generate(30, (i) => 2010 + i);
   final meses = List.generate(12, (i) => i);
   final _formKey = GlobalKey<FormState>();
 
-  Vigencia _vigencia;
   double _salario;
+  Vigencia _vigencia;
 
   @override
   void initState() {
@@ -44,60 +44,30 @@ class _ViewInsertSalarioState extends State<ViewInsertSalario> {
     super.initState();
   }
 
-  Future<bool> _canPopup() async {
-    final formState = _formKey.currentState;
-    if (widget.isInsert) {
-      return true;
-    } else {
-      if (formState.validate()) {
-        formState.save();
-        if (_vigencia.vigencia == widget.vigencia && _salario == widget.salario) {
-          return true;
-        } else {
-          final r = await showCanCloseDialog(
-            context: context,
-            title: Strings.atencao,
-            message: Strings.descartarAlteracoes,
-            positiveCaption: Strings.descartar,
-          );
-
-          if (r) {
-            return true;
-          } else {
-            Navigator.of(context).pop({
-              "valor": _salario,
-              "vigencia": _vigencia.vigencia,
-            });
-          }
-        }
-      } else {
-        return false;
-      }
-    }
-
-    return false;
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return WillPopScope(
-      onWillPop: _canPopup,
+      onWillPop: () => willPop(
+        context: context,
+        formState: _formKey.currentState,
+        hasChanged: !(_vigencia.vigencia == widget.vigencia && _salario == widget.salario),
+        isCreating: widget.isCreating,
+      ),
+      // onWillPop: _canPopup,
       child: Scaffold(
         appBar: AppBar(
           title: Text(Strings.salario),
           actions: <Widget>[
             AppbarSaveButton(
-              onPressed: () {
-                final state = _formKey.currentState;
-                if (state.validate()) {
-                  state.save();
-                  Navigator.of(context).pop({
-                    "vigencia": _vigencia.vigencia,
-                    "valor": _salario,
-                  });
-                }
-              },
+              onPressed: () => doSave(
+                context: context,
+                formState: _formKey.currentState,
+                resultData: {
+                  "vigencia": _vigencia.vigencia,
+                  "valor": _salario,
+                },
+              ),
             ),
           ],
         ),
@@ -161,10 +131,8 @@ class _ViewInsertSalarioState extends State<ViewInsertSalario> {
                     hintText: doubleToCurrency(998.0),
                     labelText: Strings.salario,
                   ),
-                  onSaved: (String s) {
-                    _salario = currencyStringToDouble(s);
-                  },
                   validator: EmpregoValidate.validateSalario,
+                  onChanged: (s) => _salario = currencyStringToDouble(s),
                   keyboardType: const TextInputType.numberWithOptions(
                     decimal: true,
                     signed: false,

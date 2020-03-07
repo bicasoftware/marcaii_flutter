@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
-import 'package:marcaii_flutter/src/utils/dialogs/dialogs.dart';
+import 'package:marcaii_flutter/src/utils/form_view.dart';
 import 'package:marcaii_flutter/src/views/shared/appbar_save_button.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/fechamento_tile.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/salario_tile.dart';
@@ -15,7 +15,7 @@ class ViewEmpregos extends StatefulWidget {
   _ViewEmpregosState createState() => _ViewEmpregosState();
 }
 
-class _ViewEmpregosState extends State<ViewEmpregos> {
+class _ViewEmpregosState extends State<ViewEmpregos> with WillPopForm {
   GlobalKey<FormState> _formKey;
   BlocEmprego blocEmpregos;
 
@@ -25,51 +25,33 @@ class _ViewEmpregosState extends State<ViewEmpregos> {
     super.initState();
   }
 
-  void doSave() {
-    final state = _formKey.currentState;
-    if (state.validate()) {
-      state.save();
-      Navigator.of(context).pop(blocEmpregos.provideResult());
-    }
-  }
-
-  Future<bool> _willPop() async {
-    if (blocEmpregos.isCreating) {
-      return true;
-    } else if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
-      if (blocEmpregos.didChange()) {
-        final r = await showCanCloseDialog(
-          context: context,
-          title: Strings.atencao,
-          message: Strings.descartarAlteracoes,
-          positiveCaption: Strings.descartar,
-        );
-
-        if (r != null && r) {
-          Navigator.of(context).pop(blocEmpregos.provideResult());
-        }
-      } else {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
   @override
   Widget build(BuildContext context) {
     blocEmpregos = Provider.of<BlocEmprego>(context);
 
     return WillPopScope(
-      onWillPop: _willPop,
+      onWillPop: () => willPop(
+        context: context,
+        formState: _formKey.currentState,
+        hasChanged: blocEmpregos.didChange(),
+        isCreating: blocEmpregos.isCreating,
+      ),
       child: Scaffold(
         appBar: AppBar(
           elevation: 4,
           title: const Text(Strings.empregos),
           actions: <Widget>[
             AppbarSaveButton(
-              onPressed: doSave,
+              // onPressed: doSave,
+              onPressed: () {
+                final result = blocEmpregos.provideResult();
+                result.salarios.forEach(print);
+                doSave(
+                  context: context,
+                  formState: _formKey.currentState,
+                  resultData: result,
+                );
+              },
             )
           ],
         ),

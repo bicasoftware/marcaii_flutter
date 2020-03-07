@@ -8,7 +8,6 @@ import 'package:marcaii_flutter/strings.dart';
 import 'package:provider/provider.dart';
 
 class FechamentoTile extends StatelessWidget {
-
   const FechamentoTile({Key key}) : super(key: key);
 
   @override
@@ -33,7 +32,7 @@ class FechamentoTile extends StatelessWidget {
           hint: "25",
           inputType: TextInputType.number,
           validator: EmpregoValidate.validateFechamento,
-          onSaved: (String s) => b.setFechamento(int.tryParse(s)),
+          onChanged: (String s) => b.setFechamento(int.tryParse(s) ?? 1),
         );
       },
     );

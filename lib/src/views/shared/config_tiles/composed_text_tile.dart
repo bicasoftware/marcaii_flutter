@@ -6,15 +6,15 @@ class ComposedTextTile extends StatelessWidget {
     @required this.hint,
     @required this.initialValue,
     @required this.validator,
-    @required this.onSaved,
     @required this.icon,
+    @required this.onChanged,
     Key key,
   }) : super(key: key);
 
   final Icon icon;
   final String label, hint;
   final String initialValue;
-  final Function(String validate) validator, onSaved;
+  final Function(String validate) validator, /* onSaved, */ onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class ComposedTextTile extends StatelessWidget {
       leading: icon,
       title: TextFormField(
         initialValue: initialValue,
-        onSaved: onSaved,
+        onChanged: onChanged,
         validator: validator,
         decoration: InputDecoration(
           labelText: label,

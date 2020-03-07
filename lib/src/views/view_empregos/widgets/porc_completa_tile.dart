@@ -32,7 +32,7 @@ class PorcCompletaTile extends StatelessWidget {
           hint: "100",
           inputType: TextInputType.number,
           validator: (String s) => EmpregoValidate.validatePorc(s, 50),
-          onSaved: (String s) => b.setPorcCompleta(int.tryParse(s)),
+          onChanged: (String s) => b.setPorcCompleta(int.tryParse(s) ?? 0),
         );
       },
     );

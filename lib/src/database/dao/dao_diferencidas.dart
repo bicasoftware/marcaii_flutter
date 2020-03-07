@@ -51,4 +51,13 @@ class DaoDiferenciadas implements BaseDao<Diferenciadas> {
 
     return result.map(Diferenciadas.fromMap).toList();
   }
+
+  static Future<void> deleteByEmprego(int emprego_id) async {
+    final db = await getDB();
+    return await db.delete(
+      Diferenciadas.tableName,
+      where: "emprego_id = ?",
+      whereArgs: [emprego_id],
+    );
+  }
 }

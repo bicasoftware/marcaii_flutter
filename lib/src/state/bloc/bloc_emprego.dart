@@ -216,18 +216,26 @@ class BlocEmprego with BaseBloc {
     _inInitSalario.add(_salarioInicial);
   }
 
+  List<Diferenciadas> getValidDiferenciadas() {
+    return _diferenciadas.where((d) => d.porc != 0).toList();
+  }
+
   Empregos provideResult() {
     if (isCreating) {
-      return emprego.copyWith(salarios: [
-        Salarios(
-          valor: _salarioInicial,
-          vigencia: "01/2010",
-        ),
-      ], diferenciadas: _diferenciadas.where((d) => d.porc != 0).toList());
+      return emprego.copyWith(
+        salarios: [
+          Salarios(
+            valor: _salarioInicial,
+            vigencia: "01/2010",
+            ativo: true,
+          ),
+        ],
+        diferenciadas: getValidDiferenciadas(),
+      );
     } else {
       return emprego.copyWith(
         salarios: _salarios,
-        diferenciadas: _diferenciadas.where((d) => d.porc != 0).toList(),
+        diferenciadas: getValidDiferenciadas(),
       );
     }
   }

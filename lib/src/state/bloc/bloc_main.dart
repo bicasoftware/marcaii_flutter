@@ -105,18 +105,18 @@ class BlocMain with BaseBloc {
     _bhsNavPosition.add(state.navPosition);
   }
 
-  void addEmprego(Empregos emprego) {
-    state.addEmprego(emprego);
+  void addEmprego(Empregos emprego) async {
+    await state.addEmprego(emprego);
     _inEmpregos.add(state.empregos);
   }
 
-  void removeEmprego(Empregos emprego) {
-    state.removeEmprego(emprego);
+  void removeEmprego(Empregos emprego) async {
+    await state.removeEmprego(emprego);
     _inEmpregos.add(state.empregos);
   }
 
-  void updateEmprego(Empregos emprego) {
-    state.updateEmprego(emprego);
+  void updateEmprego(Empregos emprego) async {
+    await state.updateEmprego(emprego);
     _inEmpregos.add(state.empregos);
   }
 }

@@ -59,7 +59,7 @@ class _LoginViewState extends State<LoginView> {
             refreshToken: result.refresh_token,
           );
 
-          await DaoEmpregos().syncFromServer(result.empregos);
+          await DaoEmpregos.syncFromServer(result.empregos);
 
           Navigator.of(_globalKey.currentContext, rootNavigator: true).pop();
           widget.setPosition(2);

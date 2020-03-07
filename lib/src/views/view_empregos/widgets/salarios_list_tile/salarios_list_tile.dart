@@ -22,7 +22,7 @@ class SalariosListTile extends StatelessWidget {
             final result = await Navigator.of(context).push(
               MaterialPageRoute(
                 fullscreenDialog: true,
-                builder: (_) => const ViewInsertSalario(isInsert: true),
+                builder: (_) => const ViewInsertSalario(isCreating: true),
               ),
             );
 
@@ -48,7 +48,7 @@ class SalariosListTile extends StatelessWidget {
                         MaterialPageRoute(
                           fullscreenDialog: true,
                           builder: (_) => ViewInsertSalario(
-                            isInsert: false,
+                            isCreating: false,
                             salario: s.valor,
                             vigencia: s.vigencia,
                           ),

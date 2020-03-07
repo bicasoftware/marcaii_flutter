@@ -7,15 +7,17 @@ import 'package:marcaii_flutter/src/database/models/diferenciadas.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/database/models/salarios.dart';
 
-class DaoEmpregos implements BaseDao<Empregos> {
-  @override
-  Future<void> delete(int i) async {
+class DaoEmpregos {
+  static Future<void> delete(int i) async {
     final db = await getDB();
-    return await db.delete(Empregos.tableName);
+    return await db.delete(
+      Empregos.tableName,
+      where: "id = ?",
+      whereArgs: [i],
+    );
   }
 
-  @override
-  Future<List<Empregos>> fetchAll() async {
+  static Future<List<Empregos>> fetchAll() async {
     final db = await getDB();
     final result = await db.query(Empregos.tableName);
     final empregos = result.map((e) => Empregos.fromMap(e)).toList();
@@ -37,15 +39,13 @@ class DaoEmpregos implements BaseDao<Empregos> {
     return resultList;
   }
 
-  @override
-  Future<Empregos> fetchById(int id) async {
+  static Future<Empregos> fetchById(int id) async {
     final db = await getDB();
     final result = await db.query(Empregos.tableName, where: "id = ?", whereArgs: [id]);
     return Empregos.fromJson(result[0]);
   }
 
-  @override
-  Future<Empregos> insert(Empregos model) async {
+  static Future<Empregos> insert(Empregos model) async {
     final db = await getDB();
     final data = model.toMap();
     final empregoId = await db.insert(Empregos.tableName, data);
@@ -53,8 +53,9 @@ class DaoEmpregos implements BaseDao<Empregos> {
     final diferenciadas = <Diferenciadas>[];
 
     for (final salario in model.salarios) {
-      final s = salario.copyWith(emprego_id: empregoId);
-      salarios.add(await DaoSalarios.insert(s));
+      salarios.add(
+        await DaoSalarios.insert(salario.copyWith(emprego_id: empregoId)),
+      );
     }
 
     for (final difer in model.diferenciadas) {
@@ -69,18 +70,28 @@ class DaoEmpregos implements BaseDao<Empregos> {
     );
   }
 
-  @override
-  Future<void> update(Empregos model) async {
+  static Future<void> update(Empregos model) async {
     final db = await getDB();
-    return await db.update(
+    await db.update(
       Empregos.tableName,
-      model.toJson(),
+      model.toMap(),
       where: "id = ?",
       whereArgs: [model.id],
     );
+
+    await DaoSalarios.deleteByEmprego(model.id);
+    await DaoDiferenciadas.deleteByEmprego(model.id);
+
+    for (final salario in model.salarios) {
+      await DaoSalarios.insert(salario.copyWith(emprego_id: model.id));
+    }
+
+    for (final difer in model.diferenciadas) {
+      await DaoDiferenciadas().insert(difer.copyWith(emprego_id: model.id));
+    }
   }
 
-  Future<void> syncFromServer(List<Empregos> empregos) async {
+  static Future<void> syncFromServer(List<Empregos> empregos) async {
     //TODO - Gerar lista de datas, calendario e parciais
     for (var emprego in empregos) {
       final e = await insert(emprego.copyWith());

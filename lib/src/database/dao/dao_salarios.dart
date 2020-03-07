@@ -58,4 +58,13 @@ class DaoSalarios {
 
     return result.map(Salarios.fromMap).toList();
   }
+
+  static Future<void> deleteByEmprego(int emprego_id) async {
+    final db = await getDB();
+    return await db.delete(
+      Salarios.tableName,
+      where: "emprego_id = ?",
+      whereArgs: [emprego_id],
+    );
+  }
 }

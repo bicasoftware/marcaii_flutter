@@ -48,9 +48,9 @@ class Salarios implements Model<Salarios> {
   Salarios copyWith({
     int id,
     int emprego_id,
-    double valor = 900,
-    String vigencia = "01/2020",
-    bool ativo = true,
+    double valor,
+    String vigencia,
+    bool ativo,
   }) {
     return Salarios(
       id: id ?? this.id,
@@ -107,5 +107,10 @@ class Salarios implements Model<Salarios> {
             this.valor == other.valor &&
             this.vigencia == other.vigencia &&
             this.ativo == other.ativo;
+  }
+
+  @override
+  String toString() {
+    return """ id: $id, emprego_id: $emprego_id, valor: $valor, vigencia: $vigencia ativo:$ativo """;
   }
 }

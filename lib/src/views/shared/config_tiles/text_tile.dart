@@ -6,7 +6,8 @@ class TextTile extends FormField<String> {
     @required Icon icon,
     @required String label,
     @required String hint,
-    @required FormFieldSetter<String> onSaved,
+    // @required FormFieldSetter<String> onSaved,
+    @required FormFieldSetter<String> onChanged,
     @required FormFieldValidator<String> validator,
     @required String initialValue,
     List<TextInputFormatter> inputFormatters,
@@ -14,7 +15,7 @@ class TextTile extends FormField<String> {
     double trailingWidth = 120,
     bool autoValidate = false,
   }) : super(
-          onSaved: onSaved,
+          // onSaved: onSaved,
           validator: validator,
           initialValue: initialValue,
           autovalidate: autoValidate,
@@ -29,9 +30,12 @@ class TextTile extends FormField<String> {
                   child: TextFormField(
                     inputFormatters: inputFormatters,
                     keyboardType: inputType,
-                    initialValue: initialValue,                    
+                    initialValue: initialValue,
                     textAlign: TextAlign.end,
-                    onChanged: (s) => state.didChange(s),
+                    onChanged: (s) {
+                      state.didChange(s);
+                      onChanged(s);
+                    },
                     decoration: InputDecoration(
                       isDense: true,
                       hintText: hint,

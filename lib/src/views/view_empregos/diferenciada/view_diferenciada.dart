@@ -78,7 +78,7 @@ class _ViewDiferenciadaState extends State<ViewDiferenciada> {
               Icons.date_range,
               color: Colors.red,
             ),
-            onSaved: (String value) {
+            onChanged: (String value) {
               _diferenciada = _diferenciada.copyWith(porc: int.tryParse(value));
             },
             validator: (String s) {

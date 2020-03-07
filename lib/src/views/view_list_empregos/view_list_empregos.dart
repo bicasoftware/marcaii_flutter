@@ -8,58 +8,6 @@ import 'package:marcaii_flutter/src/views/view_list_empregos/view_list_empregos_
 import 'package:provider/provider.dart';
 
 class ViewListEmpregos extends StatelessWidget {
-  void showInsertView({
-    BuildContext context,
-    Function(Empregos) onInsert,
-  }) async {
-    final result = await Navigator.of(context).push(
-      MaterialPageRoute(
-        fullscreenDialog: true,
-        builder: (_) {
-          return Provider<BlocEmprego>(
-            create: (BuildContext context) => BlocEmprego(
-              emprego: const Empregos(),
-              isCreating: true,
-            ),
-            dispose: (_, b) => b.dispose(),
-            child: ViewEmpregos(),
-          );
-        },
-      ),
-    );
-
-    if (result != null && result is Empregos) {
-      onInsert(result);
-    }
-  }
-
-  void showUpdateView({
-    BuildContext context,
-    Empregos emprego,
-    GlobalKey itemKey,
-    Function(Empregos) onUpdate,
-  }) async {
-    final result = await Navigator.of(context).push(
-      MaterialPageRoute(
-        fullscreenDialog: true,
-        builder: (BuildContext context) {
-          return Provider<BlocEmprego>(
-            create: (_) => BlocEmprego(
-              emprego: emprego,
-              isCreating: false,
-            ),
-            dispose: (_, b) => b.dispose(),
-            child: ViewEmpregos(),
-          );
-        },
-      ),
-    );
-
-    if (result != null && result is Empregos) {
-      onUpdate(result);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final b = Provider.of<BlocMain>(context);
@@ -79,12 +27,25 @@ class ViewListEmpregos extends StatelessWidget {
                       emprego: e,
                       onDelete: b.removeEmprego,
                       onPressed: (Empregos emprego, GlobalKey itemKey) async {
-                        showUpdateView(
-                          context: context,
-                          itemKey: itemKey,
-                          emprego: emprego,
-                          onUpdate: b.updateEmprego,
+                        final result = await Navigator.of(context).push(
+                          MaterialPageRoute(
+                            fullscreenDialog: true,
+                            builder: (BuildContext context) {
+                              return Provider<BlocEmprego>(
+                                create: (_) => BlocEmprego(
+                                  emprego: emprego,
+                                  isCreating: false,
+                                ),
+                                dispose: (_, b) => b.dispose(),
+                                child: ViewEmpregos(),
+                              );
+                            },
+                          ),
                         );
+
+                        if (result != null && result is Empregos) {
+                          b.updateEmprego(result);
+                        }
                       },
                     ),
                 ],
@@ -97,10 +58,27 @@ class ViewListEmpregos extends StatelessWidget {
           bottom: 16,
           child: FloatingActionButton(
             child: Icon(Icons.add),
-            onPressed: () => showInsertView(
-              context: context,
-              onInsert: b.addEmprego,
-            ),
+            onPressed: () async {
+              final result = await Navigator.of(context).push(
+                MaterialPageRoute(
+                  fullscreenDialog: true,
+                  builder: (_) {
+                    return Provider<BlocEmprego>(
+                      create: (BuildContext context) => BlocEmprego(
+                        emprego: const Empregos(),
+                        isCreating: true,
+                      ),
+                      dispose: (_, b) => b.dispose(),
+                      child: ViewEmpregos(),
+                    );
+                  },
+                ),
+              );
+
+              if (result != null && result is Empregos) {
+                b.addEmprego(result);
+              }
+            },
           ),
         ),
       ],

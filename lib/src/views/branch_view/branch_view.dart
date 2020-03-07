@@ -36,7 +36,7 @@ class _BranchViewState extends State<BranchView> with SingleTickerProviderStateM
         break;
       case 2:
         return FutureObserver<List<Empregos>>(
-          future: DaoEmpregos().fetchAll(),
+          future: DaoEmpregos.fetchAll(),
           onSuccess: (_, List<Empregos> empregos) {
             return Provider<BlocMain>(
               create: (_) => BlocMain(
@@ -82,7 +82,7 @@ class _BranchViewState extends State<BranchView> with SingleTickerProviderStateM
           LoginView(setPosition: setPosition),
           ViewSignin(setPosition: setPosition),
           FutureObserver<List<Empregos>>(
-            future: DaoEmpregos().fetchAll(),
+            future: DaoEmpregos.fetchAll(),
             onSuccess: (_, List<Empregos> empregos) {
               return Provider<BlocMain>(
                 create: (_) => BlocMain(

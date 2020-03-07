@@ -42,17 +42,18 @@ class AppState {
 
   void setNavPosition(int pos) => this.navPosition = pos;
 
-  void addEmprego(Empregos e) async {
-    final newEmprego = await DaoEmpregos().insert(e);
+  Future<void> addEmprego(Empregos e) async {
+    final newEmprego = await DaoEmpregos.insert(e);
     empregos.add(newEmprego);
   }
 
-  void removeEmprego(Empregos e) async {
-    await DaoEmpregos().delete(e.id);
+  Future<void> removeEmprego(Empregos e) async {
+    await DaoEmpregos.delete(e.id);
     empregos.removeWhere((emprego) => emprego.id == e.id);
   }
 
-  void updateEmprego(Empregos e) {
+  Future<void> updateEmprego(Empregos e) async {
+    await DaoEmpregos.update(e);
     final index = empregos.indexWhere((emprego) => emprego.id == e.id);
     empregos[index] = empregos[index].copyWith(
       nome: e.nome,

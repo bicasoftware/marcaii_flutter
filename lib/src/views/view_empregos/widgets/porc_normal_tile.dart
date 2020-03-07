@@ -30,7 +30,7 @@ class PorcNormalTile extends StatelessWidget {
           hint: "50",
           label: Strings.porc,
           initialValue: porc.toString(),
-          onSaved: (s) => b.setPorcNormal(int.tryParse(s)),
+          onChanged: (s) => b.setPorcNormal(int.tryParse(s) ?? 0),
           validator: (s) {
             return EmpregoValidate.validatePorc(s, 50);
           },
