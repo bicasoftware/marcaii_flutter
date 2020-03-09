@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:lib_observer/lib_observer.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
@@ -7,6 +8,7 @@ import 'package:marcaii_flutter/src/views/view_calendario/view_calendario.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/view_empregos.dart';
 import 'package:marcaii_flutter/src/views/view_list_empregos/view_list_empregos.dart';
 import 'package:marcaii_flutter/src/views/view_parciais/view_parciais.dart';
+import 'package:marcaii_flutter/strings.dart';
 import 'package:provider/provider.dart';
 
 class ViewHome extends StatefulWidget {
@@ -17,10 +19,10 @@ class ViewHome extends StatefulWidget {
 }
 
 class _ViewHomeState extends State<ViewHome> with SingleTickerProviderStateMixin {
-  int pos;
-  TabController controller;
+  // int pos;
+  // TabController controller;
 
-  final pages = [
+  final pages = <Widget>[
     ViewListEmpregos(),
     const ViewCalendario(),
     const ViewParciais(),
@@ -28,18 +30,18 @@ class _ViewHomeState extends State<ViewHome> with SingleTickerProviderStateMixin
 
   @override
   void initState() {
-    pos = 0;
-    controller = TabController(
-      vsync: this,
-      initialIndex: pos,
-      length: pages.length,
-    );
+    // pos = 0;
+    // controller = TabController(
+    //   vsync: this,
+    //   initialIndex: pos,
+    //   length: pages.length,
+    // );
     super.initState();
   }
 
-  setPos(int pos) {
+/*   setPos(int pos) {
     setState(() => this.pos = pos);
-  }
+  } */
 
   onAddEmprego() {
     Navigator.of(context).push(
@@ -58,33 +60,34 @@ class _ViewHomeState extends State<ViewHome> with SingleTickerProviderStateMixin
   Widget build(BuildContext context) {
     final b = Provider.of<BlocMain>(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: StreamObserver<String>(
-          stream: b.outAppbarTitle,
-          onSuccess: (BuildContext context, String title) {
-            return Text(title);
-          },
-        ),
-        elevation: 1,
-      ),
-      bottomNavigationBar: StreamObserver<int>(
-        stream: b.outNavPosition,
-        onSuccess: (_, p) {
-          return ViewHomeBottombar(
-            onTapped: (pos) {
-              controller.animateTo(pos);
-              b.setNavPosition(pos);
+    return StreamObserver<int>(
+      stream: b.outNavPosition,
+      onSuccess: (_, int pos) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(Consts.appBarTitles[pos]),
+            elevation: 1,
+          ),
+          bottomNavigationBar: ViewHomeBottombar(
+            onTapped: b.setNavPosition,
+            pos: pos,
+          ),
+          body: PageTransitionSwitcher(
+            transitionBuilder: (
+              Widget child,
+              Animation<double> anim1,
+              Animation<double> anim2,
+            ) {
+              return FadeThroughTransition(
+                child: child,
+                animation: anim1,
+                secondaryAnimation: anim2,
+              );
             },
-            pos: p,
-          );
-        },
-      ),
-      body: TabBarView(
-        controller: controller,
-        physics: const NeverScrollableScrollPhysics(),
-        children: pages,
-      ),
+            child: pages[pos],
+          ),
+        );
+      },
     );
   }
 }
