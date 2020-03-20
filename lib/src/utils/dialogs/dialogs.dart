@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:marcaii_flutter/strings.dart';
 
 /* Future<void> showAwaitingDialog({
   @required BuildContext context,
@@ -46,8 +47,8 @@ Future<void> showAwaitingDialog({
 
 Future<bool> showCanCloseDialog({
   @required BuildContext context,
-  @required String title,
-  @required String message,
+  String title = Strings.atencao,
+  String message = Strings.descartarAlteracoes,
   String negativeCaption = "Não",
   String positiveCaption = "Sim",
 }) async {

@@ -67,4 +67,9 @@ class DaoSalarios {
       whereArgs: [emprego_id],
     );
   }
+
+  static Future<int> truncate() async {
+    final db = await getDB();
+    return await db.delete(Salarios.tableName);
+  }
 }

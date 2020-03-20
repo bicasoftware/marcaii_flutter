@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lib_observer/lib_observer.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
+import 'package:marcaii_flutter/src/utils/vigencia.dart';
 import 'package:provider/provider.dart';
 
 class CalendarioNavigator extends StatelessWidget {
@@ -12,11 +13,11 @@ class CalendarioNavigator extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          StreamObserver<String>(
+          StreamObserver<Vigencia>(
             stream: b.outVigencia,
             onSuccess: (_, vig) => FlatButton.icon(
               icon: Icon(Icons.date_range),
-              label: Text(vig),
+              label: Text(vig.vigenciaExtenso),
               onPressed: () {},
             ),
           ),

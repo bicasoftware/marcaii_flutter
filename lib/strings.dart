@@ -33,6 +33,14 @@ class Strings {
   static const String salarios = "Salários";
   static const String salario = "Salário";
   static const String vigencia = "Vigencia";
+
+  static const String inicio = "Início";
+  static const String termino = "Término";
+  static const String tipoHora = "Tipo hora extra";
+  static const String horaNormal = "Hora Extra Normal";
+  static const String horaCompleta = "Hora Extra Feriados";
+  static const String horaDiferenciada = "Hora extra Diferenciada";
+
 }
 
 class Validations {
@@ -42,7 +50,8 @@ class Validations {
   static const String salarioZerado = "Salário não pode ser menor que zero";
   static const String fechamentoRequerido = "Dia obrigatório";
   static const String fechamentoInvalido = "Apenas dia entre 1 e 30";
-  
+  static const String horariosIguais = "Os horários não podem ser os mesmos"; 
+  static const String horarioInvalido = "A hora de início depois da hora de término"; 
 }
 
 class Api {

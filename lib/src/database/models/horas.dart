@@ -48,6 +48,17 @@ class Horas implements Model<Horas> {
     );
   }
 
+  Horas forFirstSync(int emprego_id) {
+    return Horas(
+      id: null,
+      emprego_id: emprego_id,
+      tipo: this.tipo,
+      inicio: this.inicio,
+      termino: this.termino,
+      data: this.data,
+    );
+  }
+
   DateTime mergeTimeNDateTime(String time, DateTime date) {
     final splitTime = time.split(":").map(int.parse).toList();
     return DateTime(
@@ -74,6 +85,7 @@ class Horas implements Model<Horas> {
       TIPO: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 0),
       INICIO: SqliteColumn(ColumnTypes.TEXT, nullable: false, defaultValue: "17:00"),
       TERMINO: SqliteColumn(ColumnTypes.TEXT, nullable: false, defaultValue: "17:00"),
+      DATA: SqliteColumn(ColumnTypes.TEXT, nullable: false, defaultValue: "2010-01-01"),
     }).generateCreateQuery();
   }
 

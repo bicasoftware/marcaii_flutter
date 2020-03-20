@@ -1,4 +1,3 @@
-import 'package:marcaii_flutter/src/database/dao/base_dao.dart';
 import 'package:marcaii_flutter/src/database/dao/dao_diferencidas.dart';
 import 'package:marcaii_flutter/src/database/dao/dao_horas.dart';
 import 'package:marcaii_flutter/src/database/dao/dao_salarios.dart';
@@ -6,6 +5,9 @@ import 'package:marcaii_flutter/src/database/db_helper.dart';
 import 'package:marcaii_flutter/src/database/models/diferenciadas.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/database/models/salarios.dart';
+import 'package:marcaii_flutter/src/state/calendario.dart';
+import 'package:marcaii_flutter/src/utils/calendar_generator.dart';
+import 'package:marcaii_flutter/src/utils/vigencia.dart';
 
 class DaoEmpregos {
   static Future<void> delete(int i) async {
@@ -22,6 +24,7 @@ class DaoEmpregos {
     final result = await db.query(Empregos.tableName);
     final empregos = result.map((e) => Empregos.fromMap(e)).toList();
     final resultList = <Empregos>[];
+    final dt = DateTime.now();
 
     for (final e in empregos) {
       final horas = await DaoHoras.fetchByEmprego(e.id);
@@ -32,6 +35,12 @@ class DaoEmpregos {
           horas: horas,
           salarios: salarios,
           diferenciadas: diferenciadas,
+          calendario: [
+            Calendario(
+              Vigencia.fromDateTime(dt).vigencia,
+              CalendarGenerator.generate(dt.year, dt.month, horas),
+            ),
+          ],
         ),
       );
     }
@@ -45,7 +54,7 @@ class DaoEmpregos {
     return Empregos.fromJson(result[0]);
   }
 
-  static Future<Empregos> insert(Empregos model) async {
+  static Future<Empregos> insertWithChildren(Empregos model) async {
     final db = await getDB();
     final data = model.toMap();
     final empregoId = await db.insert(Empregos.tableName, data);
@@ -70,6 +79,13 @@ class DaoEmpregos {
     );
   }
 
+  static Future<Empregos> insert(Empregos emprego) async {
+    final db = await getDB();
+    final emprego_id = await db.insert(Empregos.tableName, emprego.toMap());
+
+    return emprego.copyWith(id: emprego_id);
+  }
+
   static Future<void> update(Empregos model) async {
     final db = await getDB();
     await db.update(
@@ -91,22 +107,28 @@ class DaoEmpregos {
     }
   }
 
+  static Future<int> truncate() async {
+    final db = await getDB();
+    return await db.delete(Empregos.tableName);
+  }
+
   static Future<void> syncFromServer(List<Empregos> empregos) async {
-    //TODO - Gerar lista de datas, calendario e parciais
-    for (var emprego in empregos) {
-      final e = await insert(emprego.copyWith());
+    for (final emprego in empregos) {
+      final e = await insert(emprego.forFirstSync());
 
       for (final hora in emprego.horas) {
-        await DaoHoras().insert(hora.copyWith(emprego_id: e.id));
+        // e.addHora(await DaoHoras.insert(hora.forFirstSync(e.id)));
+        await DaoHoras.insert(hora.forFirstSync(e.id));
       }
 
       for (final salario in emprego.salarios) {
-        final s = salario.copyWith(emprego_id: e.id);
-        await DaoSalarios.insert(s);
+        await DaoSalarios.insert(salario.forFirstSync(e.id));
+        // e.addSalario(await DaoSalarios.insert(salario.forFirstSync(e.id)));
       }
 
       for (final difer in emprego.diferenciadas) {
-        await DaoDiferenciadas().insert(difer.copyWith(emprego_id: e.id));
+        // await DaoDiferenciadas().insert(difer.forFirstSync(e.id));
+        await DaoDiferenciadas().insert(difer.forFirstSync(e.id));
       }
     }
   }

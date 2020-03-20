@@ -6,6 +6,13 @@ extension TimeHelper on TimeOfDay {
     final m = this.minute.toString().padLeft(2, '0');
     return "$h:$m";
   }
+
+  bool isBefore(TimeOfDay otherTime) {
+    final init = this.hour + this.minute;
+    final end = otherTime.hour + otherTime.minute;
+
+    return end - init < 0;
+  }
 }
 
 TimeOfDay stringToTimeOfDay(String time) {

@@ -1,49 +1,34 @@
 import 'package:marcaii_flutter/src/database/dao/dao_empregos.dart';
+import 'package:marcaii_flutter/src/database/dao/dao_horas.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
-import 'package:marcaii_flutter/strings.dart';
+import 'package:marcaii_flutter/src/database/models/horas.dart';
+import 'package:marcaii_flutter/src/utils/vigencia.dart';
 
 class AppState {
   AppState({
     this.token,
     this.empregos,
   }) {
-    final dt = DateTime.now();
-    ano = dt.year;
-    mes = dt.month;
+    vigencia = Vigencia.fromDateTime(DateTime.now());
     navPosition = empregos.isNotEmpty ? 1 : 0;
   }
 
   String token;
+  Vigencia vigencia;
+  int navPosition;
   List<Empregos> empregos;
-
-  int mes, ano, navPosition;
-
-  String get vigencia => "${Consts.meses[mes - 1]}/$ano";
-
-  void addMes() {
-    if (mes == 12) {
-      mes = 1;
-      ano = ano + 1;
-    } else {
-      mes++;
-    }
-  }
-
-  void decMes() {
-    if (mes == 1) {
-      mes = 12;
-      ano = ano - 1;
-    } else {
-      mes--;
-    }
-  }
-
-  void setAno(int ano) => this.ano = ano;
 
   void setNavPosition(int pos) => this.navPosition = pos;
 
+  void addMes() => vigencia.incMonth();
+
+  void decMes() => vigencia.decMonth();
+
+  void setAno(int ano) => vigencia.setYear(ano);
+
   Future<void> addEmprego(Empregos e) async {
-    final newEmprego = await DaoEmpregos.insert(e);
+    final newEmprego = await DaoEmpregos.insertWithChildren(e);
+
     empregos.add(newEmprego);
   }
 
@@ -67,5 +52,28 @@ class AppState {
       diferenciadas: e.diferenciadas,
       salarios: e.salarios,
     );
+  }
+
+  Future<void> addHora({
+    String inicio,
+    String termino,
+    int tipo,
+    DateTime data,
+    int emprego_id,
+  }) async {
+    final hora = Horas(
+      inicio: inicio,
+      termino: termino,
+      tipo: tipo,
+      data: data,
+      emprego_id: emprego_id,
+    );
+
+    await DaoHoras.insert(hora);
+  }
+
+  Future<void> removeHora({Horas hora, int emprego_id}) async {
+    await DaoHoras.delete(hora.id);
+    empregos.firstWhere((e) => e.id == emprego_id).removeHora(hora);
   }
 }

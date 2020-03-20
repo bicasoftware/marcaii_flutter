@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/views/view_parciais/parciais_list_item.dart';
 
-class ViewParciais extends StatelessWidget {
+class ViewParciais extends StatefulWidget {
   const ViewParciais({Key key}) : super(key: key);
 
   static final horas = <Horas>[
@@ -33,13 +33,19 @@ class ViewParciais extends StatelessWidget {
   ];
 
   @override
+  _ViewParciaisState createState() => _ViewParciaisState();
+}
+
+class _ViewParciaisState extends State<ViewParciais> with AutomaticKeepAliveClientMixin {
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Container(
       padding: const EdgeInsets.all(8),
       child: ListView(
         shrinkWrap: true,
         children: <Widget>[
-          for (final h in horas)
+          for (final h in ViewParciais.horas)
             ParciaisListItem(
               hora: h,
               onDelete: print,
@@ -49,4 +55,7 @@ class ViewParciais extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

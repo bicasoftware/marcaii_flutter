@@ -37,7 +37,7 @@ class Marcaii extends StatelessWidget {
         ),
         primarySwatch: Colors.deepOrange,
         primaryColor: Colors.deepOrange,
-        accentColor: Colors.indigo,
+        accentColor: Colors.deepPurple,
         fontFamily: "Montserrat",
       ),
       home: BranchView(token: token),

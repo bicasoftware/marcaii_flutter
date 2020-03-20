@@ -24,7 +24,6 @@ class BranchView extends StatefulWidget {
 
 class _BranchViewState extends State<BranchView> with SingleTickerProviderStateMixin {
   int position;
-  TabController controller;
 
   Widget getActualView(int pos) {
     switch (pos) {
@@ -57,11 +56,6 @@ class _BranchViewState extends State<BranchView> with SingleTickerProviderStateM
   @override
   void initState() {
     position = widget.token.isNotEmpty ? 2 : 0;
-    controller = TabController(
-      length: 3,
-      vsync: this,
-      initialIndex: position,
-    );
     super.initState();
   }
 
@@ -77,30 +71,10 @@ class _BranchViewState extends State<BranchView> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: TabBarView(
-        children: <Widget>[
-          LoginView(setPosition: setPosition),
-          ViewSignin(setPosition: setPosition),
-          FutureObserver<List<Empregos>>(
-            future: DaoEmpregos.fetchAll(),
-            onSuccess: (_, List<Empregos> empregos) {
-              return Provider<BlocMain>(
-                create: (_) => BlocMain(
-                  token: widget.token,
-                  empregos: empregos,
-                ),
-                dispose: (_, BlocMain b) => b.dispose(),
-                child: const ViewHome(),
-              );
-            },
-          ),
-        ],
-        controller: controller,
-        physics: const NeverScrollableScrollPhysics(),
-      ),
-      /* body: MorpheusTabView(
+      body: AnimatedSwitcher(
         child: getActualView(position),
-      ), */
+        duration: const Duration(milliseconds: 400),
+      ),
     );
   }
 }

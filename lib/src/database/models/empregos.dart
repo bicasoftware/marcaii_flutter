@@ -9,7 +9,9 @@ import 'package:marcaii_flutter/src/database/sqlite_generator/column_types.dart'
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_column.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_table.dart';
 import 'package:marcaii_flutter/src/state/calendario.dart';
+import 'package:marcaii_flutter/src/utils/calendar_generator.dart';
 import 'package:marcaii_flutter/src/utils/json_utils.dart';
+import 'package:marcaii_flutter/src/utils/vigencia.dart';
 
 part 'empregos.g.dart';
 
@@ -69,6 +71,26 @@ class Empregos implements Model<Empregos> {
   static const String SAIDA = "saida";
   static const String CARGA_HORARIA = "carga_horaria";
   static const String ATIVO = "ativo";
+
+  Empregos forFirstSync() {
+    return Empregos(
+      id: null,
+      nome: this.nome,
+      porc: this.porc,
+      porc_completa: this.porc_completa,
+      fechamento: this.fechamento,
+      banco_horas: this.banco_horas,
+      saida: this.saida,
+      carga_horaria: this.carga_horaria,
+      ativo: this.ativo,
+      horas: [],
+      salarios: [],
+      diferenciadas: [],
+      /* horas: this.horas,
+      salarios: this.salarios,
+      diferenciadas: this.diferenciadas, */
+    );
+  }
 
   Empregos copyWith({
     int id,
@@ -153,8 +175,7 @@ class Empregos implements Model<Empregos> {
   }
 
   bool equals(Empregos emprego, List<Salarios> salarios, List<Diferenciadas> diferenciadas) {
-    final isSameEmprego = 
-        this.nome == emprego.nome &&
+    final isSameEmprego = this.nome == emprego.nome &&
         this.porc == emprego.porc &&
         this.porc_completa == emprego.porc_completa &&
         this.fechamento == emprego.fechamento &&
@@ -162,11 +183,43 @@ class Empregos implements Model<Empregos> {
         this.saida == emprego.saida &&
         this.carga_horaria == emprego.carga_horaria &&
         this.ativo == emprego.ativo;
-    
+
     final changedSalarios = listEquals(this.salarios, salarios);
     final changedDiferenciadas = listEquals(emprego.diferenciadas, diferenciadas);
 
     return isSameEmprego && changedSalarios && changedDiferenciadas;
+  }
 
+  Calendario getCalendario(String vigencia) {
+    final index = calendario.indexWhere((c) => c.vigencia == vigencia);
+
+    if (index < 0) {
+      final vig = Vigencia.fromString(vigencia);
+      final newCalendarPage = CalendarGenerator.generate(vig.ano, vig.mes, horas);
+      calendario.add(Calendario(vigencia, newCalendarPage));
+    }
+
+    return calendario.firstWhere((c) => c.vigencia == vigencia);
+  }
+
+  void addHora(Horas hora) {
+    horas.add(hora);
+  }
+
+  void updateHora(Horas hora) {
+    final index = horas.indexWhere((h) => h.id == hora.id);
+    horas.replaceRange(index, index + 1, [hora]);
+  }
+
+  void removeHora(Horas hora) {
+    horas.removeWhere((h) => h.id == hora.id);
+  }
+
+  void addSalario(Salarios salario) {
+    salarios.add(salario);
+  }
+
+  void addDiferenciada(Diferenciadas dif) {
+    diferenciadas.add(dif);
   }
 }

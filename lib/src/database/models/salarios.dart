@@ -61,6 +61,16 @@ class Salarios implements Model<Salarios> {
     );
   }
 
+  Salarios forFirstSync(int emprego_id) {
+    return Salarios(
+      id: null,
+      emprego_id: emprego_id,
+      valor: this.valor,
+      vigencia: this.vigencia,
+      ativo: this.ativo,
+    );
+  }
+
   /// Vigencia é a data inicial a qual um salário se torna válido
   /// Supondo que o fechamento do mês é dia 25, e houve um aumento de salário no mês de maio,
   /// a vigencia desse novo salário é a partir 26/04/ano

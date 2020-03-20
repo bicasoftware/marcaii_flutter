@@ -7,17 +7,23 @@ import 'package:marcaii_flutter/src/views/view_empregos/view_empregos.dart';
 import 'package:marcaii_flutter/src/views/view_list_empregos/view_list_empregos_item.dart';
 import 'package:provider/provider.dart';
 
-class ViewListEmpregos extends StatelessWidget {
+class ViewListEmpregos extends StatefulWidget {
+  @override
+  _ViewListEmpregosState createState() => _ViewListEmpregosState();
+}
+
+class _ViewListEmpregosState extends State<ViewListEmpregos> {
   @override
   Widget build(BuildContext context) {
     final b = Provider.of<BlocMain>(context);
+
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
         Container(
           padding: const EdgeInsets.all(8),
           child: StreamObserver<List<Empregos>>(
-            stream: b.outEmpregos,
+            stream: b.empregos,
             onSuccess: (_, empregos) {
               return ListView(
                 shrinkWrap: true,

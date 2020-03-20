@@ -60,4 +60,9 @@ class DaoDiferenciadas implements BaseDao<Diferenciadas> {
       whereArgs: [emprego_id],
     );
   }
+
+  static Future<int> truncate() async {
+    final db = await getDB();
+    return await db.delete(Diferenciadas.tableName);
+  }
 }

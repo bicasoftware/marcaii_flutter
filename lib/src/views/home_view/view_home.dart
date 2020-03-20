@@ -1,4 +1,3 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:lib_observer/lib_observer.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
@@ -19,29 +18,11 @@ class ViewHome extends StatefulWidget {
 }
 
 class _ViewHomeState extends State<ViewHome> with SingleTickerProviderStateMixin {
-  // int pos;
-  // TabController controller;
-
   final pages = <Widget>[
     ViewListEmpregos(),
-    const ViewCalendario(),
+    const ViewCalendario(key: ObjectKey("CALENDARIO_VIEW")),
     const ViewParciais(),
   ];
-
-  @override
-  void initState() {
-    // pos = 0;
-    // controller = TabController(
-    //   vsync: this,
-    //   initialIndex: pos,
-    //   length: pages.length,
-    // );
-    super.initState();
-  }
-
-/*   setPos(int pos) {
-    setState(() => this.pos = pos);
-  } */
 
   onAddEmprego() {
     Navigator.of(context).push(
@@ -72,18 +53,8 @@ class _ViewHomeState extends State<ViewHome> with SingleTickerProviderStateMixin
             onTapped: b.setNavPosition,
             pos: pos,
           ),
-          body: PageTransitionSwitcher(
-            transitionBuilder: (
-              Widget child,
-              Animation<double> anim1,
-              Animation<double> anim2,
-            ) {
-              return FadeThroughTransition(
-                child: child,
-                animation: anim1,
-                secondaryAnimation: anim2,
-              );
-            },
+          body: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
             child: pages[pos],
           ),
         );

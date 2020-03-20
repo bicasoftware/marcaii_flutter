@@ -65,6 +65,17 @@ class Diferenciadas implements Model<Diferenciadas> {
     );
   }
 
+  Diferenciadas forFirstSync(int emprego_id) {
+    return Diferenciadas(
+      id: null,
+      emprego_id: emprego_id,
+      porc: this.porc,
+      weekday: this.weekday,
+      vigencia: this.vigencia,
+      ativo: this.ativo,
+    );
+  }
+
   static get columns => [ID, EMPREGO_ID, PORC, WEEKDAY, VIGENCIA, ATIVO];
 
   @override

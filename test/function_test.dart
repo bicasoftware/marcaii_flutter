@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:marcaii_flutter/src/utils/double_utils.dart';
+import 'package:marcaii_flutter/src/utils/vigencia.dart';
 import 'package:marcaii_flutter/src/views/shared/form_validation.dart';
 import 'package:marcaii_flutter/helpers.dart';
 
@@ -50,6 +52,31 @@ void main() {
     print(listEquals(nomes, nomes2));
     print(listEquals(clientes, clientes2));
     print(listEquals(nomes2, clientes3));
+  });
+
+  test('vigencia',() {
+    final v1 = Vigencia(ano: 2020, mes: 5);
+    final v2 = Vigencia.fromString("05/2020");
+    final v3 = Vigencia.fromDateTime(DateTime(2020,5,1));
+    print('v1: ${v1.vigenciaExtenso}');
+    print('v2: ${v2.vigenciaExtenso}');
+    print('v3: ${v3.vigenciaExtenso}');
+    assert(v1.vigencia == v2.vigencia && v2.vigencia == v3.vigencia);
+    assert(v1.vigenciaExtenso == v2.vigenciaExtenso && v2.vigenciaExtenso == v3.vigenciaExtenso);
+  });
+
+  test('replace', (){
+    final nomes = ["saulo", "andrioli", "silva", "souza"];
+    final index = nomes.indexOf('saulo');
+    nomes.replaceRange(index, index+1, ["josué"]);
+    print(nomes);
+  });
+
+  test('time of day compare', (){
+    const init = TimeOfDay(hour: 19, minute: 0);
+    const end = TimeOfDay(hour: 19, minute: 30);
+
+    assert(init.isBefore(end));
   });
 }
 

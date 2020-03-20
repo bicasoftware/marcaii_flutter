@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:marcaii_flutter/src/views/view_calendario/calendario_header_item.dart';
+import 'package:marcaii_flutter/src/views/view_calendario/calendario/calendario_header_item.dart';
 import 'package:marcaii_flutter/strings.dart';
 
 class CalendarioHeader extends StatelessWidget {
