@@ -19,8 +19,7 @@ class ViewCalendario extends StatefulWidget {
 
 class _ViewCalendarioState extends State<ViewCalendario>
     with AutomaticKeepAliveClientMixin<ViewCalendario> {
-  
-  void showViewGetHoras({Empregos emprego, DateTime date}) async {
+  void showViewGetHoras({@required Empregos emprego, @required DateTime date}) async {
     
     final result = await Navigator.of(context).push(
       MaterialPageRoute(
@@ -28,12 +27,12 @@ class _ViewCalendarioState extends State<ViewCalendario>
         builder: (_) => ViewInsertHoras(
           emprego: emprego,
           data: date,
-        )
-      )
+        ),
+      ),
     );
 
     print(result);
-    
+
     print("show view get horas");
   }
 

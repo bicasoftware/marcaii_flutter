@@ -13,6 +13,15 @@ extension TimeHelper on TimeOfDay {
 
     return end - init < 0;
   }
+
+  TimeOfDay addHour(int len) {
+    final hora = this.hour + len;
+    if(hora > 23) {
+      throw Exception("Invalid hour");
+    }
+
+    return TimeOfDay(hour: hora, minute: minute);
+  }
 }
 
 TimeOfDay stringToTimeOfDay(String time) {

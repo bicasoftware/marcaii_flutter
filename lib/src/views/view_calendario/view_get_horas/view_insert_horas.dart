@@ -17,10 +17,33 @@ class ViewInsertHoras extends StatefulWidget {
 }
 
 class _ViewInsertHorasState extends State<ViewInsertHoras> {
+  bool hasChanged;
   TimeOfDay inicio, termino;
   int tipo;
 
-  
+  @override
+  void initState() {
+    inicio = widget.emprego.horaSaida;
+    termino = inicio.addHour(1);
+    tipo = 0;
+    hasChanged = false;
+    super.initState();
+  }
+
+  void setInicio(TimeOfDay inicio) {
+    setState(() => this.inicio = inicio);
+    hasChanged = true;
+  }
+
+  void setTermino(TimeOfDay termino) {
+    setState(() => this.termino = termino);
+    hasChanged = true;
+  }
+
+  void setTipo(int newTipo) {
+    setState(() => this.tipo = newTipo);
+    hasChanged = true;
+  }
 
   int get diferenciada {
     final p = widget.emprego.diferenciadas.firstWhere(
@@ -42,11 +65,7 @@ class _ViewInsertHorasState extends State<ViewInsertHoras> {
   }
 
   Future<bool> canPop(BuildContext context) async {
-    if (inicio == termino) {
-      showErrorMessage(context, Validations.horariosIguais);
-    } else if (!inicio.isBefore(termino)) {
-      showErrorMessage(context, Validations.horarioInvalido);
-    } else {
+    if (hasChanged) {
       final result = await showCanCloseDialog(
         context: context,
       );
@@ -54,7 +73,7 @@ class _ViewInsertHorasState extends State<ViewInsertHoras> {
       return result ?? true;
     }
 
-    return false;
+    return true;
   }
 
   void onSave() {
@@ -91,30 +110,30 @@ class _ViewInsertHorasState extends State<ViewInsertHoras> {
               ),
               initialTime: inicio,
               label: Strings.inicio,
-              onTimeSet: (t) => setState(() => inicio = t),
+              onTimeSet: setInicio,
             ),
             TimePickerTile(
               icon: Icon(
                 Icons.timer,
                 color: Colors.pink,
               ),
-              initialTime: inicio,
+              initialTime: termino,
               label: Strings.saida,
-              onTimeSet: (t) => setState(() => termino = t),
+              onTimeSet: setTermino,
             ),
             RadioListTile<int>(
               groupValue: 0,
               value: tipo,
               title: Text(Strings.horaNormal),
               subtitle: Text("${widget.emprego.porc} %"),
-              onChanged: (b) => setState(() => tipo = 0),
+              onChanged: (b) => setTipo(0),
             ),
             RadioListTile<int>(
               groupValue: 1,
               value: tipo,
               title: Text(Strings.horaCompleta),
               subtitle: Text("${widget.emprego.porc_completa} %"),
-              onChanged: (b) => setState(() => tipo = 1),
+              onChanged: (b) => setTipo(1),
             ),
             if (diferenciada > -1)
               RadioListTile<int>(
@@ -122,7 +141,7 @@ class _ViewInsertHorasState extends State<ViewInsertHoras> {
                 value: tipo,
                 title: Text(Strings.horaCompleta),
                 subtitle: Text("${diferenciada} %"),
-                onChanged: (b) => setState(() => tipo = 2),
+                onChanged: (b) => setTipo(2),
               ),
           ],
         ),

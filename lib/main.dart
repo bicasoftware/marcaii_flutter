@@ -33,7 +33,6 @@ class Marcaii extends StatelessWidget {
           brightness: Brightness.light,
           iconTheme: ThemeData.light().iconTheme,
           textTheme: customTheme.textTheme,
-          // textTheme: ThemeData.light().textTheme,
         ),
         primarySwatch: Colors.deepOrange,
         primaryColor: Colors.deepOrange,

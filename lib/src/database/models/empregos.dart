@@ -10,6 +10,7 @@ import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_column.dart
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_table.dart';
 import 'package:marcaii_flutter/src/state/calendario.dart';
 import 'package:marcaii_flutter/src/utils/calendar_generator.dart';
+import 'package:marcaii_flutter/src/utils/helpers/time_helper.dart';
 import 'package:marcaii_flutter/src/utils/json_utils.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
 
@@ -85,10 +86,7 @@ class Empregos implements Model<Empregos> {
       ativo: this.ativo,
       horas: [],
       salarios: [],
-      diferenciadas: [],
-      /* horas: this.horas,
-      salarios: this.salarios,
-      diferenciadas: this.diferenciadas, */
+      diferenciadas: [],      
     );
   }
 
@@ -201,6 +199,8 @@ class Empregos implements Model<Empregos> {
 
     return calendario.firstWhere((c) => c.vigencia == vigencia);
   }
+
+  TimeOfDay get horaSaida => stringToTimeOfDay(saida);
 
   void addHora(Horas hora) {
     horas.add(hora);
