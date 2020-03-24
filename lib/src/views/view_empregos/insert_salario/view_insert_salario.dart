@@ -54,10 +54,9 @@ class _ViewInsertSalarioState extends State<ViewInsertSalario> with WillPopForm 
         hasChanged: !(_vigencia.vigencia == widget.vigencia && _salario == widget.salario),
         isCreating: widget.isCreating,
       ),
-      // onWillPop: _canPopup,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(Strings.salario),
+          title: const Text(Strings.salario),
           actions: <Widget>[
             AppbarSaveButton(
               onPressed: () => doSave(

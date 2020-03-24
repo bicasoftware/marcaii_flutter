@@ -9,10 +9,12 @@ import 'package:marcaii_flutter/src/database/sqlite_generator/column_types.dart'
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_column.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_table.dart';
 import 'package:marcaii_flutter/src/state/calendario.dart';
+import 'package:marcaii_flutter/src/state/calendario_item.dart';
 import 'package:marcaii_flutter/src/utils/calendar_generator.dart';
 import 'package:marcaii_flutter/src/utils/helpers/time_helper.dart';
 import 'package:marcaii_flutter/src/utils/json_utils.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
+import 'package:marcaii_flutter/helpers.dart';
 
 part 'empregos.g.dart';
 
@@ -86,7 +88,7 @@ class Empregos implements Model<Empregos> {
       ativo: this.ativo,
       horas: [],
       salarios: [],
-      diferenciadas: [],      
+      diferenciadas: [],
     );
   }
 
@@ -193,8 +195,8 @@ class Empregos implements Model<Empregos> {
 
     if (index < 0) {
       final vig = Vigencia.fromString(vigencia);
-      final newCalendarPage = CalendarGenerator.generate(vig.ano, vig.mes, horas);
-      calendario.add(Calendario(vigencia, newCalendarPage));
+      final calendarioItems = CalendarGenerator.generate(vig.ano, vig.mes, horas);
+      calendario.add(Calendario(vigencia: vigencia, items: calendarioItems));
     }
 
     return calendario.firstWhere((c) => c.vigencia == vigencia);
@@ -202,8 +204,15 @@ class Empregos implements Model<Empregos> {
 
   TimeOfDay get horaSaida => stringToTimeOfDay(saida);
 
-  void addHora(Horas hora) {
+  void addHora(Horas hora, Vigencia vigencia) {
     horas.add(hora);
+    final c = calendario.firstWhere((c) => c.vigencia == vigencia.vigencia);
+    final cIndex = calendario.indexOf(c);
+    final items = [...c.items];
+    final itemIndex = items.indexWhere((item) => item.date.isSameDate(hora.data));
+    items.replaceRange(itemIndex, itemIndex + 1, [CalendarioChild(hora: hora, date: hora.data)]);
+
+    calendario.replaceRange(cIndex, cIndex + 1, [c.copyWith(items: items)]);
   }
 
   void updateHora(Horas hora) {

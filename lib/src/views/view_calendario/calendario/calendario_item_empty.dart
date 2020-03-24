@@ -5,7 +5,7 @@ class CalendarioEmptyCells {
   static Widget _emptyContainer() {
     return AspectRatio(
       aspectRatio: 1.1,
-      child: Container(color: Colors.amber),
+      child: Container(),
     );
   }
 

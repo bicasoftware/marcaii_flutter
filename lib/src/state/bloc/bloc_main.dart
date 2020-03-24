@@ -101,21 +101,8 @@ class BlocMain with BaseBloc {
     _inEmpregos.add(state.empregos);
   }
 
-  void addHora({
-    String inicio,
-    String termino,
-    int tipo,
-    DateTime data,
-    int emprego_id,
-  }) async {
-    await state.addHora(
-      inicio: inicio,
-      termino: termino,
-      tipo: tipo,
-      data: data,
-      emprego_id: emprego_id,
-    );
-
+  void addHora(Horas hora, Vigencia vigencia) async {
+    await state.addHora(hora, vigencia);
     _inEmpregos.add(state.empregos);
   }
 

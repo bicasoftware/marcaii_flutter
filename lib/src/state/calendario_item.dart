@@ -8,4 +8,14 @@ class CalendarioChild {
 
   final DateTime date;
   final Horas hora;
+
+  CalendarioChild copyWith({
+    DateTime date,
+    Horas hora,
+  }) {
+    return CalendarioChild(
+      date: date ?? this.date,
+      hora: hora ?? this.hora,
+    );
+  }
 }

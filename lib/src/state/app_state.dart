@@ -54,22 +54,9 @@ class AppState {
     );
   }
 
-  Future<void> addHora({
-    String inicio,
-    String termino,
-    int tipo,
-    DateTime data,
-    int emprego_id,
-  }) async {
-    final hora = Horas(
-      inicio: inicio,
-      termino: termino,
-      tipo: tipo,
-      data: data,
-      emprego_id: emprego_id,
-    );
-
-    await DaoHoras.insert(hora);
+  Future<void> addHora(Horas hora, Vigencia vigencia) async {
+    hora = await DaoHoras.insert(hora);
+    empregos.firstWhere((e) => e.id == hora.emprego_id).addHora(hora, vigencia);
   }
 
   Future<void> removeHora({Horas hora, int emprego_id}) async {

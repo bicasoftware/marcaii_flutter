@@ -89,6 +89,11 @@ class Horas implements Model<Horas> {
     }).generateCreateQuery();
   }
 
+  @override
+  String toString() {
+    return "id: $id, emprego_id: $emprego_id, tipo: $tipo, inicio: $inicio, termino: $termino, data: $data";
+  }
+
   static Horas fromJson(Map<String, Object> json) {
     return _$HorasFromJson(json);
   }

@@ -37,8 +37,8 @@ class DaoEmpregos {
           diferenciadas: diferenciadas,
           calendario: [
             Calendario(
-              Vigencia.fromDateTime(dt).vigencia,
-              CalendarGenerator.generate(dt.year, dt.month, horas),
+              vigencia: Vigencia.fromDateTime(dt).vigencia,
+              items: CalendarGenerator.generate(dt.year, dt.month, horas),
             ),
           ],
         ),

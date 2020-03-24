@@ -139,7 +139,7 @@ class _ViewInsertHorasState extends State<ViewInsertHoras> {
               RadioListTile<int>(
                 groupValue: 2,
                 value: tipo,
-                title: Text(Strings.horaCompleta),
+                title: Text(Strings.horaDiferenciada),
                 subtitle: Text("${diferenciada} %"),
                 onChanged: (b) => setTipo(2),
               ),

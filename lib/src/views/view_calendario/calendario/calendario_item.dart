@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:marcaii_flutter/helpers.dart';
 import 'package:marcaii_flutter/src/state/calendario_item.dart';
-import 'package:marcaii_flutter/src/views/shared/circle.dart';
 
 class CalendarioItem extends StatelessWidget {
   const CalendarioItem({
@@ -19,13 +18,14 @@ class CalendarioItem extends StatelessWidget {
   Widget build(BuildContext context) {
     if (childContent.date != null) {
       return Ink(
-        color: isToday ? Colors.black12 : Colors.transparent,
+        color: isToday ? Colors.green[100] : Colors.transparent,
         child: InkWell(
           onTap: () {
             onTap(childContent);
           },
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
                 childContent.date.paddedWeekday(2),
@@ -37,10 +37,20 @@ class CalendarioItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     const Spacer(),
-                    Circle(
-                      color: childContent.hora.getColor(),
-                      size: 8,
+                    Center(
+                      child: Container(
+                        height: 4,
+                        width: 20,
+                        decoration: BoxDecoration(
+                          color: childContent.hora.getColor(),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
                     ),
+                    // Circle(
+                    //   color: childContent.hora.getColor(),
+                    //   size: 8,
+                    // ),
                     const Spacer(),
                   ],
                 )

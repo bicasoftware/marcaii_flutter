@@ -1,9 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:lib_observer/stream_observer.dart';
+import 'package:lib_observer/lib_observer.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
+import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
 import 'package:marcaii_flutter/src/state/calendario_item.dart';
+import 'package:marcaii_flutter/src/utils/vigencia.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/calendario/calendario_header.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/calendario/calendario_page.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/calendario_navigator.dart';
@@ -19,9 +21,8 @@ class ViewCalendario extends StatefulWidget {
 
 class _ViewCalendarioState extends State<ViewCalendario>
     with AutomaticKeepAliveClientMixin<ViewCalendario> {
-  void showViewGetHoras({@required Empregos emprego, @required DateTime date}) async {
-    
-    final result = await Navigator.of(context).push(
+  Future<Horas> showViewGetHoras({@required Empregos emprego, @required DateTime date}) async {
+    return await Navigator.of(context).push(
       MaterialPageRoute(
         fullscreenDialog: true,
         builder: (_) => ViewInsertHoras(
@@ -30,10 +31,6 @@ class _ViewCalendarioState extends State<ViewCalendario>
         ),
       ),
     );
-
-    print(result);
-
-    print("show view get horas");
   }
 
   void showViewInfoHoras({Empregos empregos, CalendarioChild child}) {
@@ -47,8 +44,8 @@ class _ViewCalendarioState extends State<ViewCalendario>
     final b = Provider.of<BlocMain>(context);
     final theme = Theme.of(context);
 
-    return StreamObserver<List<Empregos>>(
-      stream: b.empregos,
+    return MergedStreamObserver(
+      streams: [b.empregos, b.outVigencia],
       onError: (_, e) {
         return Container(
           color: Colors.red,
@@ -56,7 +53,10 @@ class _ViewCalendarioState extends State<ViewCalendario>
           height: double.maxFinite,
         );
       },
-      onSuccess: (BuildContext context, List<Empregos> empregos) {
+      onSuccess: (BuildContext context, List<Object> data) {
+        final empregos = data[0] as List<Empregos>;
+        final vigencia = data[1] as Vigencia;
+
         return DefaultTabController(
           length: empregos.length,
           initialIndex: 0,
@@ -84,9 +84,12 @@ class _ViewCalendarioState extends State<ViewCalendario>
                     for (final e in empregos)
                       CalendarioPage(
                         emprego: e,
-                        onItemTap: (CalendarioChild child) {
+                        onItemTap: (CalendarioChild child) async {
                           if (child.hora == null) {
-                            showViewGetHoras(emprego: e, date: child.date);
+                            final hora = await showViewGetHoras(emprego: e, date: child.date);
+                            if (hora != null && hora is Horas) {
+                              b.addHora(hora, vigencia);
+                            }
                           } else {
                             showViewInfoHoras(empregos: e, child: child);
                           }

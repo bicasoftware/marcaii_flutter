@@ -30,7 +30,7 @@ class _ViewDiferenciadaState extends State<ViewDiferenciada> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(Strings.diferenciadas),
+        title: const Text(Strings.diferenciadas),
         actions: <Widget>[
           AppbarSaveButton(
             onPressed: () {
