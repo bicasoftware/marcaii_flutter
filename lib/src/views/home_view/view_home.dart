@@ -24,8 +24,8 @@ class _ViewHomeState extends State<ViewHome> with SingleTickerProviderStateMixin
     const ViewParciais(),
   ];
 
-  onAddEmprego() {
-    Navigator.of(context).push(
+  void onAddEmprego() {
+    Navigator.of(context).push<MaterialPageRoute<dynamic>>(
       MaterialPageRoute(
         fullscreenDialog: true,
         builder: (_) => ViewEmpregos(),
@@ -33,9 +33,9 @@ class _ViewHomeState extends State<ViewHome> with SingleTickerProviderStateMixin
     );
   }
 
-  onUserOptionChange(int pos) {}
+  void onUserOptionChange(int pos) {}
 
-  onEmpregoTap(Empregos emprego) {}
+  void onEmpregoTap(Empregos emprego) {}
 
   @override
   Widget build(BuildContext context) {

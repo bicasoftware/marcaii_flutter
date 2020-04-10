@@ -6,6 +6,7 @@ import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
 import 'package:marcaii_flutter/src/state/calendario_item.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
+import 'package:marcaii_flutter/src/views/view_calendario/bts_horas_info/bts_horas_info.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/calendario/calendario_header.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/calendario/calendario_page.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/calendario_navigator.dart';
@@ -33,9 +34,17 @@ class _ViewCalendarioState extends State<ViewCalendario>
     );
   }
 
-  void showViewInfoHoras({Empregos empregos, CalendarioChild child}) {
-    print("info horas");
-    //TODO: Mostrar bottomsheet com informações da hora extra
+  Future<bool> showViewInfoHoras({Empregos emprego, CalendarioChild child}) async {
+    final bool shouldDelete = await showModalBottomSheet(
+      context: context,
+      elevation: 2,
+      builder: (_) => BtsHorasInfo(
+        emprego: emprego,
+        calendarioChild: child,
+      ),
+    );
+
+    return shouldDelete ?? false;
   }
 
   @override
@@ -91,7 +100,10 @@ class _ViewCalendarioState extends State<ViewCalendario>
                               b.addHora(hora, vigencia);
                             }
                           } else {
-                            showViewInfoHoras(empregos: e, child: child);
+                            final canDelete = await showViewInfoHoras(emprego: e, child: child);
+                            if (canDelete) {
+                              b.removeHora(hora: child.hora, emprego_id: e.id);
+                            }
                           }
                         },
                       ),

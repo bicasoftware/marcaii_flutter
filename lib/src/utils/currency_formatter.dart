@@ -5,7 +5,7 @@ class CurrencyInputFormatter extends TextInputFormatter {
   CurrencyInputFormatter({this.maxDigits});
   final int maxDigits;
 
-  static formatValue(double valor) {
+  static String formatValue(double valor) {
     final f = NumberFormat("#,##0.00", "pt_BR");
     return "R\$ ${f.format(valor/100)}";
   }

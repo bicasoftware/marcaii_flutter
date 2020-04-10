@@ -32,7 +32,14 @@ class Marcaii extends StatelessWidget {
           elevation: 2,
           brightness: Brightness.light,
           iconTheme: ThemeData.light().iconTheme,
-          textTheme: customTheme.textTheme,
+          textTheme: ThemeData.light().textTheme.copyWith(
+            title: const TextStyle(
+              fontFamily: "Montserrat",
+              fontSize: 20,
+              color: Colors.black,
+            )
+          ),
+          // textTheme: customTheme.textTheme,
         ),
         primarySwatch: Colors.deepOrange,
         primaryColor: Colors.deepOrange,

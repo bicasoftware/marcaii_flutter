@@ -76,8 +76,13 @@ class Salarios implements Model<Salarios> {
   /// a vigencia desse novo salário é a partir 26/04/ano
   DateTime vigenciaAsDate(int fechamento) {
     final splitVigencia = vigencia.split("/").map(int.parse).toList();
-    final dt = DateTime(splitVigencia[1], fechamento + 1, splitVigencia[0]);
-    return Jiffy(dt).subtract(months: 1);
+    
+    final ano = splitVigencia.last;
+    final mes = splitVigencia.first;
+
+    final dt = DateTime(ano, mes, fechamento + 1);
+    final r = Jiffy(dt).subtract(months: 1);
+    return r;
   }
 
   ///Retorna valor do salário formatado

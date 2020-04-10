@@ -1,6 +1,14 @@
 import 'package:intl/intl.dart';
 
 extension DateHelper on DateTime {
+  String format({String pattern = "dd/MM/yyyy"}) {
+    return DateFormat(pattern).format(this);
+  }
+
+  String formatAsDefault() {
+    return format(pattern: 'yyyy-MM-dd');
+  }
+
   String asString() => DateFormat("dd/MM/yyyy").format(this);
   String asStringWithPattern(String pattern) => DateFormat(pattern).format(this);
   int indexWeekday() {

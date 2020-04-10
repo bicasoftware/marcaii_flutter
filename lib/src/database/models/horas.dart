@@ -4,6 +4,7 @@ import 'package:marcaii_flutter/src/database/sqlite_generator/column_types.dart'
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_column.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_table.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:marcaii_flutter/strings.dart';
 
 part 'horas.g.dart';
 
@@ -101,4 +102,6 @@ class Horas implements Model<Horas> {
   static String get tableName => "horas";
 
   Map<String, Object> toJson() => _$HorasToJson(this);
+
+  Color get color => Consts.horaColor[this.tipo];
 }

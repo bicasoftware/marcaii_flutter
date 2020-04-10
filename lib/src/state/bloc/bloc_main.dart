@@ -37,24 +37,24 @@ class BlocMain with BaseBloc {
 
   final BehaviorSubject<String> _bhsToken = BehaviorSubject<String>();
   Stream<String> get outToken => _bhsToken.stream;
-  get _inToken => _bhsToken.sink;
+  Sink<String> get _inToken => _bhsToken.sink;
 
   final BehaviorSubject<List<Empregos>> _bhsEmpregos = BehaviorSubject<List<Empregos>>();
   Stream<List<Empregos>> get empregos => _bhsEmpregos.stream;
-  get _inEmpregos => _bhsEmpregos.sink;
+  Sink<List<Empregos>> get _inEmpregos => _bhsEmpregos.sink;
 
   final _countEmpregos = StreamController<int>();
-  get outCount => _countEmpregos.stream;
+  Stream<int> get outCount => _countEmpregos.stream;
 
   final BehaviorSubject<Vigencia> _bhsVigencia = BehaviorSubject<Vigencia>();
   Stream<Vigencia> get outVigencia => _bhsVigencia.stream;
-  get _inVigencia => _bhsVigencia.sink;
+  Sink<Vigencia> get _inVigencia => _bhsVigencia.sink;
 
   final BehaviorSubject<int> _bhsNavPosition = BehaviorSubject<int>();
   Stream<int> get outNavPosition => _bhsNavPosition.stream;
 
   final _appBarTitle = StreamController<String>();
-  get outAppbarTitle => _appBarTitle.stream;
+  Stream<String> get outAppbarTitle => _appBarTitle.stream;
 
   @override
   void dispose() {

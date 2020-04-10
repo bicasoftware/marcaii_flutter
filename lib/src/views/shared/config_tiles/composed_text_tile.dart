@@ -14,7 +14,7 @@ class ComposedTextTile extends StatelessWidget {
   final Icon icon;
   final String label, hint;
   final String initialValue;
-  final Function(String validate) validator, /* onSaved, */ onChanged;
+  final String Function(String validate) validator, /* onSaved, */ onChanged;
 
   @override
   Widget build(BuildContext context) {
