@@ -47,7 +47,7 @@ class _ViewDiferenciadaState extends State<ViewDiferenciada> {
               color: Colors.orange,
             ),
             onPressed: () async {
-              final result = await showCanCloseDialog(
+              final result = await showConfirmationDialog(
                 context: context,
                 title: "Aviso - Remoção",
                 message: "Deseja remover o valor diferenciado?",

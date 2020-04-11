@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:marcaii_flutter/src/database/dao/dao_empregos.dart';
 import 'package:marcaii_flutter/src/database/dao/dao_horas.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
@@ -59,8 +60,23 @@ class AppState {
     empregos.firstWhere((e) => e.id == hora.emprego_id).addHora(hora, vigencia);
   }
 
-  Future<void> removeHora({Horas hora, int emprego_id}) async {
+  //immutability sucks
+  Future<void> removeHora({
+    @required Horas hora,
+    @required int emprego_id,
+  }) async {
+    final indexEmprego = empregos.indexWhere((e) => e.id == emprego_id);
     await DaoHoras.delete(hora.id);
-    empregos.firstWhere((e) => e.id == emprego_id).removeHora(hora);
+    empregos[indexEmprego].removeHora(hora);    
+    final _calendario = [...empregos[indexEmprego].calendario];
+    final indexCalendario = _calendario.indexWhere((c) => c.vigencia == vigencia.vigencia);
+    _calendario.replaceRange(
+      indexCalendario,
+      indexCalendario + 1,
+      [_calendario[indexCalendario].removeHora(hora.id)],
+    );
+    empregos[indexEmprego] = empregos[indexEmprego].copyWith(
+      calendario: _calendario
+    );
   }
 }

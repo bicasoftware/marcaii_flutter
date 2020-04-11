@@ -14,7 +14,7 @@ mixin WillPopForm {
     } else if (formState.validate()) {
       formState.save();
       if (hasChanged) {
-        final r = await showCanCloseDialog(
+        final r = await showConfirmationDialog(
           context: context,
           title: Strings.atencao,
           message: Strings.descartarAlteracoes,

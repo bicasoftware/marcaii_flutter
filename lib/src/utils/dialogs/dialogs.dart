@@ -45,7 +45,7 @@ Future<void> showAwaitingDialog({
   );
 }
 
-Future<bool> showCanCloseDialog({
+Future<bool> showConfirmationDialog({
   @required BuildContext context,
   String title = Strings.atencao,
   String message = Strings.descartarAlteracoes,
@@ -59,7 +59,10 @@ Future<bool> showCanCloseDialog({
       content: Text(message),
       actions: <Widget>[
         FlatButton(
-          child: Text(negativeCaption),
+          child: Text(
+            negativeCaption,
+            style: Theme.of(context).textTheme.button.copyWith(color: Colors.black87),
+          ),
           onPressed: () {
             Navigator.of(context).pop(false);
           },

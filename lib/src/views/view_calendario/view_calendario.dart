@@ -5,6 +5,7 @@ import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
 import 'package:marcaii_flutter/src/state/calendario_item.dart';
+import 'package:marcaii_flutter/src/utils/dialogs/dialogs.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/bts_horas_info/bts_horas_info.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/calendario/calendario_header.dart';
@@ -102,7 +103,17 @@ class _ViewCalendarioState extends State<ViewCalendario>
                           } else {
                             final canDelete = await showViewInfoHoras(emprego: e, child: child);
                             if (canDelete) {
-                              b.removeHora(hora: child.hora, emprego_id: e.id);
+                              final confirmRemove = await showConfirmationDialog(
+                                context: context,
+                                title: "Exclusão",
+                                message: "Deseja apagar a hora extra?",
+                                negativeCaption: "Cancelar",
+                                positiveCaption: "Apagar!",
+                              );
+
+                              if (confirmRemove == true) {
+                                b.removeHora(hora: child.hora, emprego_id: e.id);
+                              }
                             }
                           }
                         },

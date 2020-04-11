@@ -66,7 +66,7 @@ class _ViewInsertHorasState extends State<ViewInsertHoras> {
 
   Future<bool> canPop(BuildContext context) async {
     if (hasChanged) {
-      final result = await showCanCloseDialog(
+      final result = await showConfirmationDialog(
         context: context,
       );
 
