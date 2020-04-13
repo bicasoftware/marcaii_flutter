@@ -86,6 +86,7 @@ class Empregos implements Model<Empregos> {
       saida: this.saida,
       carga_horaria: this.carga_horaria,
       ativo: this.ativo,
+      //TODO - Repassar rotina
       horas: [],
       salarios: [],
       diferenciadas: [],

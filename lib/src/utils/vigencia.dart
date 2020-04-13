@@ -26,7 +26,6 @@ class Vigencia {
     } else {
       mes++;
     }
-    print(vigencia);
   }
 
   void decMonth() {
@@ -36,10 +35,7 @@ class Vigencia {
     } else {
       mes--;
     }
-    print(vigencia);
   }
-
-  void setYear(int ano) => this.ano = ano;
 
   String get vigencia => formatVigencia(ano, mes);
   String get vigenciaExtenso => "${Consts.meses[mes-1]}/$ano";

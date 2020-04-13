@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lib_observer/lib_observer.dart';
+import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/emprego_validate.dart';
 import 'package:marcaii_flutter/strings.dart';
@@ -24,7 +25,7 @@ class PorcCompletaTile extends StatelessWidget {
           ],
           trailingWidth: 32,
           icon: Icon(
-            Icons.info,
+            LineAwesomeIcons.info_circle,
             color: Consts.horaColor[1],
           ),
           label: Strings.porcCompleta,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lib_observer/lib_observer.dart';
+import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
 import 'package:marcaii_flutter/src/views/shared/config_tiles/text_tile.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/emprego_validate.dart';
@@ -24,7 +25,7 @@ class PorcNormalTile extends StatelessWidget {
           inputType: TextInputType.number,
           trailingWidth: 32,
           icon: Icon(
-            Icons.info,
+            LineAwesomeIcons.info_circle,
             color: Consts.horaColor.first,
           ),
           hint: "50",

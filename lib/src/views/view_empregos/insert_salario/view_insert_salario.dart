@@ -4,6 +4,7 @@ import 'package:marcaii_flutter/src/utils/currency_formatter.dart';
 import 'package:marcaii_flutter/src/utils/double_utils.dart';
 import 'package:marcaii_flutter/src/utils/form_view.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
+import 'package:marcaii_flutter/src/utils/vigencia_picker.dart';
 import 'package:marcaii_flutter/src/views/shared/appbar_save_button.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/emprego_validate.dart';
 import 'package:marcaii_flutter/strings.dart';
@@ -76,48 +77,6 @@ class _ViewInsertSalarioState extends State<ViewInsertSalario> with WillPopForm 
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
-                Strings.vigencia,
-                textAlign: TextAlign.start,
-                style: theme.textTheme.caption.copyWith(color: theme.accentColor),
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Expanded(
-                    flex: 6,
-                    child: DropdownButton<int>(
-                      value: _vigencia.mes,
-                      onChanged: (i) => setState(() => _vigencia.mes = i),
-                      isExpanded: true,
-                      items: <DropdownMenuItem<int>>[
-                        for (final m in meses)
-                          DropdownMenuItem<int>(
-                            value: m,
-                            child: Text(Consts.meses[m]),
-                          )
-                      ],
-                    ),
-                  ),
-                  const Spacer(),
-                  Expanded(
-                    flex: 4,
-                    child: DropdownButton<int>(
-                      isExpanded: true,
-                      value: _vigencia.ano,
-                      onChanged: (i) => setState(() => _vigencia.ano = i),
-                      items: <DropdownMenuItem<int>>[
-                        for (final a in anos)
-                          DropdownMenuItem<int>(
-                            value: a,
-                            child: Text(a.toString()),
-                          )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(height: 8),
               Form(
                 key: _formKey,
                 child: TextFormField(
@@ -137,6 +96,19 @@ class _ViewInsertSalarioState extends State<ViewInsertSalario> with WillPopForm 
                     signed: false,
                   ),
                 ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                Strings.vigencia,
+                textAlign: TextAlign.start,
+                style: theme.textTheme.caption.copyWith(color: theme.accentColor),
+              ),
+              VigenciaPicker(
+                backgroundColor: Theme.of(context).canvasColor,
+                ano: _vigencia.ano,
+                mes: _vigencia.mes,
+                onMesSet: (m) => _vigencia.mes = m,
+                onAnoSet: (a) => _vigencia.ano = a,
               ),
             ],
           ),

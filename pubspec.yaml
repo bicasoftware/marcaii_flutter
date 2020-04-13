@@ -17,6 +17,7 @@ dependencies:
       url: "https://github.com/bicasoftware/lib_observer"
 
   cupertino_icons: ^0.1.2
+  line_awesome_icons: ^1.0.4+2
   provider: ^4.0.2
   rxdart: ^0.23.1
   dio: ^3.0.8
@@ -28,6 +29,7 @@ dependencies:
   path: ^1.6.4
   flutter_secure_storage: ^3.3.1+1
   auto_size_text: ^2.1.0
+  flutter_fluid_slider: ^1.0.2
   intl:
 
 dev_dependencies:

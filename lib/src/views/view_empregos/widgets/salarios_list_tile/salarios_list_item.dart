@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/src/database/models/salarios.dart';
 import 'package:marcaii_flutter/src/utils/double_utils.dart';
 
@@ -28,8 +29,8 @@ class SalariosListItem extends StatelessWidget {
               child: Row(
                 children: <Widget>[
                   Icon(
-                    Icons.calendar_today,
-                    color: Colors.deepPurple,
+                    LineAwesomeIcons.money,
+                    color: Colors.lightGreen,
                   ),
                   const SizedBox(
                     width: 8,

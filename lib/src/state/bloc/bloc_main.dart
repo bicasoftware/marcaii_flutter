@@ -76,8 +76,8 @@ class BlocMain with BaseBloc {
     _inVigencia.add(state.vigencia);
   }
 
-  void setAno(int year) {
-    state.setAno(year);
+  void setVigencia(Vigencia vigencia){
+    state.setVigencia(vigencia);
     _inVigencia.add(state.vigencia);
   }
 

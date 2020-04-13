@@ -16,7 +16,7 @@ extension TimeHelper on TimeOfDay {
 
   TimeOfDay addHour(int len) {
     final hora = this.hour + len;
-    if(hora > 23) {
+    if (hora > 23) {
       throw Exception("Invalid hour");
     }
 
@@ -25,6 +25,8 @@ extension TimeHelper on TimeOfDay {
 }
 
 TimeOfDay stringToTimeOfDay(String time) {
-  final times = time.split(":").map(int.parse).toList();
-  return TimeOfDay(hour: times[0], minute: times[1]);
+  return TimeOfDay(
+    hour: int.parse(time.substring(0, 2)),
+    minute: int.parse(time.substring(3, 5)),
+  );
 }

@@ -41,6 +41,9 @@ class Strings {
   static const String horaCompleta = "Hora Extra Feriados";
   static const String horaDiferenciada = "Hora extra Diferenciada";
 
+  static const String das = "Das";
+  static const String ate = "Até";
+
 }
 
 class Validations {

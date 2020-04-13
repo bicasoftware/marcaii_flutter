@@ -25,7 +25,9 @@ class AppState {
 
   void decMes() => vigencia.decMonth();
 
-  void setAno(int ano) => vigencia.setYear(ano);
+  void setVigencia(Vigencia vigencia) {
+    this.vigencia = vigencia;
+  }
 
   Future<void> addEmprego(Empregos e) async {
     final newEmprego = await DaoEmpregos.insertWithChildren(e);
@@ -67,7 +69,7 @@ class AppState {
   }) async {
     final indexEmprego = empregos.indexWhere((e) => e.id == emprego_id);
     await DaoHoras.delete(hora.id);
-    empregos[indexEmprego].removeHora(hora);    
+    empregos[indexEmprego].removeHora(hora);
     final _calendario = [...empregos[indexEmprego].calendario];
     final indexCalendario = _calendario.indexWhere((c) => c.vigencia == vigencia.vigencia);
     _calendario.replaceRange(
@@ -75,8 +77,6 @@ class AppState {
       indexCalendario + 1,
       [_calendario[indexCalendario].removeHora(hora.id)],
     );
-    empregos[indexEmprego] = empregos[indexEmprego].copyWith(
-      calendario: _calendario
-    );
+    empregos[indexEmprego] = empregos[indexEmprego].copyWith(calendario: _calendario);
   }
 }

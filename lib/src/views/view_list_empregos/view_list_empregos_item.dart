@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 
 class ViewListEmpregosItem extends StatelessWidget {
@@ -18,7 +19,8 @@ class ViewListEmpregosItem extends StatelessWidget {
     final itemKey = GlobalKey();
     return ListTile(
       key: itemKey,
-      leading: Icon(Icons.work),
+      isThreeLine: true,
+      leading: Icon(LineAwesomeIcons.briefcase, color: Theme.of(context).accentColor),
       title: Text(emprego.nome),
       subtitle: Text("${emprego.carga_horaria} | ${emprego.saida} | ${emprego.fechamento}"),
       trailing: IconButton(

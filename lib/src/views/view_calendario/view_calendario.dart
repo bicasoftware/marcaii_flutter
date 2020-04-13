@@ -37,6 +37,12 @@ class _ViewCalendarioState extends State<ViewCalendario>
 
   Future<bool> showViewInfoHoras({Empregos emprego, CalendarioChild child}) async {
     final bool shouldDelete = await showModalBottomSheet(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+        ),
+      ),
       context: context,
       elevation: 2,
       builder: (_) => BtsHorasInfo(
@@ -74,6 +80,7 @@ class _ViewCalendarioState extends State<ViewCalendario>
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               CalendarioNavigator(),
+              const Divider(height: 0, indent: 16, endIndent: 16),
               if (empregos.length > 1)
                 TabBar(
                   labelColor: theme.accentColor,
@@ -88,6 +95,7 @@ class _ViewCalendarioState extends State<ViewCalendario>
                   }).toList(),
                 ),
               CalendarioHeader(),
+              const Divider(height: 0, indent: 16, endIndent: 16),
               Expanded(
                 child: TabBarView(
                   children: [

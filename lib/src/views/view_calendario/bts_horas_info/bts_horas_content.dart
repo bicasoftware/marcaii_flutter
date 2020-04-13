@@ -4,6 +4,7 @@ import 'package:marcaii_flutter/src/state/calendario_item.dart';
 import 'package:marcaii_flutter/src/utils/double_utils.dart';
 import 'package:marcaii_flutter/src/utils/hora_calc.dart';
 import 'package:marcaii_flutter/strings.dart';
+import 'package:marcaii_flutter/src/utils/helpers/hora_helper.dart';
 
 class BtsHorasContent extends StatelessWidget {
   const BtsHorasContent({
@@ -27,8 +28,9 @@ class BtsHorasContent extends StatelessWidget {
 
     final salarioHora = salario / (emprego.carga_horaria);
     final valorPorc = salarioHora * (porcentagem / 100);
+    final total = (valorPorc / 60) * calendarChild.hora.difMinutes();
 
-    return doubleToCurrency(valorPorc);
+    return doubleToCurrency(total);
   }
 
   @override
@@ -37,9 +39,10 @@ class BtsHorasContent extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         ListTile(
+          isThreeLine: true,
           leading: CircleAvatar(backgroundColor: calendarChild.hora.color),
           title: Text(Consts.tipoHora[calendarChild.hora.tipo]),
-          subtitle: Text(valorPorcentagem),
+          subtitle: Text("$valorPorcentagem\n${calendarChild.hora.difEstenso()}"),
           trailing: Text(
             actualPorcentagem,
             style: Theme.of(context).textTheme.button.copyWith(color: calendarChild.hora.color),

@@ -195,6 +195,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_fluid_slider:
+    dependency: "direct main"
+    description:
+      name: flutter_fluid_slider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
@@ -312,6 +319,13 @@ packages:
       url: "https://github.com/bicasoftware/lib_observer"
     source: git
     version: "0.0.2"
+  line_awesome_icons:
+    dependency: "direct main"
+    description:
+      name: line_awesome_icons
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.4+2"
   logging:
     dependency: transitive
     description:

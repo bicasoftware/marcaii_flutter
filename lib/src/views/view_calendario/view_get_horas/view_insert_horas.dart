@@ -4,6 +4,7 @@ import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/utils/dialogs/dialogs.dart';
 import 'package:marcaii_flutter/src/views/shared/config_tiles/time_tile.dart';
 import 'package:marcaii_flutter/src/views/shared/appbar_save_button.dart';
+import 'package:marcaii_flutter/src/views/shared/list_separator.dart';
 import 'package:marcaii_flutter/strings.dart';
 import 'package:marcaii_flutter/helpers.dart';
 
@@ -121,6 +122,7 @@ class _ViewInsertHorasState extends State<ViewInsertHoras> {
               label: Strings.saida,
               onTimeSet: setTermino,
             ),
+            const ListSeparator(label: "Tipo de Hora Extra"),
             RadioListTile<int>(
               groupValue: 0,
               value: tipo,

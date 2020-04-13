@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lib_observer/stream_observer.dart';
+import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
 import 'package:marcaii_flutter/src/views/shared/config_tiles/text_tile.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/emprego_validate.dart';
@@ -24,7 +25,7 @@ class FechamentoTile extends StatelessWidget {
           ],
           trailingWidth: 32,
           icon: Icon(
-            Icons.date_range,
+            LineAwesomeIcons.calendar,
             color: Colors.pink,
           ),
           label: Strings.fechamento,

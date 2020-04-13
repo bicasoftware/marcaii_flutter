@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lib_observer/lib_observer.dart';
+import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/src/database/models/diferenciadas.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
 import 'package:marcaii_flutter/src/views/shared/config_tiles/base_config_tile.dart';
@@ -30,7 +31,7 @@ class ListDiferenciadas extends StatelessWidget {
                   trailingWidth: 30,
                   label: Consts.weekDayExtenso[dif.weekday],
                   icon: Icon(
-                    Icons.date_range,
+                    LineAwesomeIcons.calendar_plus_o,
                     color: Consts.weekdayColors[dif.weekday],
                   ),
                   trailing: Text("${dif.porc}"),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lib_observer/lib_observer.dart';
+import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
 import 'package:marcaii_flutter/strings.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,7 @@ class CargaHorariaTile extends StatelessWidget {
       onSuccess: (_, carga) {
         return DropdownTile<int>(
           icon: Icon(
-            Icons.collections_bookmark,
+            LineAwesomeIcons.clock_o,
             color: Colors.orange,
           ),
           label: Strings.cargaHoraria,

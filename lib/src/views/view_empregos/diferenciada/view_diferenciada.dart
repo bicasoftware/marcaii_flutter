@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/src/database/models/diferenciadas.dart';
-import 'package:marcaii_flutter/src/utils/dialogs/dialogs.dart';
 import 'package:marcaii_flutter/src/views/shared/appbar_save_button.dart';
 import 'package:marcaii_flutter/src/views/shared/config_tiles/text_tile.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/emprego_validate.dart';
@@ -30,7 +30,7 @@ class _ViewDiferenciadaState extends State<ViewDiferenciada> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(Strings.diferenciadas),
+        title: Text(Consts.weekDayExtenso[_diferenciada.weekday]),
         actions: <Widget>[
           AppbarSaveButton(
             onPressed: () {
@@ -41,7 +41,7 @@ class _ViewDiferenciadaState extends State<ViewDiferenciada> {
               }
             },
           ),
-          IconButton(
+          /* IconButton(
             icon: Icon(
               Icons.delete_sweep,
               color: Colors.orange,
@@ -57,7 +57,7 @@ class _ViewDiferenciadaState extends State<ViewDiferenciada> {
                 Navigator.of(context).pop(_diferenciada.copyWith(porc: 0));
               }
             },
-          ),
+          ), */
         ],
       ),
       body: Container(
@@ -75,8 +75,8 @@ class _ViewDiferenciadaState extends State<ViewDiferenciada> {
             hint: "100",
             inputType: TextInputType.number,
             icon: Icon(
-              Icons.date_range,
-              color: Colors.red,
+              LineAwesomeIcons.calendar_plus_o,
+              color: Colors.green,
             ),
             onChanged: (String value) {
               _diferenciada = _diferenciada.copyWith(porc: int.tryParse(value));

@@ -19,23 +19,21 @@ class BtsHorasInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.transparent,
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            BtsHorasHeader(date: calendarioChild.date),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Divider(height: 8),
-            ),
-            BtsHorasContent(
-              calendarChild: calendarioChild,
-              emprego: emprego,
-            ),
-          ],
-        ),
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          BtsHorasHeader(
+            date: calendarioChild.date,
+            inicio: calendarioChild.hora.inicio,
+            termino: calendarioChild.hora.termino,
+          ),
+          const Divider(height: 0, endIndent: 16, indent: 16),
+          BtsHorasContent(
+            calendarChild: calendarioChild,
+            emprego: emprego,
+          ),
+        ],
       ),
     );
   }

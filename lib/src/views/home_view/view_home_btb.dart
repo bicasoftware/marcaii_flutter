@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/strings.dart';
 
 class ViewHomeBottombar extends StatelessWidget {
@@ -18,15 +19,15 @@ class ViewHomeBottombar extends StatelessWidget {
       currentIndex: pos,
       items: [
         BottomNavigationBarItem(
-          icon: Icon(Icons.work),
+          icon: Icon(LineAwesomeIcons.briefcase),
           title: const Text(Strings.empregos),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.date_range),
+          icon: Icon(LineAwesomeIcons.calendar),
           title: const Text(Strings.calendario),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.list),
+          icon: Icon(LineAwesomeIcons.list_alt),
           title: const Text(Strings.parciais),
         ),
       ],
