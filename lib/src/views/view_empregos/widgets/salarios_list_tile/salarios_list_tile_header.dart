@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:marcaii_flutter/src/views/view_empregos/widgets/list_section_decorator.dart';
 import 'package:marcaii_flutter/strings.dart';
 
 class SalariosListTileHeader extends StatelessWidget {
@@ -10,7 +11,6 @@ class SalariosListTileHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Column(
       children: [
         const Padding(
@@ -21,13 +21,7 @@ class SalariosListTileHeader extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             Expanded(
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Text(
-                  Strings.salarios,
-                  style: theme.textTheme.subhead.copyWith(color: theme.accentColor),
-                ),
-              ),
+              child: ListSectionDecorator(label: Strings.salarios),
             ),
             Padding(
               padding: const EdgeInsets.only(right: 10),

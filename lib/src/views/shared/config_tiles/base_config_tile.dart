@@ -7,19 +7,20 @@ class BaseConfigTile extends StatelessWidget {
     this.trailingWidth = 140,
     this.onTap,
     this.trailing,
-    Key key,
+    Key key, this.onLongPress,
   }) : super(key: key);
 
   final String label;
   final Icon icon;
   final Widget trailing;
   final double trailingWidth;
-  final VoidCallback onTap;
+  final VoidCallback onTap, onLongPress;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       onTap: onTap,
+      onLongPress: onLongPress,
       leading: icon,
       title: Text(this.label),
       trailing: SizedBox(

@@ -5,6 +5,8 @@ class Strings {
   static const String salvar = "Salvar";
   static const String atencao = "Atenção";
   static const String descartar = "Descartar!";
+  static const String cancelar = "Cancelar";
+  static const String remover = "Remover";
 
 
   static const String calendario = "Calendário";

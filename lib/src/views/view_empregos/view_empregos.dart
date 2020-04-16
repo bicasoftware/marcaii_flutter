@@ -3,6 +3,7 @@ import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
 import 'package:marcaii_flutter/src/utils/form_view.dart';
 import 'package:marcaii_flutter/src/views/shared/appbar_save_button.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/fechamento_tile.dart';
+import 'package:marcaii_flutter/src/views/view_empregos/widgets/porcentagens/porcentagens.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/salario_tile.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/salarios_list_tile/salarios_list_tile.dart';
 import 'package:marcaii_flutter/strings.dart';
@@ -55,28 +56,27 @@ class _ViewEmpregosState extends State<ViewEmpregos> with WillPopForm {
             )
           ],
         ),
-        body: ListView(
-          children: [
-            Form(
-              key: _formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  const NomeEmpregoTile(),
-                  const FechamentoTile(),
-                  const PorcNormalTile(),
-                  const PorcCompletaTile(),
-                  const CargaHorariaTile(),
-                  const HorarioSaidaTile(),
-                  const EmpregoAtivoTile(),
-                  const BancoHorasTile(),
-                  blocEmpregos.isCreating ? SalarioTile() : const SalariosListTile(),
-                  const ListDiferenciadas(),
-                ],
-              ),
-            ),
-          ],
-        ),
+        body: Form(
+          key: _formKey,
+          child: ListView(
+            // mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              const NomeEmpregoTile(),              
+              const Divider(indent: 64,),
+              const ViewPorcentagens(),
+              const CargaHorariaTile(),
+              const FechamentoTile(),
+              const Divider(indent: 64,),
+              const HorarioSaidaTile(),
+              const Divider(indent: 64,),
+              const EmpregoAtivoTile(),
+              const Divider(indent: 64,),
+              const BancoHorasTile(),
+              blocEmpregos.isCreating ? SalarioTile() : const SalariosListTile(),
+              const ListDiferenciadas(),
+            ],
+          ),
+        ),        
       ),
     );
   }
