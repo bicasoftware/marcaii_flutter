@@ -11,26 +11,18 @@ class SalariosListTileHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Divider(height: 0),
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        Expanded(
+          child: ListSectionDecorator(label: Strings.salarios),
         ),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Expanded(
-              child: ListSectionDecorator(label: Strings.salarios),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: IconButton(
-                icon: Icon(Icons.add),
-                onPressed: onAddTap,
-              ),
-            ),
-          ],
+        Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: IconButton(
+            icon: Icon(Icons.add),
+            onPressed: onAddTap,
+          ),
         ),
       ],
     );

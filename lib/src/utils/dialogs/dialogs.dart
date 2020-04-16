@@ -91,7 +91,10 @@ Future<Vigencia> showVigenciaPicker({
       ),
       actions: <Widget>[
         FlatButton(
-          child: const Text("Cancelar"),
+          child: Text(
+            "Cancelar",
+            style: Theme.of(context).textTheme.button.copyWith(color: Colors.black87),
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         FlatButton(
@@ -120,7 +123,10 @@ Future<int> showFechamentoPicker({
       ),
       actions: <Widget>[
         FlatButton(
-          child: const Text("Cancelar"),
+          child: Text(
+            "Cancelar",
+            style: Theme.of(context).textTheme.button.copyWith(color: Colors.black87),
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         FlatButton(
@@ -174,7 +180,10 @@ Future<int> showIntegerPickerDialog({
       ),
       actions: <Widget>[
         FlatButton(
-          child: Text(cancelButton),
+          child: Text(
+            cancelButton,
+            style: Theme.of(context).textTheme.button.copyWith(color: Colors.black87),
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         FlatButton(

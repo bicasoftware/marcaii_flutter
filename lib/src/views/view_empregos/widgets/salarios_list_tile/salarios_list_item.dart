@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/src/database/models/salarios.dart';
 import 'package:marcaii_flutter/src/utils/double_utils.dart';
+import 'package:marcaii_flutter/src/utils/vigencia.dart';
 
 class SalariosListItem extends StatelessWidget {
   const SalariosListItem({
@@ -16,53 +17,18 @@ class SalariosListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return InkWell(
-      onTap: () => onPressed(salario),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 16, right: 0, top: 0, bottom: 0),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Expanded(
-              flex: 4,
-              child: Row(
-                children: <Widget>[
-                  Icon(
-                    LineAwesomeIcons.money,
-                    color: Colors.lightGreen,
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    salario.vigencia,
-                    textAlign: TextAlign.start,
-                    style: theme.textTheme.subhead,
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 4,
-              child: Text(
-                doubleToCurrency(salario.valor),
-                textAlign: TextAlign.start,
-                style: theme.textTheme.subhead.copyWith(
-                  color: theme.accentColor,
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: IconButton(
-                icon: Icon(Icons.close, color: Colors.red),
-                onPressed: () => onDelete(salario),
-              ),
-            )
-          ],
-        ),
+    return ListTile(
+      leading: Icon(
+        LineAwesomeIcons.money,
+        color: Colors.lightGreen,
       ),
+      title: Text(Vigencia.fromString(salario.vigencia).vigenciaExtenso),
+      subtitle: Text(doubleToCurrency(salario.valor)),
+      trailing: IconButton(
+        icon: Icon(Icons.close, color: Colors.red),
+        onPressed: () => onDelete(salario),
+      ),
+      onTap: () => onPressed(salario),
     );
   }
 }
