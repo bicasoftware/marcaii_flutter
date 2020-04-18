@@ -60,7 +60,7 @@ class _BranchViewState extends State<BranchView> with SingleTickerProviderStateM
   }
 
   Future<String> findToken() async {
-    final manager = TokenManager();
+    final manager = Vault();
     return manager.getToken();
   }
 

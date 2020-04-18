@@ -1,11 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class TokenManager {
-  TokenManager();
+class Vault {
+  Vault();
 
   static const String TOKEN = "token";
   static const String REFRESH_TOKEN = "refresh_token";
+  static const String EMAIL = "marcaii_email";
 
   FlutterSecureStorage _getStorage() {
     return const FlutterSecureStorage();
@@ -42,9 +43,21 @@ class TokenManager {
     );
   }
 
-  Future<void> setAuthData({@required String token, @required String refreshToken}) async {
-    await setToken(token);
-    await setRefreshToken(refreshToken);
+  Future<void> setEmail(String email) {
+    final storage = _getStorage();
+    return storage.write(key: EMAIL, value: email);
+  }
+
+  Future<void> setAuthData({
+    @required String email,
+    @required String token,
+    @required String refreshToken,
+  }) async {
+    await Future.wait([
+      setToken(token),
+      setRefreshToken(refreshToken),
+      setEmail(email),
+    ]);
   }
 
   Future<String> getToken() async {
@@ -55,5 +68,10 @@ class TokenManager {
   Future<String> getRefreshToken() async {
     final store = _getStorage();
     return await store.read(key: REFRESH_TOKEN);
+  }
+
+  Future<String> getEmail() async {
+    final store = _getStorage();
+    return await store.read(key: EMAIL);
   }
 }

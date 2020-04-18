@@ -16,78 +16,41 @@ class _ViewListEmpregosState extends State<ViewListEmpregos> {
   @override
   Widget build(BuildContext context) {
     final b = Provider.of<BlocMain>(context);
-
-    return Stack(
-      fit: StackFit.expand,
-      children: <Widget>[
-        Container(
-          padding: const EdgeInsets.all(8),
-          child: StreamObserver<List<Empregos>>(
-            stream: b.empregos,
-            onSuccess: (_, empregos) {
-              return ListView(
-                shrinkWrap: true,
-                children: [
-                  for (final e in empregos)
-                    ViewListEmpregosItem(
-                      emprego: e,
-                      onDelete: b.removeEmprego,
-                      onPressed: (Empregos emprego, GlobalKey itemKey) async {
-                        final result = await Navigator.of(context).push(
-                          MaterialPageRoute(
-                            fullscreenDialog: true,
-                            builder: (BuildContext context) {
-                              return Provider<BlocEmprego>(
-                                create: (_) => BlocEmprego(
-                                  emprego: emprego,
-                                  isCreating: false,
-                                ),
-                                dispose: (_, b) => b.dispose(),
-                                child: ViewEmpregos(),
-                              );
-                            },
+    return StreamObserver<List<Empregos>>(
+      stream: b.empregos,
+      onSuccess: (_, empregos) {
+        return ListView(
+          shrinkWrap: true,
+          children: [
+            for (final e in empregos)
+              ViewListEmpregosItem(
+                emprego: e,
+                onDelete: b.removeEmprego,
+                onPressed: (Empregos emprego, GlobalKey itemKey) async {
+                  final result = await Navigator.of(context).push(
+                    MaterialPageRoute(
+                      fullscreenDialog: true,
+                      builder: (BuildContext context) {
+                        return Provider<BlocEmprego>(
+                          create: (_) => BlocEmprego(
+                            emprego: emprego,
+                            isCreating: false,
                           ),
+                          dispose: (_, b) => b.dispose(),
+                          child: ViewEmpregos(),
                         );
-
-                        if (result != null && result is Empregos) {
-                          b.updateEmprego(result);
-                        }
                       },
                     ),
-                ],
-              );
-            },
-          ),
-        ),
-        Positioned(
-          right: 16,
-          bottom: 16,
-          child: FloatingActionButton(
-            child: Icon(Icons.add),
-            onPressed: () async {
-              final result = await Navigator.of(context).push(
-                MaterialPageRoute(
-                  fullscreenDialog: true,
-                  builder: (_) {
-                    return Provider<BlocEmprego>(
-                      create: (BuildContext context) => BlocEmprego(
-                        emprego: const Empregos(),
-                        isCreating: true,
-                      ),
-                      dispose: (_, b) => b.dispose(),
-                      child: ViewEmpregos(),
-                    );
-                  },
-                ),
-              );
+                  );
 
-              if (result != null && result is Empregos) {
-                b.addEmprego(result);
-              }
-            },
-          ),
-        ),
-      ],
+                  if (result != null && result is Empregos) {
+                    b.updateEmprego(result);
+                  }
+                },
+              ),
+          ],
+        );
+      },
     );
   }
 }

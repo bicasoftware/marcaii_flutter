@@ -53,10 +53,11 @@ class _LoginViewState extends State<LoginView> {
         );
 
         if (result is UserDataDto) {
-          final tokenManager = TokenManager();
-          await tokenManager.setAuthData(
+          final vault = Vault();
+          await vault.setAuthData(
             token: result.token,
             refreshToken: result.refresh_token,
+            email: result.email,
           );
 
           await DaoEmpregos.syncFromServer(result.empregos);

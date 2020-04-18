@@ -7,7 +7,7 @@ import 'package:marcaii_flutter/strings.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final manager = TokenManager();
+  final manager = Vault();
   final token = await manager.getToken();
 
   runApp(Marcaii(token: token));

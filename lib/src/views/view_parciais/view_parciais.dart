@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/views/view_parciais/parciais_list_item.dart';
+import 'package:marcaii_flutter/strings.dart';
 
 class ViewParciais extends StatefulWidget {
   const ViewParciais({Key key}) : super(key: key);
 
+  @override
+  _ViewParciaisState createState() => _ViewParciaisState();
+}
+
+class _ViewParciaisState extends State<ViewParciais> {
   static final horas = <Horas>[
     Horas(
       id: 1,
@@ -31,31 +37,24 @@ class ViewParciais extends StatefulWidget {
       tipo: 1,
     ),
   ];
-
-  @override
-  _ViewParciaisState createState() => _ViewParciaisState();
-}
-
-class _ViewParciaisState extends State<ViewParciais> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-    return Container(
-      padding: const EdgeInsets.all(8),
-      child: ListView(
-        shrinkWrap: true,
-        children: <Widget>[
-          for (final h in ViewParciais.horas)
-            ParciaisListItem(
-              hora: h,
-              onDelete: print,
-              onPressed: print,
-            ),
-        ],
+    return Scaffold(
+      appBar: AppBar(title: const Text(Strings.parciais)),
+      body: Container(
+        padding: const EdgeInsets.all(8),
+        child: ListView(
+          shrinkWrap: true,
+          children: <Widget>[
+            for (final h in horas)
+              ParciaisListItem(
+                hora: h,
+                onDelete: print,
+                onPressed: print,
+              ),
+          ],
+        ),
       ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

@@ -54,17 +54,14 @@ class _ViewSigninState extends State<ViewSignin> {
         );
 
         if (result is UserDataDto) {
-          final manager = TokenManager();
-          await manager.setAuthData(token: result.token, refreshToken: result.refresh_token);
+          final vault = Vault();
+          await vault.setAuthData(
+            token: result.token,
+            refreshToken: result.refresh_token,
+            email: result.email,
+          );
           Navigator.of(_globalKey.currentContext, rootNavigator: true).pop();
           widget.setPosition(2);
-
-          // await Navigator.of(context).pushReplacement(
-          //   MaterialPageRoute(
-          //     fullscreenDialog: false,
-          //     builder: (_) => SplashView(),
-          //   ),
-          // );
         }
       } catch (e) {
         if (e is DioError) {
