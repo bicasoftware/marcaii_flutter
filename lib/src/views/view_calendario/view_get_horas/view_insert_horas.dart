@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
@@ -91,6 +92,14 @@ class _ViewInsertHorasState extends State<ViewInsertHoras> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    final horasTipo = {
+      0: const Text("Normal"),
+      1: const Text("Completa"),
+      if (diferenciada > -1) 2: const Text("Diferenciada"),
+    };
+
     return WillPopScope(
       onWillPop: () => canPop(context),
       child: Scaffold(
@@ -122,29 +131,16 @@ class _ViewInsertHorasState extends State<ViewInsertHoras> {
               label: Strings.saida,
               onTimeSet: setTermino,
             ),
-            const ListSeparator(label: "Tipo de Hora Extra"),
-            RadioListTile<int>(
-              groupValue: 0,
-              value: tipo,
-              title: Text(Strings.horaNormal),
-              subtitle: Text("${widget.emprego.porc} %"),
-              onChanged: (b) => setTipo(0),
+            const ListSeparator(
+              label: "Tipo de Hora Extra",padding: EdgeInsets.symmetric(horizontal: 16,vertical: 16),
             ),
-            RadioListTile<int>(
-              groupValue: 1,
-              value: tipo,
-              title: Text(Strings.horaCompleta),
-              subtitle: Text("${widget.emprego.porc_completa} %"),
-              onChanged: (b) => setTipo(1),
+            CupertinoSegmentedControl<int>(
+              groupValue: tipo,
+              selectedColor: Consts.horaColor[tipo],
+              borderColor: theme.dividerColor,
+              onValueChanged: (b) => setState(() => tipo = b),
+              children: horasTipo,
             ),
-            if (diferenciada > -1)
-              RadioListTile<int>(
-                groupValue: 2,
-                value: tipo,
-                title: Text(Strings.horaDiferenciada),
-                subtitle: Text("${diferenciada} %"),
-                onChanged: (b) => setTipo(2),
-              ),
           ],
         ),
       ),

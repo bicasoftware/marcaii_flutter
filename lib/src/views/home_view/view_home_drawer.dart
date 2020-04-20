@@ -15,34 +15,33 @@ class ViewHomeDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Drawer(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            ListTile(
-              leading: Image.asset("assets/images/app_icon.png"),
-              title: const Text(Strings.appName),
-              subtitle: FutureObserver<String>(
-                future: Vault().getEmail(),
-                onSuccess: (_, String email) => Text(email),
-              ),
+    return Drawer(
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          const SizedBox(height: 32),
+          ListTile(
+            leading: Image.asset("assets/images/app_icon.png"),
+            title: const Text(Strings.appName),
+            subtitle: FutureObserver<String>(
+              future: Vault().getEmail(),
+              onSuccess: (_, String email) => Text(email),
             ),
-            const Divider(),
-            ListSectionDecorator(label: Strings.empregos),
-            ViewListEmpregos(),
-            const Spacer(),
-            DrawerContainer(
-              child: ListTile(
-                title: const Text("Adicionar Emprego"),
-                trailing: Icon(Icons.add),
-                onTap: onNewEmprego,
-              ),
+          ),
+          const Divider(),
+          ListSectionDecorator(label: Strings.empregos),
+          ViewListEmpregos(),
+          const Spacer(),
+          DrawerContainer(
+            child: ListTile(
+              title: const Text("Adicionar Emprego"),
+              trailing: Icon(Icons.add),
+              onTap: onNewEmprego,
             ),
-            const Divider(),
-            ListTile(leading: Icon(Icons.lightbulb_outline)),
-          ],
-        ),
+          ),
+          const Divider(),
+          ListTile(leading: Icon(Icons.lightbulb_outline)),
+        ],
       ),
     );
   }

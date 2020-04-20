@@ -6,6 +6,11 @@ version: 1.0.0+1
 environment:
   sdk: ">=2.7.0 <3.0.0"
 
+flutter_native_splash:
+  image: assets/images/logo.png
+  color: "F35423"
+  ios: false
+
 dependencies:
   flutter:
     sdk: flutter
@@ -25,7 +30,7 @@ dependencies:
   sqflite: ^1.2.0
   jiffy: ^2.2.0
   json_serializable: ^3.2.5
-  path_provider: ^1.5.1
+  path_provider: ^1.6.5
   path: ^1.6.4
   flutter_secure_storage: ^3.3.1+1
   auto_size_text: ^2.1.0
@@ -37,6 +42,7 @@ dev_dependencies:
   test: any
   build_runner: any
   retrofit_generator: any
+  flutter_native_splash: ^0.1.9
 
 flutter:
   uses-material-design: true

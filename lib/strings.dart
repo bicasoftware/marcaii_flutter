@@ -119,7 +119,7 @@ class Consts {
   ];
 
   static const horaColor = <Color>[
-    Colors.green,
+    Colors.teal,
     Colors.amber,
     Colors.red,
   ];

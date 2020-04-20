@@ -136,6 +136,9 @@ class _ViewCalendarioState extends State<ViewCalendario> {
           child: FloatingActionButton(
             child: Icon(LineAwesomeIcons.file_text),
             onPressed: () {
+              //TODO - Listar todas as horas da vigência, (fechamento+1 e mes -1)
+              //TODO - gerar model e passar para ViewParciais
+              //TODO - Implementar layout da tela de parciais, com totalizador e gerador de arquivos
               Navigator.of(context).push(
                 MaterialPageRoute(
                   fullscreenDialog: true,
