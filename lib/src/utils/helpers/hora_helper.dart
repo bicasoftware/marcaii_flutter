@@ -19,6 +19,6 @@ extension HoraHelper on Horas {
     final horas = (dif / 60).floor();
     final minutes = dif % 60;
 
-    return "${horas > 0 ? '$horas horas' : ''}${horas > 0 && minutes > 0 ? ' e ' : ''}${minutes > 0 ? '$minutes minutos' : ''}";
+    return "${horas > 0 ? '$horas Horas' : ''}${horas > 0 && minutes > 0 ? ' e ' : ''}${minutes > 0 ? '$minutes Minutos' : ''}";
   }
 }

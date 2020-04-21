@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:marcaii_flutter/helpers.dart';
-import 'package:marcaii_flutter/strings.dart';
+import 'package:marcaii_flutter/src/views/shared/hora_info_header.dart';
 
 class BtsHorasHeader extends StatelessWidget {
   const BtsHorasHeader({
@@ -15,7 +14,6 @@ class BtsHorasHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Container(
       margin: const EdgeInsets.only(left: 16, right: 8, top: 8, bottom: 8),
       child: Row(
@@ -23,26 +21,7 @@ class BtsHorasHeader extends StatelessWidget {
         children: <Widget>[
           Expanded(
             flex: 6,
-            child: RichText(
-              text: TextSpan(
-                style: DefaultTextStyle.of(context).style,
-                children: <TextSpan>[
-                  TextSpan(
-                      text: date.format(), style: const TextStyle(fontStyle: FontStyle.italic)),
-                  const TextSpan(text: " - "),
-                  const TextSpan(text: "${Strings.das} "),
-                  TextSpan(
-                    text: inicio,
-                    style: TextStyle(fontStyle: FontStyle.italic, color: theme.accentColor),
-                  ),
-                  const TextSpan(text: " ${Strings.ate} "),
-                  TextSpan(
-                    text: termino,
-                    style: TextStyle(fontStyle: FontStyle.italic, color: theme.accentColor),
-                  )
-                ],
-              ),
-            ),
+            child: HoraHeaderText(date: date, inicio: inicio, termino: termino),
           ),
           IconButton(
             icon: Icon(Icons.delete_sweep, color: Colors.red),

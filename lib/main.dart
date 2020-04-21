@@ -26,7 +26,8 @@ class Marcaii extends StatelessWidget {
       ],
       supportedLocales: const [Locale('pt', 'BR')],
       title: Strings.appName,
-      theme: ThemeData(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(        
         appBarTheme: AppBarTheme(
           color: Colors.white,
           elevation: 2,

@@ -40,20 +40,25 @@ class _ViewParciaisState extends State<ViewParciais> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text(Strings.parciais)),
-      body: Container(
-        padding: const EdgeInsets.all(8),
-        child: ListView(
-          shrinkWrap: true,
-          children: <Widget>[
-            for (final h in horas)
-              ParciaisListItem(
-                hora: h,
-                onDelete: print,
-                onPressed: print,
-              ),
-          ],
-        ),
+      appBar: AppBar(
+        title: const Text(Strings.parciais),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.attach_file),
+            onPressed: () {},
+          )
+        ],
+      ),
+      body: ListView(
+        shrinkWrap: true,
+        children: <Widget>[
+          for (int i = 0; i < horas.length; i++)
+            ParciaisListItem(
+              hora: horas[i],
+              porc: 30,
+              valorReceber: 6.30,
+            ),
+        ],
       ),
     );
   }
