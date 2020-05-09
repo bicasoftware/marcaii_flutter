@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lib_observer/lib_observer.dart';
+import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
 import 'package:marcaii_flutter/src/views/home_view/view_home_drawer.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/view_calendario.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/view_empregos.dart';
+import 'package:marcaii_flutter/src/views/view_parciais/view_parciais.dart';
 import 'package:marcaii_flutter/strings.dart';
 import 'package:provider/provider.dart';
 
@@ -63,7 +65,24 @@ class _ViewHomeState extends State<ViewHome> with SingleTickerProviderStateMixin
           drawer: ViewHomeDrawer(
             onNewEmprego: () => onNewEmprego(b),
           ),
-          body: const ViewCalendario(key: ObjectKey("CALENDARIO_VIEW")),
+          body: const ViewCalendario(),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          floatingActionButton: FloatingActionButton.extended(
+            elevation: 2,
+            label: Text(Strings.verTotais),
+            icon: Icon(LineAwesomeIcons.money),
+            onPressed: () {
+              //TODO - Listar todas as horas da vigência, (fechamento+1 e mes -1)
+              //TODO - gerar model e passar para ViewParciais
+              //TODO - Implementar layout da tela de parciais, com totalizador e gerador de arquivos
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  fullscreenDialog: true,
+                  builder: (_) => const ViewParciais(),
+                ),
+              );
+            },
+          ),
         );
       },
     );

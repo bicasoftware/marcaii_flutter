@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:marcaii_flutter/helpers.dart';
 import 'package:marcaii_flutter/src/database/models/diferenciadas.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/database/models/model.dart';
@@ -9,12 +10,11 @@ import 'package:marcaii_flutter/src/database/sqlite_generator/column_types.dart'
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_column.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_table.dart';
 import 'package:marcaii_flutter/src/state/calendario.dart';
-import 'package:marcaii_flutter/src/state/calendario_item.dart';
+import 'package:marcaii_flutter/src/state/calendario_child.dart';
 import 'package:marcaii_flutter/src/utils/calendar_generator.dart';
 import 'package:marcaii_flutter/src/utils/helpers/time_helper.dart';
 import 'package:marcaii_flutter/src/utils/json_utils.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
-import 'package:marcaii_flutter/helpers.dart';
 
 part 'empregos.g.dart';
 

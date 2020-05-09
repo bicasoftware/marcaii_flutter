@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:marcaii_flutter/helpers.dart';
-import 'package:marcaii_flutter/src/state/calendario_item.dart';
+import 'package:marcaii_flutter/src/state/calendario_child.dart';
 
 class CalendarioItem extends StatelessWidget {
   const CalendarioItem({
@@ -29,7 +29,7 @@ class CalendarioItem extends StatelessWidget {
             children: <Widget>[
               Text(
                 childContent.date.paddedWeekday(2),
-                style: Theme.of(context).textTheme.subhead,
+                style: Theme.of(context).textTheme.subtitle1,
               ),
               const SizedBox(height: 4),
               if (childContent.hora != null)

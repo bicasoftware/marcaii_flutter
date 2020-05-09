@@ -14,7 +14,7 @@ class SalariosListTileHeader extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        Expanded(
+        const Expanded(
           child: ListSectionDecorator(label: Strings.salarios),
         ),
         Padding(

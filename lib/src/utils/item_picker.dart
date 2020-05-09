@@ -50,7 +50,7 @@ class _ItemPickerState<T> extends State<ItemPicker> {
           for (final item in widget.items)
             Text(
               item.toString(),
-              style: theme.textTheme.title,
+              style: theme.textTheme.headline6,
             )
         ],
         onSelectedItemChanged: (int pos) {

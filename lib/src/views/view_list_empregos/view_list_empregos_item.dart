@@ -19,7 +19,6 @@ class ViewListEmpregosItem extends StatelessWidget {
     final itemKey = GlobalKey();
     return ListTile(
       key: itemKey,
-      isThreeLine: true,
       leading: Icon(LineAwesomeIcons.briefcase, color: Theme.of(context).accentColor),
       title: Text(emprego.nome),
       subtitle: Text("${emprego.carga_horaria} | ${emprego.saida} | ${emprego.fechamento}"),

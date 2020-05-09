@@ -8,7 +8,6 @@ class Strings {
   static const String cancelar = "Cancelar";
   static const String remover = "Remover";
 
-
   static const String calendario = "Calendário";
   static const String parciais = "Parciais";
   static const String emprego = "Emprego";
@@ -16,7 +15,7 @@ class Strings {
   static const String sair = "Sair";
   static const String adicionar = "Adicionar";
   static const String diferenciada = "diferenciada";
-  static const String diferenciadas = "Horas Diferenciadas";
+  static const String diferenciadas = "Diferenciadas";
   static const String diaSemana = "Dia da Semana";
   static const String porcentagem = "Porcentagem";
 
@@ -40,12 +39,17 @@ class Strings {
   static const String termino = "Término";
   static const String tipoHora = "Tipo hora extra";
   static const String horaNormal = "Hora Extra Normal";
+  static const String normais = "Normais";
   static const String horaCompleta = "Hora Extra Feriados";
+  static const String feriados = "Feriados";
   static const String horaDiferenciada = "Hora extra Diferenciada";
-
+  static const String totais = "Totais";
+  static const String totalReceber = "Total a Receber";
+  static const String verTotais = "Ver Totais";
+  static const String horasExtras = "Horas Extras";
   static const String das = "Das";
   static const String ate = "Até";
-
+  static const String minutos = "minutos";
 }
 
 class Validations {
@@ -55,12 +59,13 @@ class Validations {
   static const String salarioZerado = "Salário não pode ser menor que zero";
   static const String fechamentoRequerido = "Dia obrigatório";
   static const String fechamentoInvalido = "Apenas dia entre 1 e 30";
-  static const String horariosIguais = "Os horários não podem ser os mesmos"; 
-  static const String horarioInvalido = "A hora de início depois da hora de término"; 
+  static const String horariosIguais = "Os horários não podem ser os mesmos";
+  static const String horarioInvalido = "A hora de início depois da hora de término";
 }
 
 class Api {
   static const String url = "https://marcaii.herokuapp.com";
+
   // static const String url = "http://192.168.15.3:3000";
   static const String localhost = "http://localhost:3000";
 }
@@ -118,10 +123,18 @@ class Consts {
     "Diferenciada",
   ];
 
+  static const tipoHoraPlural = <String>[
+    "Normais",
+    "Feriados",
+    "Diferenciadas",
+    "Totais",
+  ];
+
   static const horaColor = <Color>[
     Colors.teal,
     Colors.amber,
     Colors.red,
+    Colors.deepPurple,
   ];
 
   static const meses = <String>[

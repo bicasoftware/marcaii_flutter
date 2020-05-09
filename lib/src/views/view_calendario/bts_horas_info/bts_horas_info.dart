@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
-import 'package:marcaii_flutter/src/state/calendario_item.dart';
+import 'package:marcaii_flutter/src/state/calendario_child.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/bts_horas_info/bts_horas_content.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/bts_horas_info/bts_horas_header.dart';
 

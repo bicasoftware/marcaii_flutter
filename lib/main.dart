@@ -15,7 +15,7 @@ void main() async {
 
 class Marcaii extends StatelessWidget {
   const Marcaii({Key key, this.token}) : super(key: key);
-  final String token;
+  final String token;  
 
   @override
   Widget build(BuildContext context) {
@@ -27,26 +27,49 @@ class Marcaii extends StatelessWidget {
       supportedLocales: const [Locale('pt', 'BR')],
       title: Strings.appName,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(        
+      theme: ThemeData(
+        primarySwatch: Colors.deepOrange,
+        primaryColor: Colors.deepOrange,
+        accentColor: Colors.deepPurple,
+        fontFamily: "Montserrat",
+        appBarTheme: AppBarTheme(
+          color: Colors.white,
+          elevation: 2,
+          brightness: Brightness.light,
+          iconTheme: ThemeData.light().iconTheme,          
+          textTheme: ThemeData.light().textTheme.copyWith(            
+                headline6: const TextStyle(
+                  fontFamily: "Montserrat",
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
+              ),
+        ),
+        tabBarTheme: TabBarTheme(
+          labelColor: Colors.deepPurple,
+          unselectedLabelColor: Colors.black45,
+        ),
+      ),
+      /* theme: ThemeData(
         appBarTheme: AppBarTheme(
           color: Colors.white,
           elevation: 2,
           brightness: Brightness.light,
           iconTheme: ThemeData.light().iconTheme,
           textTheme: ThemeData.light().textTheme.copyWith(
-            title: const TextStyle(
-              fontFamily: "Montserrat",
-              fontSize: 20,
-              color: Colors.black,
-            )
-          ),
+                title: const TextStyle(
+                  fontFamily: "Montserrat",
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
+              ),
           // textTheme: customTheme.textTheme,
         ),
         primarySwatch: Colors.deepOrange,
         primaryColor: Colors.deepOrange,
         accentColor: Colors.deepPurple,
         fontFamily: "Montserrat",
-      ),
+      ), */
       home: BranchView(token: token),
     );
   }
@@ -58,9 +81,17 @@ ThemeData customTheme = ThemeData(
     elevation: 2,
     brightness: Brightness.light,
     iconTheme: ThemeData.light().iconTheme,
+    textTheme: ThemeData.light().textTheme.copyWith(
+          headline6: const TextStyle(
+            fontFamily: "Montserrat",
+            fontSize: 20,
+            color: Colors.black,
+          ),
+        ),
+    // textTheme: customTheme.textTheme,
   ),
   primarySwatch: Colors.deepOrange,
   primaryColor: Colors.deepOrange,
-  accentColor: Colors.indigo,
+  accentColor: Colors.deepPurple,
   fontFamily: "Montserrat",
 );

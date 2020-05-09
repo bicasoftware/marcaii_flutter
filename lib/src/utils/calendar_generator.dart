@@ -1,5 +1,5 @@
 import 'package:marcaii_flutter/src/database/models/horas.dart';
-import 'package:marcaii_flutter/src/state/calendario_item.dart';
+import 'package:marcaii_flutter/src/state/calendario_child.dart';
 import 'package:marcaii_flutter/helpers.dart';
 
 class CalendarGenerator {

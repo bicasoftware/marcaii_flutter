@@ -24,7 +24,7 @@ class ListDiferenciadas extends StatelessWidget {
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              ListSeparator(label: Strings.diferenciadas),
+              const ListSeparator(label: Strings.diferenciadas),
               for (Diferenciadas dif in diferenciadas)
                 ListTile(
                   leading: Icon(

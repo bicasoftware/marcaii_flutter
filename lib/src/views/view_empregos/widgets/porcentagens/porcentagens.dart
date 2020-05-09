@@ -36,7 +36,7 @@ class ViewPorcentagens extends StatelessWidget {
 
         return Column(
           children: <Widget>[
-            ListSectionDecorator(label: Strings.porcentagem),
+            const ListSectionDecorator(label: Strings.porcentagem),
             Container(
               padding: const EdgeInsets.all(16),
               child: Row(

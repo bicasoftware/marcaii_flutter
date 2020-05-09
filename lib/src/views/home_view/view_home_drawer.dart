@@ -29,11 +29,14 @@ class ViewHomeDrawer extends StatelessWidget {
             ),
           ),
           const Divider(),
-          ListSectionDecorator(label: Strings.empregos),
+          const ListSectionDecorator(
+            label: Strings.empregos,
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+          ),
           ViewListEmpregos(),
-          const Spacer(),
           DrawerContainer(
             child: ListTile(
+              dense: true,
               title: const Text("Adicionar Emprego"),
               trailing: Icon(Icons.add),
               onTap: onNewEmprego,
@@ -59,7 +62,7 @@ class DrawerContainer extends StatelessWidget {
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.deepPurple[50],
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(4),
       ),
       child: child,
     );

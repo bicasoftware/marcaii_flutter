@@ -22,7 +22,7 @@ class FechamentoTile extends StatelessWidget {
           trailing: Text(
             dia.toString(),
             textAlign: TextAlign.end,
-            style: Theme.of(context).textTheme.subhead,
+            style: Theme.of(context).textTheme.subtitle1,
           ),
           trailingWidth: 30,
           icon: Icon(

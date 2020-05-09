@@ -24,7 +24,7 @@ class ListSeparator extends StatelessWidget {
           const Divider(),
           Text(
             label,
-            style: theme.textTheme.subhead.copyWith(color: theme.accentColor),
+            style: theme.textTheme.subtitle1.copyWith(color: theme.accentColor),
           )
         ],
       ),

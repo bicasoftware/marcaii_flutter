@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
+import 'package:marcaii_flutter/src/utils/bottom_indicator_container.dart';
 import 'package:marcaii_flutter/src/utils/double_utils.dart';
 import 'package:marcaii_flutter/src/utils/helpers/hora_helper.dart';
 
@@ -19,8 +20,9 @@ class ParciaisListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Card(
+    return BottomIndicatorContainer(
       elevation: .2,
+      indicatorColor: hora.color,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -29,18 +31,18 @@ class ParciaisListItem extends StatelessWidget {
             ListTile(
               title: Text(
                 "10/01/2020",
-                style: theme.textTheme.subhead.copyWith(fontWeight: FontWeight.bold),
+                style: theme.textTheme.subtitle2.copyWith(fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
                 hora.getTipo(),
                 style: Theme.of(context)
                     .textTheme
-                    .subtitle
+                    .subtitle1
                     .copyWith(color: hora.color, fontStyle: FontStyle.italic),
               ),
               trailing: Text(
                 "30 %",
-                style: theme.textTheme.subtitle,
+                style: theme.textTheme.subtitle1,
               ),
             ),
             const Divider(height: 0, indent: 16, endIndent: 16),
@@ -83,11 +85,11 @@ class ParciaisListDetail extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        Text(label, style: theme.textTheme.subtitle.copyWith(color: Colors.black54)),
+        Text(label, style: theme.textTheme.subtitle1.copyWith(color: Colors.black54)),
         const Spacer(),
         Text(
           value,
-          style: theme.textTheme.subhead.copyWith(
+          style: theme.textTheme.subtitle2.copyWith(
             color: theme.accentColor,
           ),
         ),

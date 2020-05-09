@@ -18,7 +18,7 @@ class CargaHorariaTile extends StatelessWidget {
       onSuccess: (_, int carga) {
         return Column(
           children: <Widget>[
-            ListSectionDecorator(label: Strings.cargaHoraria),
+            const ListSectionDecorator(label: Strings.cargaHoraria),
             Container(
               width: double.maxFinite,
               padding: const EdgeInsets.only(bottom: 16),

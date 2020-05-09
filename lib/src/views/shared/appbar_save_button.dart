@@ -13,7 +13,7 @@ class AppbarSaveButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
-      child: Text(Strings.salvar, style: Theme.of(context).textTheme.subhead),
+      child: Text(Strings.salvar, style: Theme.of(context).textTheme.subtitle1),
       onPressed: onPressed,
     );
   }

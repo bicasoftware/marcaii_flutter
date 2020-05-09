@@ -29,9 +29,9 @@ class PorcentagemContainer extends StatelessWidget {
             const SizedBox(width: 16),
             Column(
               children: <Widget>[
-                Text(label, style: theme.textTheme.subtitle),
+                Text(label, style: theme.textTheme.subtitle1),
                 const SizedBox(height: 8),
-                Text("$porc %", style: theme.textTheme.subhead),
+                Text("$porc %", style: theme.textTheme.subtitle2),
               ],
             ),
           ],

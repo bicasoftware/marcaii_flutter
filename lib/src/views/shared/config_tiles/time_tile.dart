@@ -24,7 +24,7 @@ class TimePickerTile extends StatelessWidget {
       icon: icon,
       trailing: Text(
         initialTime.toShortString(),
-        style: Theme.of(context).textTheme.subhead,
+        style: Theme.of(context).textTheme.subtitle1,
         textAlign: TextAlign.end,
       ),
       onTap: () async {

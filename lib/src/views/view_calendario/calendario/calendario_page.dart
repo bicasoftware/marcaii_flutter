@@ -3,7 +3,7 @@ import 'package:lib_observer/lib_observer.dart';
 import 'package:marcaii_flutter/helpers.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
-import 'package:marcaii_flutter/src/state/calendario_item.dart';
+import 'package:marcaii_flutter/src/state/calendario_child.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/calendario/calendario_item.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/calendario/calendario_item_empty.dart';

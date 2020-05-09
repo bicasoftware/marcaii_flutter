@@ -1,4 +1,4 @@
-import 'package:marcaii_flutter/src/state/calendario_item.dart';
+import 'package:marcaii_flutter/src/state/calendario_child.dart';
 
 class Calendario {
   Calendario({this.vigencia, this.items});

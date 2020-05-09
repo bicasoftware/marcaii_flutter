@@ -99,7 +99,7 @@ class _ViewSigninState extends State<ViewSignin> {
             Strings.appName,
             maxLines: 1,
             textAlign: TextAlign.center,
-            style: theme.textTheme.display1.copyWith(
+            style: theme.textTheme.headline4.copyWith(
               color: Colors.white,
             ),
           ),
