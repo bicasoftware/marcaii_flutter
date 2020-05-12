@@ -21,18 +21,18 @@ class DoubleLineAppbar extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return AppBar(
-      iconTheme: ThemeData.dark().iconTheme,
+
       title: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
             title,
-            style: theme.textTheme.headline6.copyWith(color: Colors.white),
+            style: theme.textTheme.headline6.copyWith(fontWeight: FontWeight.normal),
           ),
           Text(
             subtitle,
-            style: theme.textTheme.subtitle1.copyWith(color: Colors.white70),
+            style: theme.textTheme.subtitle1.copyWith(color: Colors.black45),
           ),
         ],
       ),

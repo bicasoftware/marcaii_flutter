@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:marcaii_flutter/src/database/dao/dao_empregos.dart';
 import 'package:marcaii_flutter/src/server/clients/user_client.dart';
@@ -59,8 +60,7 @@ class _LoginViewState extends State<LoginView> {
             refreshToken: result.refresh_token,
             email: result.email,
           );
-
-          await DaoEmpregos.syncFromServer(result.empregos);
+         await DaoEmpregos.syncFromServer(result.empregos);
 
           Navigator.of(_globalKey.currentContext, rootNavigator: true).pop();
           widget.setPosition(2);

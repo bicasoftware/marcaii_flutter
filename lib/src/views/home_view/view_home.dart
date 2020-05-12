@@ -7,7 +7,7 @@ import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
 import 'package:marcaii_flutter/src/views/home_view/view_home_drawer.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/view_calendario.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/view_empregos.dart';
-import 'package:marcaii_flutter/src/views/view_parciais/view_parciais.dart';
+import 'package:marcaii_flutter/src/views/view_totais/view_totais.dart';
 import 'package:marcaii_flutter/strings.dart';
 import 'package:provider/provider.dart';
 

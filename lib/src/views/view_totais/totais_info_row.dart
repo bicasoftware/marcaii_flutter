@@ -9,14 +9,14 @@ class TotaisInfoRow extends StatelessWidget {
   }) : super(key: key);
 
   final String label, value;
-  final IconData icon;
+  final Icon icon;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Row(
       children: <Widget>[
-        Icon(icon, color: Colors.grey),
+        icon,
         const SizedBox(width: 16),
         Text(
           label,

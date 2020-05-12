@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
-import 'package:marcaii_flutter/src/views/view_parciais/tab_list/parciais_list_item.dart';
+import 'package:marcaii_flutter/src/views/view_totais/tab_list/parciais_list_item.dart';
 
 class ViewParciaisList extends StatelessWidget {
   const ViewParciaisList({
