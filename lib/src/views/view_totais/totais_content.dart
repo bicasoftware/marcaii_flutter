@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/src/state/totais_domain/totais_detalhes.dart';
+import 'package:marcaii_flutter/src/utils/double_utils.dart';
 import 'package:marcaii_flutter/src/utils/helpers/hora_helper.dart';
 import 'package:marcaii_flutter/src/views/view_totais/totais_info_header.dart';
 import 'package:marcaii_flutter/src/views/view_totais/totais_info_row.dart';
@@ -47,7 +48,6 @@ class TotaisContent extends StatelessWidget {
             porcentagem: detalhe.porcentagem,
             title: label,
           ),
-          // const Divider(indent: 8, endIndent: 8, height: 0),
           Container(
             padding: const EdgeInsets.symmetric(
               horizontal: 16,
@@ -59,28 +59,38 @@ class TotaisContent extends StatelessWidget {
                 TotaisInfoRow(
                   icon: Icon(LineAwesomeIcons.clock_o),
                   label: Strings.horasExtras,
-                  value: "3:40 horas",
+                  value: detalhe.minutos.toString(),
                 ),
                 const SizedBox(height: 8),
                 TotaisInfoRow(
                   icon: Icon(LineAwesomeIcons.money),
                   label: Strings.totalReceber,
-                  value: "36,23 R\$",
+                  value: doubleToCurrency(detalhe.total),
                 ),
                 const Divider(),
-                ListView.separated(
-                  shrinkWrap: true,
-                  itemCount: detalhe.horas.length,
-                  physics: const NeverScrollableScrollPhysics(),
-                  separatorBuilder: (_, i) => const SizedBox(height: 4),
-                  itemBuilder: (_, i) {
-                    final hora = detalhe.horas[i];
-                    return TotaisListItem(
-                      data: hora.data,
-                      minutes: hora.difMinutes(),
-                    );
-                  },
-                )
+                detalhe.horas.isNotEmpty
+                    ? ListView.separated(
+                        shrinkWrap: true,
+                        itemCount: detalhe.horas.length,
+                        physics: const NeverScrollableScrollPhysics(),
+                        separatorBuilder: (_, i) => const SizedBox(height: 4),
+                        itemBuilder: (_, i) {
+                          final hora = detalhe.horas[i];
+                          return TotaisListItem(
+                            data: hora.data,
+                            minutes: hora.difMinutes(),
+                          );
+                        },
+                      )
+                    : Container(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        width: double.maxFinite,
+                        child: Text(
+                          Strings.nenhumaHora,
+                          style: Theme.of(context).textTheme.caption,
+                          textAlign: TextAlign.start,
+                        ),
+                      )
               ],
             ),
           )

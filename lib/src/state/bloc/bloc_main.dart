@@ -6,7 +6,6 @@ import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/state/app_state.dart';
 import 'package:marcaii_flutter/src/state/bloc/base_bloc.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
-import 'package:marcaii_flutter/strings.dart';
 import 'package:rxdart/rxdart.dart';
 
 class BlocMain with BaseBloc {
@@ -14,18 +13,10 @@ class BlocMain with BaseBloc {
     @required final String token,
     @required final List<Empregos> empregos,
   }) {
-    this.state = AppState(
+    state = AppState(
       token: token,
       empregos: empregos,
     );
-
-    _bhsEmpregos.listen((empregos) {
-      _countEmpregos.sink.add(empregos.length);
-    });
-
-    _bhsNavPosition.listen((int pos) {
-      _appBarTitle.sink.add(Consts.appBarTitles[pos]);
-    });
 
     _inToken.add(state.token);
     _bhsNavPosition.sink.add(state.navPosition);
@@ -43,9 +34,6 @@ class BlocMain with BaseBloc {
   Stream<List<Empregos>> get empregos => _bhsEmpregos.stream;
   Sink<List<Empregos>> get _inEmpregos => _bhsEmpregos.sink;
 
-  final _countEmpregos = StreamController<int>();
-  Stream<int> get outCount => _countEmpregos.stream;
-
   final BehaviorSubject<Vigencia> _bhsVigencia = BehaviorSubject<Vigencia>();
   Stream<Vigencia> get outVigencia => _bhsVigencia.stream;
   Sink<Vigencia> get _inVigencia => _bhsVigencia.sink;
@@ -53,17 +41,12 @@ class BlocMain with BaseBloc {
   final BehaviorSubject<int> _bhsNavPosition = BehaviorSubject<int>();
   Stream<int> get outNavPosition => _bhsNavPosition.stream;
 
-  final _appBarTitle = StreamController<String>();
-  Stream<String> get outAppbarTitle => _appBarTitle.stream;
-
   @override
   void dispose() {
     _bhsToken.close();
     _bhsEmpregos.close();
-    _countEmpregos.close();
     _bhsVigencia.close();
     _bhsNavPosition.close();
-    _appBarTitle.close();
   }
 
   void incMes() {
@@ -76,7 +59,7 @@ class BlocMain with BaseBloc {
     _inVigencia.add(state.vigencia);
   }
 
-  void setVigencia(Vigencia vigencia){
+  void setVigencia(Vigencia vigencia) {
     state.setVigencia(vigencia);
     _inVigencia.add(state.vigencia);
   }

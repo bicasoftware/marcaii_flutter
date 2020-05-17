@@ -53,10 +53,10 @@ class Horas implements Model<Horas> {
     return Horas(
       id: null,
       emprego_id: emprego_id,
-      tipo: this.tipo,
-      inicio: this.inicio,
-      termino: this.termino,
-      data: this.data,
+      tipo: tipo,
+      inicio: inicio,
+      termino: termino,
+      data: data,
     );
   }
 
@@ -74,7 +74,7 @@ class Horas implements Model<Horas> {
   DateTime get inicioAsDate => mergeTimeNDateTime(inicio, data);
   DateTime get terminoAsDate => mergeTimeNDateTime(inicio, data);
 
-  bool hasValidDates() => this.inicioAsDate.isBefore(terminoAsDate);
+  bool hasValidDates() => inicioAsDate.isBefore(terminoAsDate);
 
   static get columns => [ID, TIPO, INICIO, TERMINO];
 
@@ -103,5 +103,5 @@ class Horas implements Model<Horas> {
 
   Map<String, Object> toJson() => _$HorasToJson(this);
 
-  Color get color => Consts.horaColor[this.tipo];
+  Color get color => Consts.horaColor[tipo];
 }

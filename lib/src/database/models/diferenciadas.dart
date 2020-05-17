@@ -69,10 +69,10 @@ class Diferenciadas implements Model<Diferenciadas> {
     return Diferenciadas(
       id: null,
       emprego_id: emprego_id,
-      porc: this.porc,
-      weekday: this.weekday,
-      vigencia: this.vigencia,
-      ativo: this.ativo,
+      porc: porc,
+      weekday: weekday,
+      vigencia: vigencia,
+      ativo: ativo,
     );
   }
 
@@ -100,9 +100,9 @@ class Diferenciadas implements Model<Diferenciadas> {
     return identical(this, other) ||
         other is Diferenciadas &&
             runtimeType == other.runtimeType &&
-            this.porc == other.porc &&
-            this.weekday == other.weekday &&
-            this.vigencia == other.vigencia &&
-            this.ativo == other.ativo;
+            porc == other.porc &&
+            weekday == other.weekday &&
+            vigencia == other.vigencia &&
+            ativo == other.ativo;
   }
 }

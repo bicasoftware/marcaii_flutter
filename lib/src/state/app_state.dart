@@ -11,15 +11,14 @@ class AppState {
     this.empregos,
   }) {
     vigencia = Vigencia.fromDateTime(DateTime.now());
-    navPosition = empregos.isNotEmpty ? 1 : 0;
   }
 
   String token;
   Vigencia vigencia;
-  int navPosition;
+  int navPosition = 0;
   List<Empregos> empregos;
 
-  void setNavPosition(int pos) => this.navPosition = pos;
+  void setNavPosition(int pos) => navPosition = pos;
 
   void addMes() => vigencia.incMonth();
 

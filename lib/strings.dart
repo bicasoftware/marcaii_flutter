@@ -50,6 +50,7 @@ class Strings {
   static const String das = "Das";
   static const String ate = "Até";
   static const String minutos = "minutos";
+  static const String nenhumaHora = "Nenhuma Hora";
 }
 
 class Validations {
@@ -121,6 +122,7 @@ class Consts {
     "Normais",
     "Feriados",
     "Diferenciadas",
+    "Totais"
   ];
 
   static const tipoHoraPlural = <String>[

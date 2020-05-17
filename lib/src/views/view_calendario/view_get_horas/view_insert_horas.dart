@@ -43,7 +43,7 @@ class _ViewInsertHorasState extends State<ViewInsertHoras> {
   }
 
   void setTipo(int newTipo) {
-    setState(() => this.tipo = newTipo);
+    setState(() => tipo = newTipo);
     hasChanged = true;
   }
 

@@ -85,6 +85,13 @@ void main() {
     print(dt.format());
     print(dt.formatAsDefault());
   });
+
+  test('periodo range', (){
+    final v = Vigencia(ano: 2020, mes: 1);
+    final range = v.getDateRange(25);
+
+    range.forEach((DateTime e) => print(e.toIso8601String()));
+  });
 }
 
 @immutable

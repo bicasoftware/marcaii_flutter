@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:marcaii_flutter/src/state/totais_domain/totais_detalhes.dart';
-import 'package:marcaii_flutter/src/views/view_totais/totais_colored_indicator.dart';
 import 'package:marcaii_flutter/src/views/view_totais/totais_content.dart';
 
 class TotaisDiferenciaisContainer extends StatelessWidget {

@@ -65,9 +65,9 @@ class Salarios implements Model<Salarios> {
     return Salarios(
       id: null,
       emprego_id: emprego_id,
-      valor: this.valor,
-      vigencia: this.vigencia,
-      ativo: this.ativo,
+      valor: valor,
+      vigencia: vigencia,
+      ativo: ativo,
     );
   }
 
@@ -87,7 +87,7 @@ class Salarios implements Model<Salarios> {
 
   ///Retorna valor do salário formatado
   String valorAsString() {
-    return NumberFormat.simpleCurrency(locale: "pt_Br").format(this.valor);
+    return NumberFormat.simpleCurrency(locale: "pt_Br").format(valor);
   }
 
   static const String tableName = "salarios";
@@ -119,9 +119,9 @@ class Salarios implements Model<Salarios> {
     return identical(this, other) ||
         other is Salarios &&
             runtimeType == other.runtimeType &&
-            this.valor == other.valor &&
-            this.vigencia == other.vigencia &&
-            this.ativo == other.ativo;
+            valor == other.valor &&
+            vigencia == other.vigencia &&
+            ativo == other.ativo;
   }
 
   @override

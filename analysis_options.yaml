@@ -1,4 +1,3 @@
-include: package:pedantic/analysis_options.yaml
 analyzer:
   exclude: [build/**, lib/**/*.g.dart]
   strong-mode:
@@ -24,6 +23,7 @@ linter:
     - avoid_renaming_method_parameters
     - avoid_return_types_on_setters
 #    - avoid_single_cascade_in_expression_statements
+    # - prefer_single_quotes
     - avoid_slow_async_io
     - avoid_types_as_parameter_names
     - avoid_unused_constructor_parameters
@@ -89,11 +89,14 @@ linter:
     - unnecessary_overrides
     - unnecessary_parenthesis
     - unnecessary_statements
-    # - unnecessary_this
+    - unnecessary_this
     - unrelated_type_equality_checks
     - use_rethrow_when_possible
     - use_string_buffers
     - use_to_and_as_if_applicable
     - valid_regexps
     - void_checks
-#    - unnecessary_final
+    # - unnecessary_final
+    # - prefer_relative_imports
+    # - public_member_api_docs
+    

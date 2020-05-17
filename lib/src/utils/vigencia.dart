@@ -1,3 +1,4 @@
+import 'package:jiffy/jiffy.dart';
 import 'package:marcaii_flutter/strings.dart';
 
 class Vigencia {
@@ -8,13 +9,13 @@ class Vigencia {
 
   Vigencia.fromString(String vigencia) {
     final vig = parseVigencia(vigencia);
-    this.mes = vig[0];
-    this.ano = vig[1];
+    mes = vig[0];
+    ano = vig[1];
   }
 
   Vigencia.fromDateTime(DateTime date) {
-    this.ano = date.year;
-    this.mes = date.month;
+    ano = date.year;
+    mes = date.month;
   }
 
   int ano, mes;
@@ -37,8 +38,15 @@ class Vigencia {
     }
   }
 
+  List<DateTime> getDateRange(int diaFechamento) {
+    final termino = DateTime(ano, mes, diaFechamento, 0, 0, 0);
+    final inicio = Jiffy(termino)..subtract(months: 1)..subtract(days: 1);
+
+    return <DateTime>[inicio.dateTime, termino];
+  }
+
   String get vigencia => formatVigencia(ano, mes);
-  String get vigenciaExtenso => "${Consts.meses[mes-1]}/$ano";
+  String get vigenciaExtenso => "${Consts.meses[mes - 1]}/$ano";
 
   static String formatVigencia(int ano, int mes) {
     return "${_rightIndexMonth(mes)}/$ano";

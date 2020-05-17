@@ -1,6 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:lib_observer/lib_observer.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
@@ -14,9 +13,39 @@ import 'package:marcaii_flutter/src/views/view_calendario/calendario_navigator.d
 import 'package:marcaii_flutter/src/views/view_calendario/view_get_horas/view_insert_horas.dart';
 import 'package:provider/provider.dart';
 
-class ViewCalendario extends StatelessWidget {
+class ViewCalendario extends StatefulWidget {
+  const ViewCalendario({
+    @required this.empregos,
+    @required this.vigencia,
+    Key key,
+  }) : super(key: key);
 
-  const ViewCalendario({Key key}) : super(key: key);
+  final List<Empregos> empregos;
+  final Vigencia vigencia;
+
+  @override
+  _ViewCalendarioState createState() => _ViewCalendarioState();
+}
+
+class _ViewCalendarioState extends State<ViewCalendario> with SingleTickerProviderStateMixin {
+  TabController controller;
+  int pos;
+  BlocMain b;
+
+  @override
+  void initState() {
+    pos = 0;
+    controller = TabController(
+      vsync: this,
+      initialIndex: pos,
+      length: widget.empregos.length,
+    )..addListener(() {
+        if (!controller.indexIsChanging) {
+          b.setNavPosition(controller.index);
+        }
+      });
+    super.initState();
+  }
 
   Future<Horas> showViewGetHoras({
     @required BuildContext context,
@@ -59,83 +88,73 @@ class ViewCalendario extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final b = Provider.of<BlocMain>(context);
+    b = Provider.of<BlocMain>(context);
     final theme = Theme.of(context);
 
-    return MergedStreamObserver(
-      streams: [b.empregos, b.outVigencia],
-      onSuccess: (BuildContext context, List<Object> data) {
-        final empregos = data[0] as List<Empregos>;
-        final vigencia = data[1] as Vigencia;
-
-        return DefaultTabController(
-          length: empregos.length,
-          initialIndex: 0,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              CalendarioNavigator(),
-              const Divider(height: 0, indent: 16, endIndent: 16),
-              if (empregos.length > 1)
-                TabBar(
-                  labelColor: theme.accentColor,
-                  unselectedLabelColor: theme.primaryColorLight,
-                  tabs: empregos.map((e) {
-                    return Tab(
-                      child: AutoSizeText(
-                        e.nome,
-                        maxLines: 1,
-                      ),
-                    );
-                  }).toList(),
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        CalendarioNavigator(),
+        const Divider(height: 0, indent: 16, endIndent: 16),
+        if (widget.empregos.length > 1)
+          TabBar(
+            controller: controller,
+            labelColor: theme.accentColor,
+            unselectedLabelColor: theme.primaryColorLight,
+            tabs: widget.empregos.map((e) {
+              return Tab(
+                child: AutoSizeText(
+                  e.nome,
+                  maxLines: 1,
                 ),
-              CalendarioHeader(),
-              const Divider(height: 0, indent: 16, endIndent: 16),
-              Expanded(
-                child: TabBarView(
-                  children: [
-                    for (final e in empregos)
-                      CalendarioPage(
+              );
+            }).toList(),
+          ),
+        CalendarioHeader(),
+        const Divider(height: 0, indent: 16, endIndent: 16),
+        Expanded(
+          child: TabBarView(
+            controller: controller,
+            children: [
+              for (final e in widget.empregos)
+                CalendarioPage(
+                  emprego: e,
+                  onItemTap: (CalendarioChild child) async {
+                    if (child.hora == null) {
+                      final hora = await showViewGetHoras(
+                        context: context,
                         emprego: e,
-                        onItemTap: (CalendarioChild child) async {
-                          if (child.hora == null) {
-                            final hora = await showViewGetHoras(
-                              context: context,
-                              emprego: e,
-                              date: child.date,
-                            );
-                            if (hora != null && hora is Horas) {
-                              b.addHora(hora, vigencia);
-                            }
-                          } else {
-                            final canDelete = await showViewInfoHoras(
-                              context: context,
-                              emprego: e,
-                              child: child,
-                            );
-                            if (canDelete) {
-                              final confirmRemove = await showConfirmationDialog(
-                                context: context,
-                                title: "Exclusão",
-                                message: "Deseja apagar a hora extra?",
-                                negativeCaption: "Cancelar",
-                                positiveCaption: "Apagar!",
-                              );
+                        date: child.date,
+                      );
+                      if (hora != null && hora is Horas) {
+                        b.addHora(hora, widget.vigencia);
+                      }
+                    } else {
+                      final canDelete = await showViewInfoHoras(
+                        context: context,
+                        emprego: e,
+                        child: child,
+                      );
+                      if (canDelete) {
+                        final confirmRemove = await showConfirmationDialog(
+                          context: context,
+                          title: "Exclusão",
+                          message: "Deseja apagar a hora extra?",
+                          negativeCaption: "Cancelar",
+                          positiveCaption: "Apagar!",
+                        );
 
-                              if (confirmRemove == true) {
-                                b.removeHora(hora: child.hora, emprego_id: e.id);
-                              }
-                            }
-                          }
-                        },
-                      ),
-                  ],
+                        if (confirmRemove == true) {
+                          b.removeHora(hora: child.hora, emprego_id: e.id);
+                        }
+                      }
+                    }
+                  },
                 ),
-              ),
             ],
           ),
-        );
-      },
+        ),
+      ],
     );
   }
 }

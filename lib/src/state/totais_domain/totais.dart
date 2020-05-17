@@ -7,17 +7,14 @@ class Totais {
     @required this.mes,
     @required this.inicio,
     @required this.termino,
-    @required this.minutos,
-    @required this.totalReceber,
     @required this.normais,
     @required this.feriados,
+    @required this.totaisGeral,
     @required this.difer,
   });
 
   final int mes;
   final DateTime inicio, termino;
-  final int minutos;
-  final double totalReceber;
-  final TotaisDetalhe normais, feriados;
+  final TotaisDetalhe normais, feriados, totaisGeral;
   final List<TotaisDetalhe> difer;
 }

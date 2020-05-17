@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
 
 extension DateHelper on DateTime {
-  String format({String pattern = "dd/MM/yyyy"}) {
+  String format({String pattern = 'dd/MM/yyyy'}) {
     return DateFormat(pattern).format(this);
   }
 
@@ -9,10 +9,10 @@ extension DateHelper on DateTime {
     return format(pattern: 'yyyy-MM-dd');
   }
 
-  String asString() => DateFormat("dd/MM/yyyy").format(this);
+  String asString() => DateFormat('dd/MM/yyyy').format(this);
   String asStringWithPattern(String pattern) => DateFormat(pattern).format(this);
   int indexWeekday() {
-    switch (this.weekday) {
+    switch (weekday) {
       case DateTime.sunday:
         return 0;
         break;
@@ -41,10 +41,8 @@ extension DateHelper on DateTime {
   }
 
   bool isSameDate(DateTime otherDate) {
-    return this.year == otherDate.year &&
-        this.month == otherDate.month &&
-        this.day == otherDate.day;
+    return year == otherDate.year && month == otherDate.month && day == otherDate.day;
   }
 
-  String paddedWeekday(int padLen) => this.day.toString().padLeft(padLen, "0");
+  String paddedWeekday(int padLen) => day.toString().padLeft(padLen, '0');
 }

@@ -44,4 +44,40 @@ class CalcHelper {
   static double getValorPorcentagem(double salarioHora, int porcentagem) {
     return salarioHora * (porcentagem / 100);
   }
+
+  static double provideValorPorcentagem(
+    Empregos emprego,
+    int tipoHora,
+    DateTime inicio,
+    int weekday,
+  ) {
+    int porcentagem = 0;
+    switch (tipoHora) {
+      case 0:
+        porcentagem = emprego.porc;
+        break;
+      case 1:
+        porcentagem = emprego.porc_completa;
+        break;
+      case 2:
+        porcentagem = emprego.diferenciadas.firstWhere((d) => d.weekday == weekday).porc;
+        break;
+      default:
+        porcentagem = emprego.porc;
+    }
+
+    final salario = CalcHelper.getActualSalario(emprego.fechamento, inicio, emprego.salarios);
+
+    final salarioHora = salario / (emprego.carga_horaria);
+    return salarioHora * (porcentagem / 100);
+  }
+
+  static double getSalarioMinuto(
+    Empregos emprego,
+    DateTime inicio,
+  ) {
+    final salario = CalcHelper.getActualSalario(emprego.fechamento, inicio, emprego.salarios);
+    final salarioHora = salario / (emprego.carga_horaria);
+    return salarioHora / 60;
+  }
 }

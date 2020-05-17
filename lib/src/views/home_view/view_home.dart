@@ -1,9 +1,11 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:lib_observer/lib_observer.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
+import 'package:marcaii_flutter/src/utils/vigencia.dart';
 import 'package:marcaii_flutter/src/views/home_view/view_home_drawer.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/view_calendario.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/view_empregos.dart';
@@ -53,35 +55,40 @@ class _ViewHomeState extends State<ViewHome> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     final b = Provider.of<BlocMain>(context);
+    final theme = Theme.of(context);
 
-    return StreamObserver<int>(
-      stream: b.outNavPosition,
-      onSuccess: (_, int pos) {
+    return MergedStreamObserver(
+      streams: [b.empregos, b.outVigencia, b.outNavPosition],
+      onSuccess: (BuildContext context, List<Object> data) {
+        final empregos = data[0] as List<Empregos>;
+        final vigencia = data[1] as Vigencia;
+        final pos = data[2] as int;
+
         return Scaffold(
           appBar: AppBar(
-            title: Text(Consts.appBarTitles[pos]),
+            title: Text(Strings.calendario),
             elevation: 1,
           ),
-          drawer: ViewHomeDrawer(
-            onNewEmprego: () => onNewEmprego(b),
+          body: ViewCalendario(
+            empregos: empregos,
+            vigencia: vigencia,
           ),
-          body: const ViewCalendario(),
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: FloatingActionButton.extended(
-            elevation: 2,
-            label: Text(Strings.verTotais),
-            icon: Icon(LineAwesomeIcons.money),
-            onPressed: () {
-              //TODO - Listar todas as horas da vigência, (fechamento+1 e mes -1)
-              //TODO - gerar model e passar para ViewParciais
-              //TODO - Implementar layout da tela de parciais, com totalizador e gerador de arquivos
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  fullscreenDialog: true,
-                  builder: (_) => const ViewParciais(),
-                ),
-              );
-            },
+          drawer: ViewHomeDrawer(onNewEmprego: () => onNewEmprego(b)),
+          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+          floatingActionButton: OpenContainer(
+            transitionDuration: const Duration(milliseconds: 400),
+            closedColor: theme.accentColor,
+            openColor: theme.canvasColor,
+            closedShape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30)),
+            ),
+            transitionType: ContainerTransitionType.fadeThrough,
+            openBuilder: (_, __) => ViewTotais(totais: empregos[pos].generateTotais(vigencia)),
+            closedBuilder: (_, VoidCallback call) => FloatingActionButton(
+              // label: Text(Strings.verTotais),
+              child: Icon(LineAwesomeIcons.money),
+              onPressed: call,
+            ),
           ),
         );
       },

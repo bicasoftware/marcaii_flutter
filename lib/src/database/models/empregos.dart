@@ -11,8 +11,11 @@ import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_column.dart
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_table.dart';
 import 'package:marcaii_flutter/src/state/calendario.dart';
 import 'package:marcaii_flutter/src/state/calendario_child.dart';
+import 'package:marcaii_flutter/src/state/totais_domain/totais.dart';
+import 'package:marcaii_flutter/src/state/totais_domain/totais_detalhes.dart';
 import 'package:marcaii_flutter/src/utils/calendar_generator.dart';
 import 'package:marcaii_flutter/src/utils/helpers/time_helper.dart';
+import 'package:marcaii_flutter/src/utils/hora_calc.dart';
 import 'package:marcaii_flutter/src/utils/json_utils.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
 
@@ -28,13 +31,14 @@ class Empregos implements Model<Empregos> {
     this.porc_completa = 100,
     this.fechamento = 25,
     this.banco_horas = false,
-    this.saida = "17:00",
+    this.saida = '17:00',
     this.carga_horaria = 220,
     this.ativo = true,
     this.horas,
     this.diferenciadas,
     this.salarios,
     this.calendario,
+    this.totais,
   });
 
   factory Empregos.fromMap(Map<String, dynamic> map) {
@@ -58,6 +62,8 @@ class Empregos implements Model<Empregos> {
   final List<Salarios> salarios;
   @JsonKey(ignore: true)
   final List<Calendario> calendario;
+  @JsonKey(ignore: true)
+  final Totais totais;
 
   // @JsonKey(toJson: boolToInt, fromJson: intToBool)
   final bool banco_horas;
@@ -78,14 +84,14 @@ class Empregos implements Model<Empregos> {
   Empregos forFirstSync() {
     return Empregos(
       id: null,
-      nome: this.nome,
-      porc: this.porc,
-      porc_completa: this.porc_completa,
-      fechamento: this.fechamento,
-      banco_horas: this.banco_horas,
-      saida: this.saida,
-      carga_horaria: this.carga_horaria,
-      ativo: this.ativo,
+      nome: nome,
+      porc: porc,
+      porc_completa: porc_completa,
+      fechamento: fechamento,
+      banco_horas: banco_horas,
+      saida: saida,
+      carga_horaria: carga_horaria,
+      ativo: ativo,
       //TODO - Repassar rotina
       horas: [],
       salarios: [],
@@ -163,27 +169,27 @@ class Empregos implements Model<Empregos> {
   ///Usar com Sqlite
   Map<String, Object> toMap() {
     return {
-      ID: this.id,
-      NOME: this.nome,
-      SAIDA: this.saida,
-      PORC: this.porc,
-      PORC_COMPLETA: this.porc_completa,
-      FECHAMENTO: this.fechamento,
-      CARGA_HORARIA: this.carga_horaria,
-      BANCO_HORAS: boolToInt(this.banco_horas),
-      ATIVO: boolToInt(this.ativo),
+      ID: id,
+      NOME: nome,
+      SAIDA: saida,
+      PORC: porc,
+      PORC_COMPLETA: porc_completa,
+      FECHAMENTO: fechamento,
+      CARGA_HORARIA: carga_horaria,
+      BANCO_HORAS: boolToInt(banco_horas),
+      ATIVO: boolToInt(ativo),
     };
   }
 
   bool equals(Empregos emprego, List<Salarios> salarios, List<Diferenciadas> diferenciadas) {
-    final isSameEmprego = this.nome == emprego.nome &&
-        this.porc == emprego.porc &&
-        this.porc_completa == emprego.porc_completa &&
-        this.fechamento == emprego.fechamento &&
-        this.banco_horas == emprego.banco_horas &&
-        this.saida == emprego.saida &&
-        this.carga_horaria == emprego.carga_horaria &&
-        this.ativo == emprego.ativo;
+    final isSameEmprego = nome == emprego.nome &&
+        porc == emprego.porc &&
+        porc_completa == emprego.porc_completa &&
+        fechamento == emprego.fechamento &&
+        banco_horas == emprego.banco_horas &&
+        saida == emprego.saida &&
+        carga_horaria == emprego.carga_horaria &&
+        ativo == emprego.ativo;
 
     final changedSalarios = listEquals(this.salarios, salarios);
     final changedDiferenciadas = listEquals(emprego.diferenciadas, diferenciadas);
@@ -231,5 +237,92 @@ class Empregos implements Model<Empregos> {
 
   void addDiferenciada(Diferenciadas dif) {
     diferenciadas.add(dif);
+  }
+
+  List<Horas> getHorasInRange(DateTime inicio, DateTime termino) {
+    final ini = inicio.subtract(const Duration(days: 1));
+    final end = termino.add(const Duration(days: 1));
+    return horas
+        .where((Horas h) => h.inicioAsDate.isAfter(ini) && h.terminoAsDate.isBefore(end))
+        .toList()
+          ..sort((Horas a, Horas b) => a.data.compareTo(b.data));
+  }
+
+  Totais generateTotais(Vigencia vigencia) {
+    //TODO - Calcular os totais!
+    final periodo = vigencia.getDateRange(fechamento);
+    final inicio = periodo[0];
+    final termino = periodo[1];
+
+    final double salarioMinuto = CalcHelper.getSalarioMinuto(this, inicio);
+    final double valorPorcNormal = salarioMinuto * (porc / 100);
+    final double valorPorcCompleta = salarioMinuto * (porc_completa / 100);
+
+    final horasPeriodo = getHorasInRange(inicio, termino);
+    horasPeriodo.sort((Horas a, Horas b) => a.data.compareTo(b.data));
+
+    final minutesNormal = horasPeriodo
+        .where((e) => e.tipo == 0)
+        .fold<int>(0, (int t, Horas n) => t + n.difMinutes() ?? 0);
+
+    final totalReceberNormal = valorPorcNormal * minutesNormal;
+    final minutesFeriados = horasPeriodo
+        .where((e) => e.tipo == 1)
+        .fold<int>(0, (int t, Horas n) => t + n.difMinutes() ?? 0);
+    final totalReceberFeriados = valorPorcCompleta * minutesFeriados;
+
+    final minutesDif = horasPeriodo
+        .where((e) => e.tipo == 2)
+        .fold<int>(0, (int t, Horas n) => t + n.difMinutes() ?? 0);
+
+    double totalDifer = 0;
+
+    final difer = <TotaisDetalhe>[];
+
+    for (final d in diferenciadas) {
+      final list =
+          horasPeriodo.where((h) => h.tipo == 2 && h.data.indexWeekday() == d.weekday).toList();
+      final difMin = list.fold<int>(0, (int t, Horas n) => t + n.difMinutes() ?? 0);
+      final valorDifHora = salarioMinuto * (d.porc / 100);
+      final totDif = difMin * valorDifHora;
+      totalDifer += totDif;
+      difer.add(
+        TotaisDetalhe(
+          minutos: difMin,
+          total: totDif,
+          porcentagem: d.porc,
+          weekday: d.weekday,
+          horas: list,
+        ),
+      );
+    }
+
+    return Totais(
+      inicio: inicio,
+      termino: termino,
+      mes: vigencia.mes,
+      totaisGeral: TotaisDetalhe(
+        weekday: null,
+        total: totalReceberNormal + totalReceberFeriados + totalDifer,
+        minutos: minutesNormal + minutesDif + minutesFeriados,
+        porcentagem: null,
+        horas: horasPeriodo,
+      ),
+      normais: TotaisDetalhe(
+        minutos: minutesNormal,
+        total: totalReceberNormal,
+        porcentagem: porc,
+        weekday: null,
+        horas: horasPeriodo.where((e) => e.tipo == 0).toList(),
+      ),
+      feriados: TotaisDetalhe(
+        minutos: minutesFeriados,
+        total: totalReceberFeriados,
+        porcentagem: porc_completa,
+        weekday: null,
+        horas: horasPeriodo.where((e) => e.tipo == 1).toList(),
+      ),
+      difer: difer,
+    );
   }
 }

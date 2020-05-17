@@ -3,14 +3,14 @@ import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/strings.dart';
 
 extension HoraHelper on Horas {
-  Color getColor() => Consts.horaColor[this.tipo];
-  String getTipo() => Consts.tipoHora[this.tipo];
+  Color getColor() => Consts.horaColor[tipo];
+  String getTipo() => Consts.tipoHora[tipo];
 
   int difMinutes() {
     final iniMinutes =
-        int.parse(this.inicio.substring(0, 2)) * 60 + int.parse(this.inicio.substring(3, 5));
+        int.parse(inicio.substring(0, 2)) * 60 + int.parse(inicio.substring(3, 5));
     final endMinutes =
-        int.parse(this.termino.substring(0, 2)) * 60 + int.parse(this.termino.substring(3, 5));
+        int.parse(termino.substring(0, 2)) * 60 + int.parse(termino.substring(3, 5));
     return endMinutes - iniMinutes;
   }
 

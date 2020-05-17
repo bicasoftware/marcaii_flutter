@@ -22,7 +22,7 @@ class BaseConfigTile extends StatelessWidget {
       onTap: onTap,
       onLongPress: onLongPress,
       leading: icon,
-      title: Text(this.label),
+      title: Text(label),
       trailing: SizedBox(
         child: trailing,
         width: trailingWidth,
