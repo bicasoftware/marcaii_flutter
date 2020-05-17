@@ -249,7 +249,6 @@ class Empregos implements Model<Empregos> {
   }
 
   Totais generateTotais(Vigencia vigencia) {
-    //TODO - Calcular os totais!
     final periodo = vigencia.getDateRange(fechamento);
     final inicio = periodo[0];
     final termino = periodo[1];

@@ -25,6 +25,6 @@ class Calendario {
       <CalendarioChild>[CalendarioChild(hora: null, date: items[index].date)],
     );
 
-    return Calendario(vigencia: this.vigencia, items: _items);
+    return Calendario(vigencia: vigencia, items: _items);
   }
 }
