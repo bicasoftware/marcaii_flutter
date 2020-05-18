@@ -30,6 +30,8 @@ class Strings {
   static const String ativo = "Ativo";
   static const String atual = "Emprego Atual";
   static const String descartarAlteracoes = "Deseja descartar as alterações feitas?";
+  static const String removerEmprego = "Confirmar remoção";
+  static const String removerEmpregoMessage = "Ao remover nenhum dado poderá ser recuperadas";
 
   static const String salarios = "Salários";
   static const String salario = "Salário";

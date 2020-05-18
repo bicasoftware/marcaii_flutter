@@ -198,8 +198,10 @@ class Empregos implements Model<Empregos> {
   }
 
   Calendario getCalendario(String vigencia) {
+    ///Testa se já existe alguma página do calendário adicionada.
     final index = calendario.indexWhere((c) => c.vigencia == vigencia);
 
+    ///Se não houver, faz a relação dos dias do mes com a [Horas] conforme a [Vigencia]
     if (index < 0) {
       final vig = Vigencia.fromString(vigencia);
       final calendarioItems = CalendarGenerator.generate(vig.ano, vig.mes, horas);

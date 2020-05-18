@@ -5,7 +5,6 @@ import 'package:marcaii_flutter/helpers.dart';
 import 'package:marcaii_flutter/src/state/totais_domain/totais.dart';
 import 'package:marcaii_flutter/src/utils/doubleline_appbar.dart';
 import 'package:marcaii_flutter/src/views/view_totais/totais_content.dart';
-import 'package:marcaii_flutter/src/views/view_totais/totais_diferenciais_container.dart';
 import 'package:marcaii_flutter/strings.dart';
 
 class ViewTotais extends StatefulWidget {
@@ -62,6 +61,7 @@ class _ViewTotaisState extends State<ViewTotais> with SingleTickerProviderStateM
         duration: const Duration(milliseconds: 300),
         crossFadeState: showFirst ? CrossFadeState.showFirst : CrossFadeState.showSecond,
         firstChild: SingleChildScrollView(
+          ///View com todas as horas do período;
           child: TotaisContent(
             detalhe: totais.totaisGeral,
             tipo: 3,
@@ -71,17 +71,21 @@ class _ViewTotaisState extends State<ViewTotais> with SingleTickerProviderStateM
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
+              ///View horas do período separadas por tipo e ordenados por data
               TotaisContent(
                 detalhe: totais.normais,
                 tipo: 0,
               ),
-              //Totais Horas em Feriados
               TotaisContent(
                 detalhe: totais.feriados,
                 tipo: 1,
               ),
               if (totais.difer != null)
-                TotaisDiferenciaisContainer(diferenciadas: totais.difer),
+                for (final d in totais.difer)
+                  TotaisContent(
+                    tipo: 2,
+                    detalhe: d,
+                  )
             ],
           ),
         ),

@@ -76,6 +76,8 @@ class DaoEmpregos {
       id: empregoId,
       diferenciadas: diferenciadas,
       salarios: salarios,
+      calendario: [],
+      horas: []
     );
   }
 
