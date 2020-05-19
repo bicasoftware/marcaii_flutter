@@ -18,8 +18,11 @@ class BlocMain with BaseBloc {
       empregos: empregos,
     );
 
+    _bhsEmpregos.listen((List<Empregos> a) {
+      _inNavPosition.add(0);
+    });
+
     _inToken.add(state.token);
-    _bhsNavPosition.sink.add(state.navPosition);
     _inVigencia.add(state.vigencia);
     _inEmpregos.add(state.empregos);
   }
@@ -40,6 +43,7 @@ class BlocMain with BaseBloc {
 
   final BehaviorSubject<int> _bhsNavPosition = BehaviorSubject<int>();
   Stream<int> get outNavPosition => _bhsNavPosition.stream;
+  Sink<int> get _inNavPosition => _bhsNavPosition.sink;
 
   @override
   void dispose() {

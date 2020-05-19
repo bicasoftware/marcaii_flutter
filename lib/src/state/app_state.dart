@@ -30,13 +30,14 @@ class AppState {
 
   Future<void> addEmprego(Empregos e) async {
     final newEmprego = await DaoEmpregos.insertWithChildren(e);
-
     empregos.add(newEmprego);
+    navPosition = 0;
   }
 
   Future<void> removeEmprego(Empregos e) async {
     await DaoEmpregos.delete(e.id);
     empregos.removeWhere((emprego) => emprego.id == e.id);
+    navPosition = 0;
   }
 
   Future<void> updateEmprego(Empregos e) async {

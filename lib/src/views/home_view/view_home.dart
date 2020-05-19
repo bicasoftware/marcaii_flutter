@@ -72,6 +72,7 @@ class _ViewHomeState extends State<ViewHome> with SingleTickerProviderStateMixin
           body: ViewCalendario(
             empregos: empregos,
             vigencia: vigencia,
+            index: pos,
           ),
           drawer: ViewHomeDrawer(onNewEmprego: () => onNewEmprego(b)),
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

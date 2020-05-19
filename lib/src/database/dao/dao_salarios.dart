@@ -26,7 +26,7 @@ class DaoSalarios {
     final db = await getDB();
     final id = await db.insert(
       Salarios.tableName,
-      salario.toJson(),
+      salario.toMap(),
     );
 
     return salario.copyWith(id: id);

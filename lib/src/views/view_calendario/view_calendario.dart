@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:lib_observer/lib_observer.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
@@ -13,39 +14,27 @@ import 'package:marcaii_flutter/src/views/view_calendario/calendario_navigator.d
 import 'package:marcaii_flutter/src/views/view_calendario/view_get_horas/view_insert_horas.dart';
 import 'package:provider/provider.dart';
 
+//TODO - Ao remover Emprego, dá tela vermelha, erro de index
+//TODO - Verificar se está removendo as horas, salarios, diferenciais ao remover o emprego
+
 class ViewCalendario extends StatefulWidget {
   const ViewCalendario({
     @required this.empregos,
     @required this.vigencia,
+    @required this.index,
     Key key,
   }) : super(key: key);
 
   final List<Empregos> empregos;
   final Vigencia vigencia;
+  final int index;
 
   @override
   _ViewCalendarioState createState() => _ViewCalendarioState();
 }
 
-class _ViewCalendarioState extends State<ViewCalendario> with SingleTickerProviderStateMixin {
+class _ViewCalendarioState extends State<ViewCalendario> with TickerProviderStateMixin {
   TabController controller;
-  int pos;
-  BlocMain b;
-
-  @override
-  void initState() {
-    pos = 0;
-    controller = TabController(
-      vsync: this,
-      initialIndex: pos,
-      length: widget.empregos.length,
-    )..addListener(() {
-        if (!controller.indexIsChanging) {
-          b.setNavPosition(controller.index);
-        }
-      });
-    super.initState();
-  }
 
   Future<Horas> showViewGetHoras({
     @required BuildContext context,
@@ -88,8 +77,18 @@ class _ViewCalendarioState extends State<ViewCalendario> with SingleTickerProvid
 
   @override
   Widget build(BuildContext context) {
-    b = Provider.of<BlocMain>(context);
+    final b = Provider.of<BlocMain>(context);
     final theme = Theme.of(context);
+
+    controller = TabController(
+      vsync: this,
+      initialIndex: widget.index,
+      length: widget.empregos.length,
+    )..addListener(() {
+        if (!controller.indexIsChanging) {
+          b.setNavPosition(controller.index);
+        }
+      });
 
     return Column(
       mainAxisSize: MainAxisSize.max,

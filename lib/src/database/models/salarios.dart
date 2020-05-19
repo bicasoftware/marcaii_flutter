@@ -76,7 +76,7 @@ class Salarios implements Model<Salarios> {
   /// a vigencia desse novo salário é a partir 26/04/ano
   DateTime vigenciaAsDate(int fechamento) {
     final splitVigencia = vigencia.split("/").map(int.parse).toList();
-    
+
     final ano = splitVigencia.last;
     final mes = splitVigencia.first;
 
@@ -111,6 +111,16 @@ class Salarios implements Model<Salarios> {
 
   Map<String, Object> toJson() {
     return _$SalariosToJson(this);
+  }
+
+  Map<String, Object> toMap() {
+    return {
+      ID: id,
+      EMPREGO_ID: emprego_id,
+      VALOR: valor,
+      VIGENCIA: vigencia,
+      ATIVO: boolToInt(ativo),
+    };
   }
 
   @override

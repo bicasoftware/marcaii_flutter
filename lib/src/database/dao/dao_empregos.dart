@@ -56,8 +56,7 @@ class DaoEmpregos {
 
   static Future<Empregos> insertWithChildren(Empregos model) async {
     final db = await getDB();
-    final data = model.toMap();
-    final empregoId = await db.insert(Empregos.tableName, data);
+    final empregoId = await db.insert(Empregos.tableName, model.toMap());
     final salarios = <Salarios>[];
     final diferenciadas = <Diferenciadas>[];
 

@@ -120,12 +120,7 @@ class Consts {
     120,
   ];
 
-  static const tipoHora = <String>[
-    "Normais",
-    "Feriados",
-    "Diferenciadas",
-    "Totais"
-  ];
+  static const tipoHora = <String>["Normais", "Feriados", "Diferenciadas", "Totais"];
 
   static const tipoHoraPlural = <String>[
     "Normais",
@@ -160,5 +155,13 @@ class Consts {
     Strings.empregos,
     Strings.calendario,
     Strings.parciais,
+  ];
+
+  static const List<Color> empregosColor = [
+    Colors.lightBlue,
+    Colors.pink,
+    Colors.indigo,
+    Colors.purple,
+    Colors.yellow,
   ];
 }
