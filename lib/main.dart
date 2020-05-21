@@ -4,6 +4,8 @@ import 'package:marcaii_flutter/src/utils/token_manager.dart';
 import 'package:marcaii_flutter/src/views/branch_view/branch_view.dart';
 import 'package:marcaii_flutter/strings.dart';
 
+import 'src/views/view_empregos/view_empregos.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -15,18 +17,18 @@ void main() async {
 
 class Marcaii extends StatelessWidget {
   const Marcaii({Key key, this.token}) : super(key: key);
-  final String token;  
+  final String token;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      supportedLocales: const [Locale('pt', 'BR')],
+      title: Strings.appName,
+      debugShowCheckedModeBanner: false,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
       ],
-      supportedLocales: const [Locale('pt', 'BR')],
-      title: Strings.appName,
-      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
         primaryColor: Colors.deepOrange,
@@ -36,8 +38,8 @@ class Marcaii extends StatelessWidget {
           color: Colors.white,
           elevation: 2,
           brightness: Brightness.light,
-          iconTheme: ThemeData.light().iconTheme,          
-          textTheme: ThemeData.light().textTheme.copyWith(            
+          iconTheme: ThemeData.light().iconTheme,
+          textTheme: ThemeData.light().textTheme.copyWith(
                 headline6: const TextStyle(
                   fontFamily: "Montserrat",
                   fontSize: 20,
@@ -50,26 +52,9 @@ class Marcaii extends StatelessWidget {
           unselectedLabelColor: Colors.black45,
         ),
       ),
-      /* theme: ThemeData(
-        appBarTheme: AppBarTheme(
-          color: Colors.white,
-          elevation: 2,
-          brightness: Brightness.light,
-          iconTheme: ThemeData.light().iconTheme,
-          textTheme: ThemeData.light().textTheme.copyWith(
-                title: const TextStyle(
-                  fontFamily: "Montserrat",
-                  fontSize: 20,
-                  color: Colors.black,
-                ),
-              ),
-          // textTheme: customTheme.textTheme,
-        ),
-        primarySwatch: Colors.deepOrange,
-        primaryColor: Colors.deepOrange,
-        accentColor: Colors.deepPurple,
-        fontFamily: "Montserrat",
-      ), */
+      routes: {
+        Routes.routeEmpregos: (_) => ViewEmpregos(),
+      },
       home: BranchView(token: token),
     );
   }

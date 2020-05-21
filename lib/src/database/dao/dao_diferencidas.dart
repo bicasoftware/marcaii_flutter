@@ -47,6 +47,7 @@ class DaoDiferenciadas implements BaseDao<Diferenciadas> {
       Diferenciadas.tableName,
       where: "${Diferenciadas.EMPREGO_ID} = ?",
       whereArgs: [empregoId],
+      orderBy: Diferenciadas.WEEKDAY,
     );
 
     return result.map(Diferenciadas.fromMap).toList();

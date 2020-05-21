@@ -97,12 +97,13 @@ class Diferenciadas implements Model<Diferenciadas> {
   @override
   // ignore: hash_and_equals
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        other is Diferenciadas &&
-            runtimeType == other.runtimeType &&
-            porc == other.porc &&
-            weekday == other.weekday &&
-            vigencia == other.vigencia &&
-            ativo == other.ativo;
+    if (other is Diferenciadas) {
+      return porc == other.porc &&
+          weekday == other.weekday &&
+          vigencia == other.vigencia &&
+          ativo == other.ativo;
+    } else {
+      return false;
+    }
   }
 }

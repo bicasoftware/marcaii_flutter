@@ -73,6 +73,13 @@ class Api {
   static const String localhost = "http://localhost:3000";
 }
 
+class Routes {
+  static const String routeEmpregos = "ROUTE_EMPREGOS";
+  static const String routeTotais = "ROUTE_TOTAIS";
+  static const String routeDiferenciadas = "ROUTE_DIFERENCIADAS";
+  static const String routeSalarios = "ROUTE_SALARIOS";
+}
+
 class Consts {
   static const List<String> weekDay = [
     "DOM",

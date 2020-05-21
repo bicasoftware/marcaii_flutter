@@ -9,7 +9,6 @@ import 'package:rxdart/rxdart.dart';
 class BlocEmprego with BaseBloc {
   BlocEmprego({
     @required this.emprego,
-    @required this.isCreating,
   }) {
     _inNome.add(emprego.nome ?? "");
     _inPorcNormal.add(emprego.porc);
@@ -28,16 +27,16 @@ class BlocEmprego with BaseBloc {
   List<Diferenciadas> _diferenciadas;
   List<Salarios> _salarios;
   double _salarioInicial;
-  bool isCreating;
 
   bool didChange() {
-    if (isCreating) {
+    if (emprego.id == null) {
       return true;
     } else {
       return !_oldEmprego.equals(
         emprego,
         _salarios,
-        _diferenciadas.where((d) => d.porc != 0).toList(),
+        _diferenciadas.where((d) => d.porc != 0).toList()
+          ..sort((a, b) => a.weekday.compareTo(b.weekday)),
       );
     }
   }
@@ -66,7 +65,7 @@ class BlocEmprego with BaseBloc {
   }
 
   _fillSalarios() {
-    if (isCreating) {
+    if (emprego.id == null) {
       _salarioInicial = 998.00;
       _inInitSalario.add(_salarioInicial);
     } else {
@@ -221,7 +220,7 @@ class BlocEmprego with BaseBloc {
   }
 
   Empregos provideResult() {
-    if (isCreating) {
+    if (emprego.id == null) {
       return emprego.copyWith(
         salarios: [
           Salarios(

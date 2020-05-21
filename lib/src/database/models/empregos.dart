@@ -192,7 +192,7 @@ class Empregos implements Model<Empregos> {
         ativo == emprego.ativo;
 
     final changedSalarios = listEquals(this.salarios, salarios);
-    final changedDiferenciadas = listEquals(emprego.diferenciadas, diferenciadas);
+    final changedDiferenciadas = listEquals(this.diferenciadas, diferenciadas);
 
     return isSameEmprego && changedSalarios && changedDiferenciadas;
   }
