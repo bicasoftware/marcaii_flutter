@@ -33,9 +33,7 @@ void main() {
 
     final update = await clientSalarios.put(
       salario.id,
-      salario.copyWith(
-        vigencia: "04/2020",
-      ),
+      salario..vigencia = "04/2020",      
     );
     assert(update.modified > 0);
 

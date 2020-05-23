@@ -1,43 +1,38 @@
-import 'package:marcaii_flutter/src/database/dao/base_dao.dart';
 import 'package:marcaii_flutter/src/database/db_helper.dart';
 import 'package:marcaii_flutter/src/database/models/diferenciadas.dart';
 
-class DaoDiferenciadas implements BaseDao<Diferenciadas> {
-  @override
+class DaoDiferenciadas {
   Future<void> delete(int i) async {
     final db = await getDB();
     return await db.delete(Diferenciadas.tableName);
   }
 
-  @override
   Future<List<Diferenciadas>> fetchAll() async {
     final db = await getDB();
     final result = await db.query(Diferenciadas.tableName);
     return result.map(Diferenciadas.fromJson).toList();
   }
 
-  @override
   Future<Diferenciadas> fetchById(int id) async {
     final db = await getDB();
-    final result = await db.query(Diferenciadas.tableName, where: "id = ?", whereArgs: [id]);
+    final result =
+        await db.query(Diferenciadas.tableName, where: "id = ?", whereArgs: <Object>[id]);
     return Diferenciadas.fromJson(result[0]);
   }
 
-  @override
   Future<Diferenciadas> insert(Diferenciadas model) async {
     final db = await getDB();
     final result = await db.insert(Diferenciadas.tableName, model.toJson());
-    return model.copyWith(id: result);
+    return model..id = result;
   }
 
-  @override
   Future<void> update(Diferenciadas model) async {
     final db = await getDB();
     return await db.update(
       Diferenciadas.tableName,
       model.toJson(),
       where: "id = ?",
-      whereArgs: [model.id],
+      whereArgs: <Object>[model.id],
     );
   }
 
@@ -46,11 +41,11 @@ class DaoDiferenciadas implements BaseDao<Diferenciadas> {
     final result = await db.query(
       Diferenciadas.tableName,
       where: "${Diferenciadas.EMPREGO_ID} = ?",
-      whereArgs: [empregoId],
+      whereArgs: <Object>[empregoId],
       orderBy: Diferenciadas.WEEKDAY,
     );
 
-    return result.map(Diferenciadas.fromMap).toList();
+    return result.map((d) => Diferenciadas.fromMap(d)).toList();
   }
 
   static Future<void> deleteByEmprego(int emprego_id) async {
@@ -58,7 +53,7 @@ class DaoDiferenciadas implements BaseDao<Diferenciadas> {
     return await db.delete(
       Diferenciadas.tableName,
       where: "emprego_id = ?",
-      whereArgs: [emprego_id],
+      whereArgs: <Object>[emprego_id],
     );
   }
 

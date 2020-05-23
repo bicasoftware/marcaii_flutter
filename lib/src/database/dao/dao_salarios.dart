@@ -8,7 +8,7 @@ class DaoSalarios {
     final result = await db.query(
       Salarios.tableName,
       where: 'id = ?',
-      whereArgs: [id],
+      whereArgs: <Object>[id],
       limit: 1,
     );
 
@@ -19,7 +19,7 @@ class DaoSalarios {
     final db = await getDB();
     final result = await db.query(Salarios.tableName);
 
-    return result.map(Salarios.fromMap).toList();
+    return result.map((s) => Salarios.fromMap(s)).toList();
   }
 
   static Future<Salarios> insert(Salarios salario) async {
@@ -28,8 +28,7 @@ class DaoSalarios {
       Salarios.tableName,
       salario.toMap(),
     );
-
-    return salario.copyWith(id: id);
+    return salario..id = id;
   }
 
   static Future<void> deleteSalario(Salarios salario) async {
@@ -38,14 +37,14 @@ class DaoSalarios {
     return await db.delete(
       Salarios.tableName,
       where: "id = ?",
-      whereArgs: [salario.id],
+      whereArgs: <Object>[salario.id],
     );
   }
 
   static Future<void> updateSalario(Salarios salario) async {
     assert(salario.id.isNotNull);
     final db = await DbHelper().db;
-    await db.update(Salarios.tableName, salario.toJson(), where: "id = ?", whereArgs: [salario.id]);
+    await db.update(Salarios.tableName, salario.toJson(), where: "id = ?", whereArgs: <Object>[salario.id]);
   }
 
   static Future<List<Salarios>> fetchByEmprego(int empregoId) async {
@@ -53,10 +52,10 @@ class DaoSalarios {
     final result = await db.query(
       Salarios.tableName,
       where: "${Salarios.EMPREGO_ID} = ?",
-      whereArgs: [empregoId],
+      whereArgs: <Object>[empregoId],
     );
 
-    return result.map(Salarios.fromMap).toList();
+    return result.map((s) => Salarios.fromMap(s)).toList();
   }
 
   static Future<void> deleteByEmprego(int emprego_id) async {
@@ -64,7 +63,7 @@ class DaoSalarios {
     return await db.delete(
       Salarios.tableName,
       where: "emprego_id = ?",
-      whereArgs: [emprego_id],
+      whereArgs: <Object>[emprego_id],
     );
   }
 

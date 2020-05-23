@@ -17,6 +17,6 @@ class UnregisterDto {
   final bool removed;
 
   Map<String, dynamic> toJson() {
-    return {'removed': removed};
+    return <String, Object>{'removed': removed};
   }
 }

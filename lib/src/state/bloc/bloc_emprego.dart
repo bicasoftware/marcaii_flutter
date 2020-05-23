@@ -18,7 +18,7 @@ class BlocEmprego with BaseBloc {
     _inCargaHoraria.add(emprego.carga_horaria);
     _inAtivo.add(emprego.ativo);
     _inSaida.add(emprego.saida);
-    _oldEmprego = emprego.copyWith();
+    _oldEmprego = emprego;
     _fillDiferenciadas();
     _fillSalarios();
   }
@@ -27,6 +27,8 @@ class BlocEmprego with BaseBloc {
   List<Diferenciadas> _diferenciadas;
   List<Salarios> _salarios;
   double _salarioInicial;
+
+  bool get isCreating => emprego.id == null;
 
   bool didChange() {
     if (emprego.id == null) {
@@ -41,7 +43,7 @@ class BlocEmprego with BaseBloc {
     }
   }
 
-  _fillDiferenciadas() {
+  void _fillDiferenciadas() {
     _diferenciadas = <Diferenciadas>[];
     for (int dia = 0; dia <= 6; dia++) {
       final Diferenciadas dif = emprego.diferenciadas?.firstWhere(
@@ -50,7 +52,7 @@ class BlocEmprego with BaseBloc {
       );
 
       if (dif != null) {
-        _diferenciadas.add(dif.copyWith());
+        _diferenciadas.add(dif);
       } else {
         _diferenciadas.add(
           Diferenciadas(
@@ -64,7 +66,7 @@ class BlocEmprego with BaseBloc {
     _inDiferenciadas.add(_diferenciadas);
   }
 
-  _fillSalarios() {
+  void _fillSalarios() {
     if (emprego.id == null) {
       _salarioInicial = 998.00;
       _inInitSalario.add(_salarioInicial);
@@ -76,39 +78,39 @@ class BlocEmprego with BaseBloc {
 
   final BehaviorSubject<String> _bhsDesc = BehaviorSubject<String>();
   Stream<String> get nome => _bhsDesc.stream;
-  get _inNome => _bhsDesc.sink;
+  Sink<String> get _inNome => _bhsDesc.sink;
 
   final BehaviorSubject<int> _bhsPorcNormal = BehaviorSubject<int>();
   Stream<int> get porcNormal => _bhsPorcNormal.stream;
-  get _inPorcNormal => _bhsPorcNormal.sink;
+  Sink<int> get _inPorcNormal => _bhsPorcNormal.sink;
 
   final BehaviorSubject<int> _bhsPorcCompleta = BehaviorSubject<int>();
   Stream<int> get porcCompleta => _bhsPorcCompleta.stream;
-  get _inPorcCompleta => _bhsPorcCompleta.sink;
+  Sink<int> get _inPorcCompleta => _bhsPorcCompleta.sink;
 
   final BehaviorSubject<int> _bhsFechamento = BehaviorSubject<int>();
   Stream<int> get fechamento => _bhsFechamento.stream;
-  get _inFechamento => _bhsFechamento.sink;
+  Sink<int> get _inFechamento => _bhsFechamento.sink;
 
   final BehaviorSubject<bool> _bhsBancoHoras = BehaviorSubject<bool>();
   Stream<bool> get bancoHoras => _bhsBancoHoras.stream;
-  get _inBancoHoras => _bhsBancoHoras.sink;
+  Sink<bool> get _inBancoHoras => _bhsBancoHoras.sink;
 
   final BehaviorSubject<String> _bhsSaida = BehaviorSubject<String>();
   Stream<String> get saida => _bhsSaida.stream;
-  get _inSaida => _bhsSaida.sink;
+  Sink<String> get _inSaida => _bhsSaida.sink;
 
   final BehaviorSubject<int> _bhsCarga = BehaviorSubject<int>();
   Stream<int> get cargaHoraria => _bhsCarga.stream;
-  get _inCargaHoraria => _bhsCarga.sink;
+  Sink<int> get _inCargaHoraria => _bhsCarga.sink;
 
   final BehaviorSubject<bool> _bhsAtivo = BehaviorSubject<bool>();
   Stream<bool> get ativo => _bhsAtivo.stream;
-  get _inAtivo => _bhsAtivo.sink;
+  Sink<bool> get _inAtivo => _bhsAtivo.sink;
 
   final _bhsDiferenciadas = BehaviorSubject<List<Diferenciadas>>();
   Stream<List<Diferenciadas>> get outDiferenciadas => _bhsDiferenciadas.stream;
-  get _inDiferenciadas => _bhsDiferenciadas.sink;
+  Sink<List<Diferenciadas>> get _inDiferenciadas => _bhsDiferenciadas.sink;
 
   final BehaviorSubject<List<Salarios>> _bhsSalarios = BehaviorSubject<List<Salarios>>();
   Stream<List<Salarios>> get salarios => _bhsSalarios.stream;
@@ -134,48 +136,48 @@ class BlocEmprego with BaseBloc {
   }
 
   void setNome(String nome) {
-    emprego = emprego.copyWith(nome: nome);
+    emprego.nome = nome;
     _bhsDesc.sink.add(nome);
   }
 
   void setPorcNormal(int porc) {
-    emprego = emprego.copyWith(porc: porc);
+    emprego.porc = porc;
     _bhsPorcNormal.sink.add(porc);
   }
 
   void setPorcCompleta(int porc) {
-    emprego = emprego.copyWith(porc_completa: porc);
+    emprego.porc_completa = porc;
     _bhsPorcCompleta.sink.add(porc);
   }
 
   void setFechamento(int f) {
-    emprego = emprego.copyWith(fechamento: f);
+    emprego.fechamento = f;
     _bhsFechamento.sink.add(f);
   }
 
   void setBancoHora(bool b) {
-    emprego = emprego.copyWith(banco_horas: b);
+    emprego.banco_horas = b;
     _bhsBancoHoras.sink.add(b);
   }
 
   void setSaida(TimeOfDay s) {
-    emprego = emprego.copyWith(saida: s.toShortString());
+    emprego.saida = s.toShortString();
     _bhsSaida.sink.add(s.toShortString());
   }
 
   void setCargaHoraria(int carga) {
-    emprego = emprego.copyWith(carga_horaria: carga);
+    emprego.carga_horaria = carga;
     _bhsCarga.sink.add(carga);
   }
 
   void setAtivo(bool b) {
-    emprego = emprego.copyWith(ativo: b);
+    emprego.ativo = b;
     _bhsAtivo.sink.add(b);
   }
 
   void setDiferenciada(Diferenciadas dif, int newPorc) {
     final index = _diferenciadas.indexOf(dif);
-    _diferenciadas[index] = _diferenciadas[index].copyWith(porc: newPorc);
+    _diferenciadas[index].porc = newPorc;
     _inDiferenciadas.add(_diferenciadas);
   }
 
@@ -202,10 +204,9 @@ class BlocEmprego with BaseBloc {
     @required double valor,
   }) {
     final index = _salarios.indexOf(salario);
-    _salarios[index] = _salarios[index].copyWith(
-      vigencia: vigencia,
-      valor: valor,
-    );
+    _salarios[index]
+      ..vigencia = vigencia
+      ..valor = valor;
 
     _inSalarios.add(_salarios);
   }
@@ -221,21 +222,19 @@ class BlocEmprego with BaseBloc {
 
   Empregos provideResult() {
     if (emprego.id == null) {
-      return emprego.copyWith(
-        salarios: [
+      return emprego
+        ..salarios = [
           Salarios(
             valor: _salarioInicial,
             vigencia: "01/2010",
             ativo: true,
           ),
-        ],
-        diferenciadas: getValidDiferenciadas(),
-      );
+        ]
+        ..diferenciadas = getValidDiferenciadas();
     } else {
-      return emprego.copyWith(
-        salarios: _salarios,
-        diferenciadas: getValidDiferenciadas(),
-      );
+      return emprego
+        ..salarios = _salarios
+        ..diferenciadas = getValidDiferenciadas();
     }
   }
 }

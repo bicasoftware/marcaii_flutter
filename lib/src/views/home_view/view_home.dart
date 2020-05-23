@@ -3,15 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:lib_observer/lib_observer.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
-import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
 import 'package:marcaii_flutter/src/views/home_view/view_home_drawer.dart';
 import 'package:marcaii_flutter/src/views/home_view/view_home_presenter.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/view_calendario.dart';
-import 'package:marcaii_flutter/src/views/view_empregos/view_empregos.dart';
 import 'package:marcaii_flutter/src/views/view_totais/view_totais.dart';
 import 'package:marcaii_flutter/strings.dart';
+import 'package:marcaii_flutter/helpers.dart';
 import 'package:provider/provider.dart';
 
 class ViewHome extends StatelessWidget {

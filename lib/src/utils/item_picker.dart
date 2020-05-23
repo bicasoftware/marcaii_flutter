@@ -20,7 +20,7 @@ class ItemPicker<T> extends StatefulWidget {
   final Color backgroundColor, textColor;
 
   @override
-  _ItemPickerState createState() => _ItemPickerState();
+  _ItemPickerState createState() => _ItemPickerState<T>();
 }
 
 class _ItemPickerState<T> extends State<ItemPicker> {

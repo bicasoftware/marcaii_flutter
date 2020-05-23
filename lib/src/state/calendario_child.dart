@@ -6,6 +6,8 @@ class CalendarioChild {
     this.hora,
   });
 
-  final DateTime date;
-  final Horas hora;
+  DateTime date;
+  Horas hora;
+
+  void setHora(Horas hora) => this.hora = hora;
 }

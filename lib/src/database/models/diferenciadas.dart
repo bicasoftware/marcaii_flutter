@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:marcaii_flutter/src/database/models/model.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/column_types.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_column.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_table.dart';
@@ -8,10 +6,9 @@ import 'package:marcaii_flutter/src/utils/json_utils.dart';
 
 part 'diferenciadas.g.dart';
 
-@immutable
 @JsonSerializable(nullable: true)
-class Diferenciadas implements Model<Diferenciadas> {
-  const Diferenciadas({
+class Diferenciadas {
+  Diferenciadas({
     this.id,
     this.emprego_id,
     this.porc = 100,
@@ -20,12 +17,7 @@ class Diferenciadas implements Model<Diferenciadas> {
     this.ativo = true,
   });
 
-  static Diferenciadas fromJson(Map<String, Object> json) {
-    return _$DiferenciadasFromJson(json);
-  }
-
-  // ignore: prefer_constructors_over_static_methods
-  static Diferenciadas fromMap(Map<String, dynamic> map) {
+  factory Diferenciadas.fromMap(Map<String, dynamic> map) {
     return Diferenciadas(
       id: map['id'] as int,
       emprego_id: map['emprego_id'] as int,
@@ -36,9 +28,9 @@ class Diferenciadas implements Model<Diferenciadas> {
     );
   }
 
-  final int id, emprego_id, porc, weekday;
-  final String vigencia;
-  final bool ativo;
+  int id, emprego_id, porc, weekday;
+  String vigencia;
+  bool ativo;
 
   static const String ID = "id";
   static const String EMPREGO_ID = "emprego_id";
@@ -47,50 +39,22 @@ class Diferenciadas implements Model<Diferenciadas> {
   static const String VIGENCIA = "vigencia";
   static const String ATIVO = "ativo";
 
-  Diferenciadas copyWith({
-    int id,
-    int emprego_id,
-    int porc,
-    int weekday,
-    String vigencia,
-    bool ativo,
-  }) {
-    return Diferenciadas(
-      id: id ?? this.id,
-      emprego_id: emprego_id ?? this.emprego_id,
-      porc: porc ?? this.porc,
-      weekday: weekday ?? this.weekday,
-      vigencia: vigencia ?? this.vigencia,
-      ativo: ativo ?? this.ativo,
-    );
-  }
+  static List<String> get columns => [ID, EMPREGO_ID, PORC, WEEKDAY, VIGENCIA, ATIVO];
 
-  Diferenciadas forFirstSync(int emprego_id) {
-    return Diferenciadas(
-      id: null,
-      emprego_id: emprego_id,
-      porc: porc,
-      weekday: weekday,
-      vigencia: vigencia,
-      ativo: ativo,
-    );
-  }
-
-  static get columns => [ID, EMPREGO_ID, PORC, WEEKDAY, VIGENCIA, ATIVO];
-
-  @override
-  String get createSQL {
-    return SqliteTable(tableName, columns: {
-      ID: SqliteColumn(ColumnTypes.PRIMARY_KEY),
-      EMPREGO_ID: SqliteColumn(ColumnTypes.INTEGER, nullable: false),
-      PORC: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 100),
-      WEEKDAY: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 6),
-      VIGENCIA: SqliteColumn(ColumnTypes.TEXT, nullable: false),
-      ATIVO: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 1),
-    }).generateCreateQuery();
-  }
+  static String createSQL = SqliteTable(tableName, columns: {
+    ID: SqliteColumn(ColumnTypes.PRIMARY_KEY),
+    EMPREGO_ID: SqliteColumn(ColumnTypes.INTEGER, nullable: false),
+    PORC: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 100),
+    WEEKDAY: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 6),
+    VIGENCIA: SqliteColumn(ColumnTypes.TEXT, nullable: false),
+    ATIVO: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 1),
+  }).generateCreateQuery();
 
   static String tableName = "diferenciadas";
+
+  static Diferenciadas fromJson(Map<String, Object> json) {
+    return _$DiferenciadasFromJson(json);
+  }
 
   Map<String, Object> toJson() => _$DiferenciadasToJson(this);
 

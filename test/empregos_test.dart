@@ -17,15 +17,16 @@ void main() {
       dio.options.headers['Authorization'] = "Bearer ${user.token}";
       final empregosClient = EmpregosClient(dio);
 
-      var emprego = const Empregos(
-          ativo: true,
-          banco_horas: false,
-          carga_horaria: 220,
-          fechamento: 25,
-          nome: "Analista de Sistemas",
-          porc: 50,
-          porc_completa: 100,
-          saida: "20:00");
+      var emprego = Empregos(
+        ativo: true,
+        banco_horas: false,
+        carga_horaria: 220,
+        fechamento: 25,
+        nome: "Analista de Sistemas",
+        porc: 50,
+        porc_completa: 100,
+        saida: "20:00",
+      );
 
       emprego = await empregosClient.post(emprego);
 

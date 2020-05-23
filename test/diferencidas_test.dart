@@ -25,7 +25,7 @@ void main() {
 
     final update = await clientDiferenciada.put(
       diferenciada.id,
-      diferenciada.copyWith(vigencia: '04/2020'),
+      diferenciada..vigencia = '04/2020',
     );
 
     assert(update.modified > 0);

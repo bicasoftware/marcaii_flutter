@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:jiffy/jiffy.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:marcaii_flutter/src/database/models/model.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/column_types.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_column.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_table.dart';
@@ -10,10 +6,9 @@ import 'package:marcaii_flutter/src/utils/json_utils.dart';
 
 part 'salarios.g.dart';
 
-@immutable
 @JsonSerializable(nullable: true)
-class Salarios implements Model<Salarios> {
-  const Salarios({
+class Salarios {
+  Salarios({
     this.id,
     this.emprego_id,
     this.valor,
@@ -21,8 +16,7 @@ class Salarios implements Model<Salarios> {
     this.ativo,
   });
 
-  // ignore: prefer_constructors_over_static_methods
-  static Salarios fromMap(Map<String, dynamic> map) {
+  factory Salarios.fromMap(Map<String, dynamic> map) {
     return Salarios(
       id: map['id'] as int,
       emprego_id: map['emprego_id'] as int,
@@ -32,12 +26,11 @@ class Salarios implements Model<Salarios> {
     );
   }
 
-  final int id, emprego_id;
+  int id, emprego_id;
   @JsonKey(fromJson: double.tryParse)
-  final double valor;
-  final String vigencia;
-  // @JsonKey(toJson: boolToInt, fromJson: intToBool)
-  final bool ativo;
+  double valor;
+  String vigencia;
+  bool ativo;
 
   static const String ID = "id";
   static const String EMPREGO_ID = "emprego_id";
@@ -45,65 +38,17 @@ class Salarios implements Model<Salarios> {
   static const String VIGENCIA = "vigencia";
   static const String ATIVO = "ativo";
 
-  Salarios copyWith({
-    int id,
-    int emprego_id,
-    double valor,
-    String vigencia,
-    bool ativo,
-  }) {
-    return Salarios(
-      id: id ?? this.id,
-      emprego_id: emprego_id ?? this.emprego_id,
-      valor: valor ?? this.valor,
-      vigencia: vigencia ?? this.vigencia,
-      ativo: ativo ?? this.ativo,
-    );
-  }
-
-  Salarios forFirstSync(int emprego_id) {
-    return Salarios(
-      id: null,
-      emprego_id: emprego_id,
-      valor: valor,
-      vigencia: vigencia,
-      ativo: ativo,
-    );
-  }
-
-  /// Vigencia é a data inicial a qual um salário se torna válido
-  /// Supondo que o fechamento do mês é dia 25, e houve um aumento de salário no mês de maio,
-  /// a vigencia desse novo salário é a partir 26/04/ano
-  DateTime vigenciaAsDate(int fechamento) {
-    final splitVigencia = vigencia.split("/").map(int.parse).toList();
-
-    final ano = splitVigencia.last;
-    final mes = splitVigencia.first;
-
-    final dt = DateTime(ano, mes, fechamento + 1);
-    final r = Jiffy(dt).subtract(months: 1);
-    return r;
-  }
-
-  ///Retorna valor do salário formatado
-  String valorAsString() {
-    return NumberFormat.simpleCurrency(locale: "pt_Br").format(valor);
-  }
-
   static const String tableName = "salarios";
 
   static const List<String> columns = [ID, EMPREGO_ID, VALOR, VIGENCIA, ATIVO];
 
-  @override
-  String get createSQL {
-    return SqliteTable(tableName, columns: {
-      ID: SqliteColumn(ColumnTypes.PRIMARY_KEY),
-      EMPREGO_ID: SqliteColumn(ColumnTypes.INTEGER),
-      VALOR: SqliteColumn(ColumnTypes.REAL),
-      VIGENCIA: SqliteColumn(ColumnTypes.TEXT),
-      ATIVO: SqliteColumn(ColumnTypes.INTEGER),
-    }).generateCreateQuery();
-  }
+  static String createSQL = SqliteTable(tableName, columns: {
+    ID: SqliteColumn(ColumnTypes.PRIMARY_KEY),
+    EMPREGO_ID: SqliteColumn(ColumnTypes.INTEGER),
+    VALOR: SqliteColumn(ColumnTypes.REAL),
+    VIGENCIA: SqliteColumn(ColumnTypes.TEXT),
+    ATIVO: SqliteColumn(ColumnTypes.INTEGER),
+  }).generateCreateQuery();
 
   static Salarios fromJson(Map<String, Object> json) {
     return _$SalariosFromJson(json);

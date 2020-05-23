@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lib_observer/lib_observer.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
-import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
 import 'package:marcaii_flutter/src/utils/dialogs/dialogs.dart';
-import 'package:marcaii_flutter/src/views/view_empregos/view_empregos.dart';
 import 'package:marcaii_flutter/src/views/view_list_empregos/view_list_empregos_item.dart';
 import 'package:marcaii_flutter/strings.dart';
 import 'package:provider/provider.dart';
@@ -34,20 +32,9 @@ class ViewListEmpregos extends StatelessWidget {
                   }
                 },
                 onPressed: (Empregos emprego, GlobalKey itemKey) async {
-                  final result = await Navigator.of(context).push(
-                    MaterialPageRoute(
-                      fullscreenDialog: true,
-                      builder: (BuildContext context) {
-                        return Provider<BlocEmprego>(
-                          create: (_) => BlocEmprego(
-                            emprego: emprego,
-                            isCreating: false,
-                          ),
-                          dispose: (_, b) => b.dispose(),
-                          child: ViewEmpregos(),
-                        );
-                      },
-                    ),
+                  final result = await Navigator.of(context).pushNamed<Object>(
+                    Routes.routeEmpregos,
+                    arguments: emprego,
                   );
 
                   if (result != null && result is Empregos) {

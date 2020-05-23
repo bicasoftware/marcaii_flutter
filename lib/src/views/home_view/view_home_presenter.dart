@@ -14,7 +14,7 @@ class ViewHomePresenter {
 
     final result = await Navigator.of(context).pushNamed(
       Routes.routeEmpregos,
-      arguments: const Empregos(),
+      arguments: Empregos(),
     );
 
     if (result != null && result is Empregos) {

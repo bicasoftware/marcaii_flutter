@@ -1,3 +1,4 @@
+import 'package:marcaii_flutter/helpers.dart';
 import 'package:marcaii_flutter/src/database/dao/dao_diferencidas.dart';
 import 'package:marcaii_flutter/src/database/dao/dao_horas.dart';
 import 'package:marcaii_flutter/src/database/dao/dao_salarios.dart';
@@ -15,7 +16,7 @@ class DaoEmpregos {
     return await db.delete(
       Empregos.tableName,
       where: "id = ?",
-      whereArgs: [i],
+      whereArgs: <Object>[i],
     );
   }
 
@@ -31,17 +32,16 @@ class DaoEmpregos {
       final salarios = await DaoSalarios.fetchByEmprego(e.id);
       final diferenciadas = await DaoDiferenciadas.fetchByEmprego(e.id);
       resultList.add(
-        e.copyWith(
-          horas: horas,
-          salarios: salarios,
-          diferenciadas: diferenciadas,
-          calendario: [
+        e
+          ..horas = horas
+          ..salarios = salarios
+          ..diferenciadas = diferenciadas
+          ..calendario = [
             Calendario(
               vigencia: Vigencia.fromDateTime(dt).vigencia,
               items: CalendarGenerator.generate(dt.year, dt.month, horas),
             ),
-          ],
-        ),
+          ],        
       );
     }
 
@@ -50,7 +50,7 @@ class DaoEmpregos {
 
   static Future<Empregos> fetchById(int id) async {
     final db = await getDB();
-    final result = await db.query(Empregos.tableName, where: "id = ?", whereArgs: [id]);
+    final result = await db.query(Empregos.tableName, where: "id = ?", whereArgs: <Object>[id]);
     return Empregos.fromJson(result[0]);
   }
 
@@ -62,29 +62,28 @@ class DaoEmpregos {
 
     for (final salario in model.salarios) {
       salarios.add(
-        await DaoSalarios.insert(salario.copyWith(emprego_id: empregoId)),
+        await DaoSalarios.insert(salario..emprego_id = empregoId),
       );
     }
 
     for (final difer in model.diferenciadas) {
-      final newDifer = difer.copyWith(emprego_id: empregoId);
+      final newDifer = difer..emprego_id = empregoId;
       diferenciadas.add(await DaoDiferenciadas().insert(newDifer));
     }
 
-    return model.copyWith(
-      id: empregoId,
-      diferenciadas: diferenciadas,
-      salarios: salarios,
-      calendario: [],
-      horas: []
-    );
+    return model
+      ..id = empregoId
+      ..diferenciadas = diferenciadas
+      ..salarios = salarios
+      ..calendario = []
+      ..horas = [];
   }
 
   static Future<Empregos> insert(Empregos emprego) async {
     final db = await getDB();
     final emprego_id = await db.insert(Empregos.tableName, emprego.toMap());
 
-    return emprego.copyWith(id: emprego_id);
+    return emprego..id = emprego_id;
   }
 
   static Future<void> update(Empregos model) async {
@@ -93,18 +92,18 @@ class DaoEmpregos {
       Empregos.tableName,
       model.toMap(),
       where: "id = ?",
-      whereArgs: [model.id],
+      whereArgs: <Object>[model.id],
     );
 
     await DaoSalarios.deleteByEmprego(model.id);
     await DaoDiferenciadas.deleteByEmprego(model.id);
 
     for (final salario in model.salarios) {
-      await DaoSalarios.insert(salario.copyWith(emprego_id: model.id));
+      await DaoSalarios.insert(salario..emprego_id = model.id);
     }
 
     for (final difer in model.diferenciadas) {
-      await DaoDiferenciadas().insert(difer.copyWith(emprego_id: model.id));
+      await DaoDiferenciadas().insert(difer..emprego_id = model.id);
     }
   }
 
@@ -118,17 +117,14 @@ class DaoEmpregos {
       final e = await insert(emprego.forFirstSync());
 
       for (final hora in emprego.horas) {
-        // e.addHora(await DaoHoras.insert(hora.forFirstSync(e.id)));
         await DaoHoras.insert(hora.forFirstSync(e.id));
       }
 
       for (final salario in emprego.salarios) {
         await DaoSalarios.insert(salario.forFirstSync(e.id));
-        // e.addSalario(await DaoSalarios.insert(salario.forFirstSync(e.id)));
       }
 
       for (final difer in emprego.diferenciadas) {
-        // await DaoDiferenciadas().insert(difer.forFirstSync(e.id));
         await DaoDiferenciadas().insert(difer.forFirstSync(e.id));
       }
     }

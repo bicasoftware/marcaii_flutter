@@ -31,8 +31,8 @@ class ViewPorcentagens extends StatelessWidget {
     return MergedStreamObserver(
       streams: [b.porcNormal, b.porcCompleta],
       onSuccess: (BuildContext context, List<dynamic> data) {
-        final porcNormal = data[0];
-        final porcCompleta = data[1];
+        final int porcNormal = data[0];
+        final int porcCompleta = data[1];
 
         return Column(
           children: <Widget>[

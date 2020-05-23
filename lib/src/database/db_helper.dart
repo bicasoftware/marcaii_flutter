@@ -41,10 +41,10 @@ class DbHelper {
   }
 
   FutureOr<void> _buildTables(Database db, int version) async {
-    await db.execute(const Empregos().createSQL);
-    await db.execute(const Horas().createSQL);
-    await db.execute(const Salarios().createSQL);
-    await db.execute(const Diferenciadas().createSQL);
+    await db.execute(Empregos.createSQL);
+    await db.execute(Horas.createSQL);
+    await db.execute(Salarios.createSQL);
+    await db.execute(Diferenciadas.createSQL);
   }
 
   FutureOr<void> _upgradeTables(Database db, int oldVersion, int newVersion) {

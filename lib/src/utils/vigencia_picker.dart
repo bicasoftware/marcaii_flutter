@@ -13,7 +13,7 @@ class VigenciaPicker extends StatefulWidget {
   }) : super(key: key);
 
   final int mes, ano;
-  final void Function(dynamic value) onMesSet, onAnoSet;
+  final void Function(int value) onMesSet, onAnoSet;
   final Color backgroundColor;
 
   @override

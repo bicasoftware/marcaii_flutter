@@ -37,7 +37,7 @@ mixin WillPopForm {
   }) {
     if (formState.validate()) {
       formState.save();
-      Navigator.of(context).pop(resultData);
+      Navigator.of(context).pop<Object>(resultData);
     }
   }
 }

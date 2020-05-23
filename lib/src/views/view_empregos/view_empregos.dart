@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
 import 'package:marcaii_flutter/src/utils/form_view.dart';
 import 'package:marcaii_flutter/src/views/shared/appbar_save_button.dart';
@@ -15,12 +17,26 @@ import 'package:marcaii_flutter/src/views/view_empregos/widgets/salarios_list_ti
 import 'package:marcaii_flutter/strings.dart';
 import 'package:provider/provider.dart';
 
-class ViewEmpregos extends StatefulWidget {
+class ViewEmpregos extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final Empregos emprego = ModalRoute.of(context).settings.arguments;
+    return Provider<BlocEmprego>(
+      create: (_) => BlocEmprego(
+        emprego: emprego,
+      ),
+      dispose: (_, b) => b.dispose(),
+      child: _ViewEmpregos(),
+    );
+  }
+}
+
+class _ViewEmpregos extends StatefulWidget {
   @override
   _ViewEmpregosState createState() => _ViewEmpregosState();
 }
 
-class _ViewEmpregosState extends State<ViewEmpregos> with WillPopForm {
+class _ViewEmpregosState extends State<_ViewEmpregos> with WillPopForm {
   GlobalKey<FormState> _formKey;
   BlocEmprego blocEmpregos;
 

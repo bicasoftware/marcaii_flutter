@@ -82,12 +82,8 @@ Future<Vigencia> showVigenciaPicker({
       content: VigenciaPicker(
         ano: vigencia.ano,
         mes: vigencia.mes - 1,
-        onAnoSet: (a) {
-          vigencia.ano = a;
-        },
-        onMesSet: (m) {
-          vigencia.mes = m;
-        },
+        onAnoSet: (int a) => vigencia.ano = a,
+        onMesSet: (int m) => vigencia.mes = m,
       ),
       actions: <Widget>[
         FlatButton(

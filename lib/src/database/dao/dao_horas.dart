@@ -15,14 +15,15 @@ class DaoHoras {
 
   static Future<Horas> fetchById(int id) async {
     final db = await getDB();
-    final result = await db.query(Horas.tableName, where: "id = ?", whereArgs: [id]);
+    final result = await db.query(Horas.tableName, where: "id = ?", whereArgs: <Object>[id]);
     return Horas.fromJson(result[0]);
   }
 
   static Future<Horas> insert(Horas model) async {
     final db = await getDB();
     final id = await db.insert(Horas.tableName, model.toJson());
-    return model.copyWith(id: id);
+    return model..id = id;
+    // return model.copyWith(id: id);
   }
 
   static Future<void> update(Horas model) async {
@@ -31,7 +32,7 @@ class DaoHoras {
       Horas.tableName,
       model.toJson(),
       where: "id = ?",
-      whereArgs: [model.id],
+      whereArgs: <Object>[model.id],
     );
   }
 
@@ -40,7 +41,7 @@ class DaoHoras {
     final result = await db.query(
       Horas.tableName,
       where: "${Horas.EMPREGO_ID} = ?",
-      whereArgs: [empregoId],
+      whereArgs: <Object>[empregoId],
     );
 
     return result.map(Horas.fromJson).toList();

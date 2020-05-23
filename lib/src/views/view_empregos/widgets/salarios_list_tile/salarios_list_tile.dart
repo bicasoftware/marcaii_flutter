@@ -21,7 +21,7 @@ class SalariosListTile extends StatelessWidget {
       children: <Widget>[
         SalariosListTileHeader(
           onAddTap: () async {
-            final result = await Navigator.of(context).push(
+            final Object result = await Navigator.of(context).push(
               MaterialPageRoute(
                 fullscreenDialog: true,
                 builder: (_) => const ViewInsertSalario(isCreating: true),
@@ -46,82 +46,42 @@ class SalariosListTile extends StatelessWidget {
               separatorBuilder: (_, i) => const Divider(indent: 64),
               itemBuilder: (_, i) {
                 return SalariosListItem(
-                    salario: salarios[i],
-                    onDelete: (Salarios s) async {
-                      final bool r = await showConfirmationDialog(
-                        context: context,
-                        message: "Deseja remover o salário?",
-                        positiveCaption: Strings.remover,
-                        negativeCaption: Strings.cancelar,
-                      );
+                  salario: salarios[i],
+                  onDelete: (Salarios s) async {
+                    final bool r = await showConfirmationDialog(
+                      context: context,
+                      message: "Deseja remover o salário?",
+                      positiveCaption: Strings.remover,
+                      negativeCaption: Strings.cancelar,
+                    );
 
-                      if (r) {
-                        b.deleteSalario(s);
-                      }
-                    },
-                    onPressed: (Salarios s) async {
-                      final r = await Navigator.of(context).push(
-                        MaterialPageRoute(
-                          fullscreenDialog: true,
-                          builder: (_) => ViewInsertSalario(
-                            isCreating: false,
-                            salario: s.valor,
-                            vigencia: s.vigencia,
-                          ),
+                    if (r) {
+                      b.deleteSalario(s);
+                    }
+                  },
+                  onPressed: (Salarios s) async {
+                    final Object r = await Navigator.of(context).push(
+                      MaterialPageRoute(
+                        fullscreenDialog: true,
+                        builder: (_) => ViewInsertSalario(
+                          isCreating: false,
+                          salario: s.valor,
+                          vigencia: s.vigencia,
                         ),
-                      );
+                      ),
+                    );
 
-                      if (r != null && r is Map<String, dynamic>) {
-                        b.updateSalario(
-                          salario: s,
-                          vigencia: r['vigencia'],
-                          valor: r['valor'],
-                        );
-                      }
-                    },
-                  );
+                    if (r != null && r is Map<String, dynamic>) {
+                      b.updateSalario(
+                        salario: s,
+                        vigencia: r['vigencia'],
+                        valor: r['valor'],
+                      );
+                    }
+                  },
+                );
               },
             );
-            /* return Column(
-              children: [
-                for (final s in salarios)
-                  SalariosListItem(
-                    salario: s,
-                    onDelete: (Salarios s) async {
-                      final bool r = await showConfirmationDialog(
-                        context: context,
-                        message: "Deseja remover o salário?",
-                        positiveCaption: Strings.remover,
-                        negativeCaption: Strings.cancelar,
-                      );
-
-                      if (r) {
-                        b.deleteSalario(s);
-                      }
-                    },
-                    onPressed: (Salarios s) async {
-                      final r = await Navigator.of(context).push(
-                        MaterialPageRoute(
-                          fullscreenDialog: true,
-                          builder: (_) => ViewInsertSalario(
-                            isCreating: false,
-                            salario: s.valor,
-                            vigencia: s.vigencia,
-                          ),
-                        ),
-                      );
-
-                      if (r != null && r is Map<String, dynamic>) {
-                        b.updateSalario(
-                          salario: s,
-                          vigencia: r['vigencia'],
-                          valor: r['valor'],
-                        );
-                      }
-                    },
-                  )
-              ],
-            ); */
           },
         )
       ],

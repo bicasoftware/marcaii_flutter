@@ -2,7 +2,7 @@ analyzer:
   exclude: [build/**, lib/**/*.g.dart]
   strong-mode:
     implicit-casts: true
-    implicit-dynamic: true
+    implicit-dynamic: false
 
 linter:
   rules:

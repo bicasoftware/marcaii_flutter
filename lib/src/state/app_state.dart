@@ -42,19 +42,17 @@ class AppState {
 
   Future<void> updateEmprego(Empregos e) async {
     await DaoEmpregos.update(e);
-    final index = empregos.indexWhere((emprego) => emprego.id == e.id);
-    empregos[index] = empregos[index].copyWith(
-      nome: e.nome,
-      ativo: e.ativo,
-      banco_horas: e.banco_horas,
-      carga_horaria: e.carga_horaria,
-      fechamento: e.fechamento,
-      porc: e.porc,
-      porc_completa: e.porc_completa,
-      saida: e.saida,
-      diferenciadas: e.diferenciadas,
-      salarios: e.salarios,
-    );
+    empregos.firstWhere((emprego) => emprego.id == e.id)
+      ..nome = e.nome
+      ..ativo = e.ativo
+      ..banco_horas = e.banco_horas
+      ..carga_horaria = e.carga_horaria
+      ..fechamento = e.fechamento
+      ..porc = e.porc
+      ..porc_completa = e.porc_completa
+      ..saida = e.saida
+      ..diferenciadas = e.diferenciadas
+      ..salarios = e.salarios;
   }
 
   Future<void> addHora(Horas hora, Vigencia vigencia) async {
@@ -62,21 +60,13 @@ class AppState {
     empregos.firstWhere((e) => e.id == hora.emprego_id).addHora(hora, vigencia);
   }
 
-  //immutability sucks
   Future<void> removeHora({
     @required Horas hora,
     @required int emprego_id,
   }) async {
-    final indexEmprego = empregos.indexWhere((e) => e.id == emprego_id);
     await DaoHoras.delete(hora.id);
-    empregos[indexEmprego].removeHora(hora);
-    final _calendario = [...empregos[indexEmprego].calendario];
-    final indexCalendario = _calendario.indexWhere((c) => c.vigencia == vigencia.vigencia);
-    _calendario.replaceRange(
-      indexCalendario,
-      indexCalendario + 1,
-      [_calendario[indexCalendario].removeHora(hora.id)],
-    );
-    empregos[indexEmprego] = empregos[indexEmprego].copyWith(calendario: _calendario);
+    empregos.firstWhere((e) => e.id == emprego_id)
+      ..removeHora(hora)
+      ..calendario.firstWhere((c) => c.vigencia == vigencia.vigencia).removeHora(hora.id);
   }
 }
