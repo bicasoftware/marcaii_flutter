@@ -1,6 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/column_types.dart';
+import 'package:marcaii_flutter/src/database/sqlite_generator/constraint_types.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_column.dart';
+import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_fk.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_table.dart';
 import 'package:marcaii_flutter/src/utils/json_utils.dart';
 
@@ -42,13 +45,23 @@ class Salarios {
 
   static const List<String> columns = [ID, EMPREGO_ID, VALOR, VIGENCIA, ATIVO];
 
-  static String createSQL = SqliteTable(tableName, columns: {
-    ID: SqliteColumn(ColumnTypes.PRIMARY_KEY),
-    EMPREGO_ID: SqliteColumn(ColumnTypes.INTEGER),
-    VALOR: SqliteColumn(ColumnTypes.REAL),
-    VIGENCIA: SqliteColumn(ColumnTypes.TEXT),
-    ATIVO: SqliteColumn(ColumnTypes.INTEGER),
-  }).generateCreateQuery();
+  static String createSQL = SqliteTable(
+    tableName,
+    columns: {
+      ID: SqliteColumn(ColumnTypes.PRIMARY_KEY),
+      EMPREGO_ID: SqliteColumn(ColumnTypes.INTEGER),
+      VALOR: SqliteColumn(ColumnTypes.REAL),
+      VIGENCIA: SqliteColumn(ColumnTypes.TEXT),
+      ATIVO: SqliteColumn(ColumnTypes.INTEGER),
+    },
+    fk: SqliteFK(
+      referenceTable: Empregos.tableName,
+      slaveColumn: EMPREGO_ID,
+      masterColumn: Empregos.ID,
+      onDelete: ConstraintTypes.CASCADE,
+      onUpdate: ConstraintTypes.CASCADE,
+    ),
+  ).makeCreateQuery();
 
   static Salarios fromJson(Map<String, Object> json) {
     return _$SalariosFromJson(json);

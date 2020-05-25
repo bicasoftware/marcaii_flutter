@@ -86,17 +86,21 @@ class Empregos {
     ATIVO
   ];
 
-  static String createSQL = SqliteTable(tableName, columns: {
-    ID: SqliteColumn(ColumnTypes.PRIMARY_KEY),
-    NOME: SqliteColumn(ColumnTypes.TEXT, nullable: false, defaultValue: "Emprego"),
-    PORC: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 50),
-    PORC_COMPLETA: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 100),
-    FECHAMENTO: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 25),
-    BANCO_HORAS: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 0),
-    SAIDA: SqliteColumn(ColumnTypes.TEXT, nullable: false, defaultValue: "17:00"),
-    CARGA_HORARIA: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 220),
-    ATIVO: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 1),
-  }).generateCreateQuery();
+  static String createSQL = SqliteTable(
+    tableName,
+    columns: {
+      ID: SqliteColumn(ColumnTypes.PRIMARY_KEY),
+      NOME: SqliteColumn(ColumnTypes.TEXT, nullable: false, defaultValue: "Emprego"),
+      PORC: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 50),
+      PORC_COMPLETA: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 100),
+      FECHAMENTO: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 25),
+      BANCO_HORAS: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 0),
+      SAIDA: SqliteColumn(ColumnTypes.TEXT, nullable: false, defaultValue: "17:00"),
+      CARGA_HORARIA: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 220),
+      ATIVO: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 1),
+    },
+    fk: null,
+  ).makeCreateQuery();
 
   static Empregos fromJson(Map<String, Object> json) {
     return _$EmpregosFromJson(json);

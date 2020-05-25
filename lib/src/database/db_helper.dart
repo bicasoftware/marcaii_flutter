@@ -35,6 +35,7 @@ class DbHelper {
       version: 1,
       onCreate: _buildTables,
       onUpgrade: _upgradeTables,
+      onConfigure: _onConfigure,
     );
 
     return db;
@@ -49,5 +50,10 @@ class DbHelper {
 
   FutureOr<void> _upgradeTables(Database db, int oldVersion, int newVersion) {
     //Implementar quando necessário
+  }
+
+  Future<void> _onConfigure(Database db) async {
+    ///Habilita [ON DELETE CASCADE]
+    await db.execute("PRAGMA foreign_keys=ON;");
   }
 }

@@ -1,6 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/column_types.dart';
+import 'package:marcaii_flutter/src/database/sqlite_generator/constraint_types.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_column.dart';
+import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_fk.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_table.dart';
 
 part 'horas.g.dart';
@@ -30,14 +33,24 @@ class Horas {
   static List<String> get columns => [ID, TIPO, INICIO, TERMINO];
 
   static String get createSQL {
-    return SqliteTable(tableName, columns: {
-      ID: SqliteColumn(ColumnTypes.PRIMARY_KEY),
-      EMPREGO_ID: SqliteColumn(ColumnTypes.INTEGER, nullable: false),
-      TIPO: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 0),
-      INICIO: SqliteColumn(ColumnTypes.TEXT, nullable: false, defaultValue: "17:00"),
-      TERMINO: SqliteColumn(ColumnTypes.TEXT, nullable: false, defaultValue: "17:00"),
-      DATA: SqliteColumn(ColumnTypes.TEXT, nullable: false, defaultValue: "2010-01-01"),
-    }).generateCreateQuery();
+    return SqliteTable(
+      tableName,
+      columns: {
+        ID: SqliteColumn(ColumnTypes.PRIMARY_KEY),
+        EMPREGO_ID: SqliteColumn(ColumnTypes.INTEGER, nullable: false),
+        TIPO: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 0),
+        INICIO: SqliteColumn(ColumnTypes.TEXT, nullable: false, defaultValue: "17:00"),
+        TERMINO: SqliteColumn(ColumnTypes.TEXT, nullable: false, defaultValue: "17:00"),
+        DATA: SqliteColumn(ColumnTypes.TEXT, nullable: false, defaultValue: "2010-01-01"),
+      },
+      fk: SqliteFK(
+        referenceTable: Empregos.tableName,
+        slaveColumn: EMPREGO_ID,
+        masterColumn: Empregos.ID,
+        onDelete: ConstraintTypes.CASCADE,
+        onUpdate: ConstraintTypes.CASCADE,
+      ),
+    ).makeCreateQuery();
   }
 
   @override

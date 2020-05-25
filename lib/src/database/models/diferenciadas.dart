@@ -1,6 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/column_types.dart';
+import 'package:marcaii_flutter/src/database/sqlite_generator/constraint_types.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_column.dart';
+import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_fk.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_table.dart';
 import 'package:marcaii_flutter/src/utils/json_utils.dart';
 
@@ -41,14 +44,24 @@ class Diferenciadas {
 
   static List<String> get columns => [ID, EMPREGO_ID, PORC, WEEKDAY, VIGENCIA, ATIVO];
 
-  static String createSQL = SqliteTable(tableName, columns: {
-    ID: SqliteColumn(ColumnTypes.PRIMARY_KEY),
-    EMPREGO_ID: SqliteColumn(ColumnTypes.INTEGER, nullable: false),
-    PORC: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 100),
-    WEEKDAY: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 6),
-    VIGENCIA: SqliteColumn(ColumnTypes.TEXT, nullable: false),
-    ATIVO: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 1),
-  }).generateCreateQuery();
+  static String createSQL = SqliteTable(
+    tableName,
+    columns: {
+      ID: SqliteColumn(ColumnTypes.PRIMARY_KEY),
+      EMPREGO_ID: SqliteColumn(ColumnTypes.INTEGER, nullable: false),
+      PORC: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 100),
+      WEEKDAY: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 6),
+      VIGENCIA: SqliteColumn(ColumnTypes.TEXT, nullable: false),
+      ATIVO: SqliteColumn(ColumnTypes.INTEGER, nullable: false, defaultValue: 1),
+    },
+    fk: SqliteFK(
+      referenceTable: Empregos.tableName,
+      slaveColumn: EMPREGO_ID,
+      masterColumn: Empregos.ID,
+      onDelete: ConstraintTypes.CASCADE,
+      onUpdate: ConstraintTypes.CASCADE,
+    ),
+  ).makeCreateQuery();
 
   static String tableName = "diferenciadas";
 
@@ -57,6 +70,17 @@ class Diferenciadas {
   }
 
   Map<String, Object> toJson() => _$DiferenciadasToJson(this);
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      ID: id,
+      EMPREGO_ID: emprego_id,
+      PORC: porc,
+      WEEKDAY: weekday,
+      VIGENCIA: vigencia,
+      ATIVO: boolToInt(ativo),
+    };
+  }
 
   @override
   // ignore: hash_and_equals

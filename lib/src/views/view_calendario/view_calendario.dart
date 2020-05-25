@@ -9,8 +9,6 @@ import 'package:marcaii_flutter/src/views/view_calendario/calendario_navigator.d
 import 'package:marcaii_flutter/src/views/view_calendario/view_calendario_presenter.dart';
 import 'package:provider/provider.dart';
 
-//TODO - Verificar se está removendo as horas, salarios, diferenciais ao remover o emprego
-
 class ViewCalendario extends StatefulWidget {
   const ViewCalendario({
     @required this.empregos,

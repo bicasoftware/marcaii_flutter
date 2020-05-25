@@ -22,7 +22,7 @@ class DaoDiferenciadas {
 
   Future<Diferenciadas> insert(Diferenciadas model) async {
     final db = await getDB();
-    final result = await db.insert(Diferenciadas.tableName, model.toJson());
+    final result = await db.insert(Diferenciadas.tableName, model.toMap());
     return model..id = result;
   }
 

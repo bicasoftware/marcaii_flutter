@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:marcaii_flutter/helpers.dart';
+import 'package:marcaii_flutter/src/database/sqlite_generator/constraint_types.dart';
+import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_fk.dart';
 import 'package:marcaii_flutter/src/utils/double_utils.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
 import 'package:marcaii_flutter/src/views/shared/form_validation.dart';
@@ -86,11 +88,23 @@ void main() {
     print(dt.formatAsDefault());
   });
 
-  test('periodo range', (){
+  test('periodo range', () {
     final v = Vigencia(ano: 2020, mes: 1);
     final range = v.getDateRange(25);
 
     range.forEach((DateTime e) => print(e.toIso8601String()));
+  });
+
+  test('generate fk', () {
+    final fk = SqliteFK(
+      referenceTable: "empregos",
+      slaveColumn: "id_emprego",
+      masterColumn: "id",
+      onDelete: ConstraintTypes.CASCADE,
+      onUpdate: ConstraintTypes.CASCADE,
+    );
+
+    print(fk.generateFK());
   });
 }
 
