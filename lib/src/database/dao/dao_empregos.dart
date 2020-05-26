@@ -6,7 +6,7 @@ import 'package:marcaii_flutter/src/database/db_helper.dart';
 import 'package:marcaii_flutter/src/database/models/diferenciadas.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/database/models/salarios.dart';
-import 'package:marcaii_flutter/src/state/calendario.dart';
+import 'package:marcaii_flutter/src/state/calendario/calendario.dart';
 import 'package:marcaii_flutter/src/utils/calendar_generator.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
 
@@ -21,31 +21,31 @@ class DaoEmpregos {
   }
 
   static Future<List<Empregos>> fetchAll() async {
+    final dt = DateTime.now();
     final db = await getDB();
     final result = await db.query(Empregos.tableName);
-    final empregos = result.map((e) => Empregos.fromMap(e)).toList();
-    final resultList = <Empregos>[];
-    final dt = DateTime.now();
-
-    for (final e in empregos) {
-      final horas = await DaoHoras.fetchByEmprego(e.id);
-      final salarios = await DaoSalarios.fetchByEmprego(e.id);
-      final diferenciadas = await DaoDiferenciadas.fetchByEmprego(e.id);
-      resultList.add(
-        e
-          ..horas = horas
-          ..salarios = salarios
-          ..diferenciadas = diferenciadas
-          ..calendario = [
-            Calendario(
-              vigencia: Vigencia.fromDateTime(dt).vigencia,
-              items: CalendarGenerator.generate(dt.year, dt.month, horas),
-            ),
-          ],        
+    return result.map((e) => Empregos.fromMap(e)).toList()
+      ..forEach(
+        (e) async {
+          final children = await Future.wait(
+            [
+              DaoHoras.fetchByEmprego(e.id),
+              DaoSalarios.fetchByEmprego(e.id),
+              DaoDiferenciadas.fetchByEmprego(e.id),
+            ],
+          );
+          e
+            ..horas = children[0]
+            ..salarios = children[1]
+            ..diferenciadas = children[2]
+            ..calendario = [
+              Calendario(
+                vigencia: Vigencia.fromDateTime(dt).vigencia,
+                items: CalendarGenerator.generate(dt.year, dt.month, children[0]),
+              ),
+            ];
+        },
       );
-    }
-
-    return resultList;
   }
 
   static Future<Empregos> fetchById(int id) async {

@@ -7,9 +7,9 @@ import 'package:marcaii_flutter/src/database/models/salarios.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/column_types.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_column.dart';
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_table.dart';
-import 'package:marcaii_flutter/src/state/calendario.dart';
-import 'package:marcaii_flutter/src/state/calendario_child.dart';
-import 'package:marcaii_flutter/src/state/totais_domain/totais.dart';
+import 'package:marcaii_flutter/src/state/calendario/calendario.dart';
+import 'package:marcaii_flutter/src/state/calendario/calendario_child.dart';
+import 'package:marcaii_flutter/src/state/totais/totais.dart';
 import 'package:marcaii_flutter/src/utils/json_utils.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
 
@@ -57,11 +57,7 @@ class Empregos {
   List<Calendario> calendario;
   @JsonKey(ignore: true)
   Totais totais;
-
-  // @JsonKey(toJson: boolToInt, fromJson: intToBool)
   bool banco_horas;
-
-  // @JsonKey(toJson: boolToInt, fromJson: intToBool)
   bool ativo;
 
   static const String ID = "id";

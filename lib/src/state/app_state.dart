@@ -65,8 +65,8 @@ class AppState {
     @required int emprego_id,
   }) async {
     await DaoHoras.delete(hora.id);
+    empregos.firstWhere((e) => e.id == emprego_id)..removeHora(hora);
     empregos.firstWhere((e) => e.id == emprego_id)
-      ..removeHora(hora)
       ..calendario.firstWhere((c) => c.vigencia == vigencia.vigencia).removeHora(hora.id);
   }
 }

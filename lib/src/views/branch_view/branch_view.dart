@@ -7,7 +7,6 @@ import 'package:marcaii_flutter/src/utils/token_manager.dart';
 import 'package:marcaii_flutter/src/views/home_view/view_home.dart';
 import 'package:marcaii_flutter/src/views/login/view_login.dart';
 import 'package:marcaii_flutter/src/views/signin/view_signin.dart';
-import 'package:marcaii_flutter/src/views/splash/splash_view.dart';
 import 'package:provider/provider.dart';
 
 class BranchView extends StatefulWidget {
@@ -49,7 +48,9 @@ class _BranchViewState extends State<BranchView> with SingleTickerProviderStateM
         );
         break;
       default:
-        return SplashView();
+        return Container(
+          color: Theme.of(context).accentColor,
+        );
     }
   }
 
@@ -59,7 +60,7 @@ class _BranchViewState extends State<BranchView> with SingleTickerProviderStateM
     super.initState();
   }
 
-  Future<String> findToken() async {
+  Future<String> findToken() async {    
     final manager = Vault();
     return manager.getToken();
   }
@@ -70,11 +71,9 @@ class _BranchViewState extends State<BranchView> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: AnimatedSwitcher(
-        child: getActualView(position),
-        duration: const Duration(milliseconds: 400),
-      ),
+    return AnimatedSwitcher(
+      child: getActualView(position),
+      duration: const Duration(milliseconds: 400),
     );
   }
 }

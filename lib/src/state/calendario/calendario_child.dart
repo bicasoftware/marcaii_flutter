@@ -10,4 +10,8 @@ class CalendarioChild {
   Horas hora;
 
   void setHora(Horas hora) => this.hora = hora;
+
+  void reset() {
+    hora = null;
+  }
 }

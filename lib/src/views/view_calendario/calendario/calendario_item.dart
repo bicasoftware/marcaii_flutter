@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:marcaii_flutter/helpers.dart';
-import 'package:marcaii_flutter/src/state/calendario_child.dart';
+import 'package:marcaii_flutter/src/state/calendario/calendario_child.dart';
 
 class CalendarioItem extends StatelessWidget {
   const CalendarioItem({

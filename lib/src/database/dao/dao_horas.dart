@@ -2,9 +2,13 @@ import 'package:marcaii_flutter/src/database/db_helper.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
 
 class DaoHoras {
-  static Future<void> delete(int i) async {
+  static Future<void> delete(int id) async {
     final db = await getDB();
-    return await db.delete(Horas.tableName);
+    return await db.delete(
+      Horas.tableName,
+      where: "${Horas.ID} = ?",
+      whereArgs: <Object>[id],
+    );
   }
 
   static Future<List<Horas>> fetchAll() async {

@@ -18,13 +18,10 @@ class BlocMain with BaseBloc {
       empregos: empregos,
     );
 
-    _bhsEmpregos.listen((List<Empregos> a) {
-      _inNavPosition.add(0);
-    });
-
     _inToken.add(state.token);
     _inVigencia.add(state.vigencia);
     _inEmpregos.add(state.empregos);
+    _inNavPosition.add(0);
   }
 
   AppState state;
@@ -53,6 +50,10 @@ class BlocMain with BaseBloc {
     _bhsNavPosition.close();
   }
 
+  void _resetNavPos() {
+    _inNavPosition.add(0);
+  }
+
   void incMes() {
     state.addMes();
     _inVigencia.add(state.vigencia);
@@ -76,11 +77,13 @@ class BlocMain with BaseBloc {
   void addEmprego(Empregos emprego) async {
     await state.addEmprego(emprego);
     _inEmpregos.add(state.empregos);
+    _resetNavPos();
   }
 
   void removeEmprego(Empregos emprego) async {
     await state.removeEmprego(emprego);
     _inEmpregos.add(state.empregos);
+    _resetNavPos();
   }
 
   void updateEmprego(Empregos emprego) async {

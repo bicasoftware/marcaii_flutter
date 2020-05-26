@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/helpers.dart';
-import 'package:marcaii_flutter/src/state/totais_domain/totais.dart';
+import 'package:marcaii_flutter/src/state/totais/totais.dart';
 import 'package:marcaii_flutter/src/utils/doubleline_appbar.dart';
 import 'package:marcaii_flutter/src/views/view_totais/totais_content.dart';
 import 'package:marcaii_flutter/strings.dart';

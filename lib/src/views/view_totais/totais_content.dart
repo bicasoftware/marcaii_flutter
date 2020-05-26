@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
-import 'package:marcaii_flutter/src/state/totais_domain/totais_detalhes.dart';
+import 'package:marcaii_flutter/src/state/totais/totais_detalhes.dart';
 import 'package:marcaii_flutter/src/utils/double_utils.dart';
-import 'package:marcaii_flutter/src/utils/helpers/hora_helper.dart';
 import 'package:marcaii_flutter/src/views/view_totais/totais_info_header.dart';
 import 'package:marcaii_flutter/src/views/view_totais/totais_info_row.dart';
 import 'package:marcaii_flutter/src/views/view_totais/totais_list_item.dart';
 import 'package:marcaii_flutter/strings.dart';
+import 'package:marcaii_flutter/helpers.dart';
 
 class TotaisContent extends StatelessWidget {
   const TotaisContent({

@@ -24,6 +24,7 @@ class ComposedTextTile extends StatelessWidget {
         initialValue: initialValue,
         onChanged: onChanged,
         validator: validator,
+        textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
           labelText: label,
           hintText: hint,
