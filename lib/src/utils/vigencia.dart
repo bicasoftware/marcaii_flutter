@@ -40,7 +40,9 @@ class Vigencia {
 
   List<DateTime> getDateRange(int diaFechamento) {
     final termino = DateTime(ano, mes, diaFechamento, 0, 0, 0);
-    final inicio = Jiffy(termino)..subtract(months: 1)..subtract(days: 1);
+    final inicio = Jiffy(termino)
+      ..subtract(months: 1)
+      ..add(days: 1);
 
     return <DateTime>[inicio.dateTime, termino];
   }
@@ -58,5 +60,17 @@ class Vigencia {
 
   static String _rightIndexMonth(int mes) {
     return (mes).toString().padLeft(2, "0");
+  }
+
+  bool compare<T>(T other) {
+    if (hashCode == other.hashCode) {
+      return true;
+    } else if (other is String) {
+      return vigencia == other;
+    } else if (other is Vigencia) {
+      return vigencia == other.vigencia;
+    }
+
+    return false;
   }
 }

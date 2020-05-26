@@ -30,25 +30,27 @@ extension EmpregoHelper on Empregos {
 
   TimeOfDay get horaSaida => stringToTimeOfDay(saida);
 
-  Calendario getCalendario(String vigencia) {
+  Calendario getCalendario(Vigencia vigencia) {
     ///Testa se já existe alguma página do calendário adicionada.
-    final index = calendario.indexWhere((c) => c.vigencia == vigencia);
+    final index = calendario.indexWhere((c) => vigencia.compare(c.vigencia));
 
     ///Se não houver, faz a relação dos dias do mes com a [Horas] conforme a [Vigencia]
     if (index < 0) {
-      final vig = Vigencia.fromString(vigencia);
-      final calendarioItems = CalendarGenerator.generate(vig.ano, vig.mes, horas);
-      calendario.add(Calendario(vigencia: vigencia, items: calendarioItems));
+      final c = Calendario(
+        vigencia: vigencia.vigencia,
+        items: CalendarGenerator.generate(vigencia.ano, vigencia.mes, horas),
+      );
+      calendario.add(c);
+      return c;
+    } else {
+      return calendario[index];
     }
-
-    return calendario.firstWhere((c) => c.vigencia == vigencia);
   }
 
   List<Horas> getHorasInRange(DateTime inicio, DateTime termino) {
-    final ini = inicio.subtract(const Duration(days: 1));
     final end = termino.add(const Duration(days: 1));
     return horas
-        .where((Horas h) => h.inicioAsDate.isAfter(ini) && h.terminoAsDate.isBefore(end))
+        .where((Horas h) => h.inicioAsDate.isAfter(inicio) && h.terminoAsDate.isBefore(end))
         .toList()
           ..sort((Horas a, Horas b) => a.data.compareTo(b.data));
   }

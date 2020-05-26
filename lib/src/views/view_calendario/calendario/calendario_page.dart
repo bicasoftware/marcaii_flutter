@@ -27,7 +27,7 @@ class CalendarioPage extends StatelessWidget {
     return StreamObserver<Vigencia>(
       stream: b.outVigencia,
       onSuccess: (_, Vigencia vigencia) {
-        final calendario = emprego.getCalendario(vigencia.vigencia);
+        final calendario = emprego.getCalendario(vigencia);
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: GridView.count(

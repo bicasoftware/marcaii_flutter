@@ -63,7 +63,7 @@ void main() {
     print('v1: ${v1.vigenciaExtenso}');
     print('v2: ${v2.vigenciaExtenso}');
     print('v3: ${v3.vigenciaExtenso}');
-    assert(v1.vigencia == v2.vigencia && v2.vigencia == v3.vigencia);
+    assert(v1.compare(v2) && v2.compare(v3));
     assert(v1.vigenciaExtenso == v2.vigenciaExtenso && v2.vigenciaExtenso == v3.vigenciaExtenso);
   });
 
