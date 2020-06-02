@@ -59,7 +59,7 @@ class TotaisContent extends StatelessWidget {
                 TotaisInfoRow(
                   icon: Icon(LineAwesomeIcons.clock_o),
                   label: Strings.horasExtras,
-                  value: detalhe.minutos.toString(),
+                  value: MinutesHelper.minutesToHoras(detalhe.minutos),
                 ),
                 const SizedBox(height: 8),
                 TotaisInfoRow(
@@ -73,13 +73,12 @@ class TotaisContent extends StatelessWidget {
                         shrinkWrap: true,
                         itemCount: detalhe.horas.length,
                         physics: const NeverScrollableScrollPhysics(),
-                        separatorBuilder: (_, i) => const SizedBox(height: 4),
+                        separatorBuilder: (_, i) => const Divider(
+                          height: 0,
+                        ),
                         itemBuilder: (_, i) {
                           final hora = detalhe.horas[i];
-                          return TotaisListItem(
-                            data: hora.data,
-                            minutes: hora.difMinutes(),
-                          );
+                          return TotaisListItem(hora: hora);
                         },
                       )
                     : Container(

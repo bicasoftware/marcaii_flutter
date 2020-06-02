@@ -50,12 +50,11 @@ class _ViewTotaisState extends State<ViewTotais> with SingleTickerProviderStateM
               );
             },
           ),
+          IconButton(
+            icon: showFirst ? Icon(LineAwesomeIcons.list) : Icon(LineAwesomeIcons.th_list),
+            onPressed: () => setState(() => showFirst = !showFirst),
+          )
         ],
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
-        child: showFirst ? Icon(LineAwesomeIcons.list) : Icon(LineAwesomeIcons.th_list),
-        onPressed: () => setState(() => showFirst = !showFirst),
       ),
       body: AnimatedCrossFade(
         duration: const Duration(milliseconds: 300),
