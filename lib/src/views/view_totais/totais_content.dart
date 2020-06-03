@@ -49,10 +49,6 @@ class TotaisContent extends StatelessWidget {
             title: label,
           ),
           Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 8,
-            ),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
@@ -69,17 +65,10 @@ class TotaisContent extends StatelessWidget {
                 ),
                 const Divider(),
                 detalhe.horas.isNotEmpty
-                    ? ListView.separated(
-                        shrinkWrap: true,
-                        itemCount: detalhe.horas.length,
-                        physics: const NeverScrollableScrollPhysics(),
-                        separatorBuilder: (_, i) => const Divider(
-                          height: 0,
-                        ),
-                        itemBuilder: (_, i) {
-                          final hora = detalhe.horas[i];
-                          return TotaisListItem(hora: hora);
-                        },
+                    ? Column(
+                        children: <Widget>[
+                          for (final hora in detalhe.horas) TotaisListItem(hora: hora)
+                        ],
                       )
                     : Container(
                         padding: const EdgeInsets.symmetric(vertical: 8),

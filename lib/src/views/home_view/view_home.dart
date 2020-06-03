@@ -31,7 +31,7 @@ class ViewHome extends StatelessWidget {
 
         return Scaffold(
           appBar: AppBar(
-            title: Text(Strings.calendario),
+            title: const Text(Strings.calendario),
             elevation: 1,
           ),
           body: ViewCalendario(

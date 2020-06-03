@@ -14,22 +14,14 @@ class TotaisInfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Row(
-      children: <Widget>[
-        icon,
-        const SizedBox(width: 16),
-        Text(
-          label,
-          style: theme.textTheme.bodyText2.copyWith(
-            fontStyle: FontStyle.italic,
-          ),
-        ),
-        const Spacer(),
-        Text(
-          value,
-          style: theme.textTheme.caption.copyWith(fontWeight: FontWeight.bold),
-        ),
-      ],
+    return ListTile(
+      dense: true,
+      leading: icon,
+      title: Text(label),
+      trailing: Text(
+        value,
+        style: theme.textTheme.caption.copyWith(fontWeight: FontWeight.bold),
+      ),
     );
   }
 }

@@ -130,10 +130,9 @@ class Consts {
   static const tipoHora = <String>["Normais", "Feriados", "Diferenciadas", "Totais"];
 
   static const tipoHoraPlural = <String>[
-    "Normais",
-    "Feriados",
-    "Diferenciadas",
-    "Totais",
+    "Normal",
+    "Feriado",
+    "Diferenciada",
   ];
 
   static const horaColor = <Color>[
