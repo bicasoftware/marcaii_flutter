@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lib_observer/stream_observer.dart';
 import 'package:marcaii_flutter/src/database/models/salarios.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
-import 'package:marcaii_flutter/src/utils/dialogs/dialogs.dart';
+import 'package:marcaii_flutter/src/views/widgets/dialogs.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/insert_salario/view_insert_salario.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/salarios_list_tile/salarios_list_item.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/salarios_list_tile/salarios_list_tile_header.dart';

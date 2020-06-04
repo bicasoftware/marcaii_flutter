@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:marcaii_flutter/src/views/shared/config_tiles/base_config_tile.dart';
+import 'package:marcaii_flutter/src/views/widgets/config_tiles/base_config_tile.dart';
 
 class SwitchTile extends StatelessWidget {
   const SwitchTile({

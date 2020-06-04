@@ -4,8 +4,8 @@ import 'package:marcaii_flutter/src/utils/currency_formatter.dart';
 import 'package:marcaii_flutter/src/utils/double_utils.dart';
 import 'package:marcaii_flutter/src/utils/form_view.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
-import 'package:marcaii_flutter/src/utils/vigencia_picker.dart';
-import 'package:marcaii_flutter/src/views/shared/appbar_save_button.dart';
+import 'package:marcaii_flutter/src/views/widgets/appbar_save_button.dart';
+import 'package:marcaii_flutter/src/views/widgets/vigencia_picker.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/emprego_validate.dart';
 import 'package:marcaii_flutter/strings.dart';
 

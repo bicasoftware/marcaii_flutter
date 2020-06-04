@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lib_observer/lib_observer.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
-import 'package:marcaii_flutter/src/utils/dialogs/dialogs.dart';
+import 'package:marcaii_flutter/src/views/widgets/dialogs.dart';
 import 'package:marcaii_flutter/src/views/view_list_empregos/view_list_empregos_item.dart';
 import 'package:marcaii_flutter/strings.dart';
 import 'package:provider/provider.dart';

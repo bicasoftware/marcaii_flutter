@@ -3,8 +3,8 @@ import 'package:lib_observer/lib_observer.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/src/database/models/diferenciadas.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
-import 'package:marcaii_flutter/src/utils/dialogs/dialogs.dart';
-import 'package:marcaii_flutter/src/views/shared/list_separator.dart';
+import 'package:marcaii_flutter/src/views/widgets/dialogs.dart';
+import 'package:marcaii_flutter/src/views/widgets/list_separator.dart';
 import 'package:marcaii_flutter/strings.dart';
 import 'package:provider/provider.dart';
 

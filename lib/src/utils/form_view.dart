@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:marcaii_flutter/src/utils/dialogs/dialogs.dart';
+import 'package:marcaii_flutter/src/views/widgets/dialogs.dart';
 import 'package:marcaii_flutter/strings.dart';
 
 mixin WillPopForm {

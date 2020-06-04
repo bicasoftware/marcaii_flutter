@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lib_observer/stream_observer.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
-import 'package:marcaii_flutter/src/utils/dialogs/dialogs.dart';
-import 'package:marcaii_flutter/src/views/shared/config_tiles/base_config_tile.dart';
+import 'package:marcaii_flutter/src/views/widgets/config_tiles/base_config_tile.dart';
+import 'package:marcaii_flutter/src/views/widgets/dialogs.dart';
 import 'package:marcaii_flutter/strings.dart';
 import 'package:provider/provider.dart';
 

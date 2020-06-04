@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
 import 'package:marcaii_flutter/src/utils/form_view.dart';
-import 'package:marcaii_flutter/src/views/shared/appbar_save_button.dart';
+import 'package:marcaii_flutter/src/views/widgets/appbar_save_button.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/banco_horas_tile.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/carga_horaria_tile.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/emprego_ativo_tile.dart';

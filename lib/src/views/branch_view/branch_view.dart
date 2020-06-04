@@ -3,7 +3,7 @@ import 'package:lib_observer/lib_observer.dart';
 import 'package:marcaii_flutter/src/database/dao/dao_empregos.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
-import 'package:marcaii_flutter/src/utils/token_manager.dart';
+import 'package:marcaii_flutter/src/utils/vault.dart';
 import 'package:marcaii_flutter/src/views/home_view/view_home.dart';
 import 'package:marcaii_flutter/src/views/login/view_login.dart';
 import 'package:marcaii_flutter/src/views/signin/view_signin.dart';

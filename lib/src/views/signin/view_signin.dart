@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:marcaii_flutter/src/server/clients/user_client.dart';
 import 'package:marcaii_flutter/src/server/models/user_data_dto.dart';
 import 'package:marcaii_flutter/src/server/models/user_dto.dart';
-import 'package:marcaii_flutter/src/utils/dialogs/dialogs.dart';
-import 'package:marcaii_flutter/src/utils/token_manager.dart';
-import 'package:marcaii_flutter/src/views/shared/form_validation.dart';
-import 'package:marcaii_flutter/src/views/shared/link_button.dart';
-import 'package:marcaii_flutter/src/views/shared/primary_color_view.dart';
-import 'package:marcaii_flutter/src/views/shared/rounded_button.dart';
+import 'package:marcaii_flutter/src/utils/vault.dart';
+import 'package:marcaii_flutter/src/views/widgets/dialogs.dart';
+import 'package:marcaii_flutter/src/views/widgets/form_validation.dart';
+import 'package:marcaii_flutter/src/views/widgets/link_button.dart';
+import 'package:marcaii_flutter/src/views/widgets/primary_color_view.dart';
+import 'package:marcaii_flutter/src/views/widgets/rounded_button.dart';
 import 'package:marcaii_flutter/strings.dart';
 
 class ViewSignin extends StatefulWidget {

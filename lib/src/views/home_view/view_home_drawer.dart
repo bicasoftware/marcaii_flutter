@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lib_observer/lib_observer.dart';
-import 'package:marcaii_flutter/src/utils/token_manager.dart';
+import 'package:marcaii_flutter/src/utils/vault.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/list_section_decorator.dart';
 import 'package:marcaii_flutter/src/views/view_list_empregos/view_list_empregos.dart';
 import 'package:marcaii_flutter/strings.dart';

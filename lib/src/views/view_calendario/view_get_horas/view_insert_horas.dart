@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
-import 'package:marcaii_flutter/src/utils/dialogs/dialogs.dart';
-import 'package:marcaii_flutter/src/views/shared/config_tiles/time_tile.dart';
-import 'package:marcaii_flutter/src/views/shared/appbar_save_button.dart';
-import 'package:marcaii_flutter/src/views/shared/list_separator.dart';
+import 'package:marcaii_flutter/src/views/widgets/config_tiles/time_tile.dart';
+import 'package:marcaii_flutter/src/views/widgets/appbar_save_button.dart';
+import 'package:marcaii_flutter/src/views/widgets/dialogs.dart';
+import 'package:marcaii_flutter/src/views/widgets/list_separator.dart';
 import 'package:marcaii_flutter/strings.dart';
 import 'package:marcaii_flutter/helpers.dart';
 

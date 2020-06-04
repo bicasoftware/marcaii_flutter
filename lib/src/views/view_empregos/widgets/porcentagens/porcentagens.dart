@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lib_observer/lib_observer.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
+import 'package:marcaii_flutter/src/views/widgets/dialogs.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/list_section_decorator.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/porcentagens/porcentagem_container.dart';
 import 'package:marcaii_flutter/strings.dart';
 import 'package:provider/provider.dart';
-import 'package:marcaii_flutter/src/utils/dialogs/dialogs.dart';
 
 class ViewPorcentagens extends StatelessWidget {
   const ViewPorcentagens({Key key}) : super(key: key);

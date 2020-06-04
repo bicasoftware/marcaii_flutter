@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lib_observer/lib_observer.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
-import 'package:marcaii_flutter/src/utils/dialogs/dialogs.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
+import 'package:marcaii_flutter/src/views/widgets/dialogs.dart';
 import 'package:provider/provider.dart';
 
 class CalendarioNavigator extends StatelessWidget {

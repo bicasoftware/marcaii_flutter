@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:marcaii_flutter/src/utils/item_picker.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
-import 'package:marcaii_flutter/src/utils/vigencia_picker.dart';
+import 'package:marcaii_flutter/src/views/widgets/item_picker.dart';
+import 'package:marcaii_flutter/src/views/widgets/vigencia_picker.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/emprego_validate.dart';
 import 'package:marcaii_flutter/strings.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:marcaii_flutter/src/utils/item_picker.dart';
+import 'package:marcaii_flutter/src/views/widgets/item_picker.dart';
 import 'package:marcaii_flutter/strings.dart';
 
 class VigenciaPicker extends StatefulWidget {

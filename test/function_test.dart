@@ -6,7 +6,7 @@ import 'package:marcaii_flutter/src/database/sqlite_generator/constraint_types.d
 import 'package:marcaii_flutter/src/database/sqlite_generator/sqlite_fk.dart';
 import 'package:marcaii_flutter/src/utils/double_utils.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
-import 'package:marcaii_flutter/src/views/shared/form_validation.dart';
+import 'package:marcaii_flutter/src/views/widgets/form_validation.dart';
 
 void main() {
   test('test email', () {

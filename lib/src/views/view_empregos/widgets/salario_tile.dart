@@ -4,7 +4,7 @@ import 'package:lib_observer/lib_observer.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
 import 'package:marcaii_flutter/src/utils/currency_formatter.dart';
 import 'package:marcaii_flutter/src/utils/double_utils.dart';
-import 'package:marcaii_flutter/src/views/shared/config_tiles/text_tile.dart';
+import 'package:marcaii_flutter/src/views/widgets/config_tiles/text_tile.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/emprego_validate.dart';
 import 'package:marcaii_flutter/strings.dart';
 import 'package:provider/provider.dart';

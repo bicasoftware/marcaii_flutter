@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:marcaii_flutter/src/views/shared/hora_info_header.dart';
+import 'package:marcaii_flutter/src/views/widgets/hora_info_header.dart';
 
 class BtsHorasHeader extends StatelessWidget {
   const BtsHorasHeader({
