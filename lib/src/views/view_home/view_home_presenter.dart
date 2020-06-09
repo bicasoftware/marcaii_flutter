@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
 import 'package:marcaii_flutter/strings.dart';
-import 'package:provider/provider.dart';
 
 class ViewHomePresenter {
   ViewHomePresenter(this.context);
@@ -10,7 +10,7 @@ class ViewHomePresenter {
   final BuildContext context;
 
   void onNewEmprego() async {
-    final b = Provider.of<BlocMain>(context, listen: false);
+    final b = Get.find<BlocMain>();
 
     final result = await Navigator.of(context).pushNamed(
       Routes.routeEmpregos,

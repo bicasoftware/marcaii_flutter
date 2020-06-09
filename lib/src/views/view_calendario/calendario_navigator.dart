@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lib_observer/lib_observer.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
 import 'package:marcaii_flutter/src/views/widgets/dialogs.dart';
-import 'package:provider/provider.dart';
 
 class CalendarioNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final b = Provider.of<BlocMain>(context);
+    final b = Get.find<BlocMain>();
     return Container(
       padding: EdgeInsets.zero,
       child: Row(

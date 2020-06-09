@@ -17,6 +17,8 @@ import 'package:marcaii_flutter/src/views/view_empregos/widgets/salarios_list_ti
 import 'package:marcaii_flutter/strings.dart';
 import 'package:provider/provider.dart';
 
+//TODO - Remover referências ao provider e usar Get
+
 class ViewEmpregos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

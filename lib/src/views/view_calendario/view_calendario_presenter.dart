@@ -1,14 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
 import 'package:marcaii_flutter/src/state/calendario/calendario_child.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
-import 'package:marcaii_flutter/src/views/widgets/dialogs.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/bts_horas_info/bts_horas_info.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/view_get_horas/view_insert_horas.dart';
-import 'package:provider/provider.dart';
+import 'package:marcaii_flutter/src/views/widgets/dialogs.dart';
 
 class ViewCalendarioPresenter {
   ViewCalendarioPresenter(this.context);
@@ -78,7 +78,7 @@ class ViewCalendarioPresenter {
     Empregos emprego,
     Vigencia vigencia,
   }) async {
-    final b = Provider.of<BlocMain>(context, listen: false);
+    final b = Get.find<BlocMain>();
     if (child.hora == null) {
       final hora = await showViewGetHoras(
         emprego: emprego,

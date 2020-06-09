@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/state/app_state.dart';
@@ -9,26 +8,17 @@ import 'package:marcaii_flutter/src/utils/vigencia.dart';
 import 'package:rxdart/rxdart.dart';
 
 class BlocMain with BaseBloc {
-  BlocMain({
-    @required final String token,
-    @required final List<Empregos> empregos,
-  }) {
+  BlocMain(List<Empregos> empregos) {
     state = AppState(
-      token: token,
       empregos: empregos,
     );
 
-    _inToken.add(state.token);
     _inVigencia.add(state.vigencia);
     _inEmpregos.add(state.empregos);
     _inNavPosition.add(0);
   }
 
   AppState state;
-
-  final BehaviorSubject<String> _bhsToken = BehaviorSubject<String>();
-  Stream<String> get outToken => _bhsToken.stream;
-  Sink<String> get _inToken => _bhsToken.sink;
 
   final BehaviorSubject<List<Empregos>> _bhsEmpregos = BehaviorSubject<List<Empregos>>();
   Stream<List<Empregos>> get empregos => _bhsEmpregos.stream;
@@ -44,7 +34,6 @@ class BlocMain with BaseBloc {
 
   @override
   void dispose() {
-    _bhsToken.close();
     _bhsEmpregos.close();
     _bhsVigencia.close();
     _bhsNavPosition.close();

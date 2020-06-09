@@ -18,6 +18,12 @@ class Vigencia {
     mes = date.month;
   }
 
+  Vigencia.forNow() {
+    final now = DateTime.now();
+    ano = now.year;
+    mes = now.month;
+  }
+
   int ano, mes;
 
   void incMonth() {

@@ -1,27 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:marcaii_flutter/src/utils/vault.dart';
-import 'package:marcaii_flutter/src/views/branch_view/branch_view.dart';
+import 'package:get/get.dart';
+import 'package:lib_observer/lib_observer.dart';
+import 'package:marcaii_flutter/src/database/dao/dao_empregos.dart';
+import 'package:marcaii_flutter/src/database/models/empregos.dart';
+import 'package:marcaii_flutter/src/views/view_branch/branch_view.dart';
+import 'package:marcaii_flutter/src/views/view_empregos/view_empregos.dart';
 import 'package:marcaii_flutter/strings.dart';
 
-import 'src/views/view_empregos/view_empregos.dart';
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  final manager = Vault();
-  final token = await manager.getToken();
-
-  runApp(Marcaii(token: token));
-}
+void main() => runApp(Marcaii());
 
 class Marcaii extends StatelessWidget {
-  const Marcaii({Key key, this.token}) : super(key: key);
-  final String token;
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       supportedLocales: const [Locale('pt', 'BR')],
       title: Strings.appName,
       debugShowCheckedModeBanner: false,
@@ -55,7 +47,10 @@ class Marcaii extends StatelessWidget {
       routes: {
         Routes.routeEmpregos: (_) => ViewEmpregos(),
       },
-      home: BranchView(token: token),
+      home: FutureObserver<List<Empregos>>(
+        future: DaoEmpregos.fetchAll(),
+        onSuccess: (_, empregos) => ViewBranch(empregos: empregos),
+      ),
     );
   }
 }

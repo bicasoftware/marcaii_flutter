@@ -68,7 +68,7 @@ class DaoEmpregos {
 
     for (final difer in model.diferenciadas) {
       final newDifer = difer..emprego_id = empregoId;
-      diferenciadas.add(await DaoDiferenciadas().insert(newDifer));
+      diferenciadas.add(await DaoDiferenciadas.insert(newDifer));
     }
 
     return model
@@ -103,7 +103,7 @@ class DaoEmpregos {
     }
 
     for (final difer in model.diferenciadas) {
-      await DaoDiferenciadas().insert(difer..emprego_id = model.id);
+      await DaoDiferenciadas.insert(difer..emprego_id = model.id);
     }
   }
 
@@ -125,7 +125,7 @@ class DaoEmpregos {
       }
 
       for (final difer in emprego.diferenciadas) {
-        await DaoDiferenciadas().insert(difer.forFirstSync(e.id));
+        await DaoDiferenciadas.insert(difer.forFirstSync(e.id));
       }
     }
   }

@@ -140,6 +140,7 @@ class Empregos {
   void addHora(Horas hora, Vigencia vigencia) {
     horas.add(hora);
     calendario
+    ///
         .firstWhere((c) => c.vigencia == vigencia.vigencia)
         .items
         .firstWhere((CalendarioChild child) => child.date.isSameDate(hora.data))
