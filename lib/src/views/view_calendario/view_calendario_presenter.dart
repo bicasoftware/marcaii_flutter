@@ -50,14 +50,8 @@ class ViewCalendarioPresenter {
     @required Empregos emprego,
     @required DateTime date,
   }) async {
-    return await Navigator.of(context).push(
-      MaterialPageRoute(
-        fullscreenDialog: true,
-        builder: (_) => ViewInsertHoras(
-          emprego: emprego,
-          data: date,
-        ),
-      ),
+    return await Get.to<Horas>(
+      ViewInsertHoras(emprego: emprego, data: date),
     );
   }
 

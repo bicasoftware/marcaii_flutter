@@ -21,14 +21,11 @@ class SalariosListTile extends StatelessWidget {
       children: <Widget>[
         SalariosListTileHeader(
           onAddTap: () async {
-            final Object result = await Navigator.of(context).push(
-              MaterialPageRoute(
-                fullscreenDialog: true,
-                builder: (_) => const ViewInsertSalario(isCreating: true),
-              ),
+            final result = await Get.to<Map<String, Object>>(
+              const ViewInsertSalario(isCreating: true),
             );
 
-            if (result != null && result is Map<String, dynamic>) {
+            if (result != null) {
               b.addSalario(
                 valor: result['valor'],
                 vigencia: result['vigencia'],
@@ -60,22 +57,19 @@ class SalariosListTile extends StatelessWidget {
                     }
                   },
                   onPressed: (Salarios s) async {
-                    final Object r = await Navigator.of(context).push(
-                      MaterialPageRoute(
-                        fullscreenDialog: true,
-                        builder: (_) => ViewInsertSalario(
-                          isCreating: false,
-                          salario: s.valor,
-                          vigencia: s.vigencia,
-                        ),
+                    final result = await Get.to<Map<String, Object>>(
+                      ViewInsertSalario(
+                        isCreating: false,
+                        salario: s.valor,
+                        vigencia: s.vigencia,
                       ),
                     );
 
-                    if (r != null && r is Map<String, dynamic>) {
+                    if (result != null) {
                       b.updateSalario(
                         salario: s,
-                        vigencia: r['vigencia'],
-                        valor: r['valor'],
+                        vigencia: result['vigencia'],
+                        valor: result['valor'],
                       );
                     }
                   },

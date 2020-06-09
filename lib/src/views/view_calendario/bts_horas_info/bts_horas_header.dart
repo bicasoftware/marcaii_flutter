@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:marcaii_flutter/src/views/widgets/hora_info_header.dart';
 
 class BtsHorasHeader extends StatelessWidget {
@@ -25,7 +26,7 @@ class BtsHorasHeader extends StatelessWidget {
           ),
           IconButton(
             icon: Icon(Icons.delete_sweep, color: Colors.red),
-            onPressed: () => Navigator.of(context).pop(true),
+            onPressed: () => Get.back(result: true),
           ),
         ],
       ),

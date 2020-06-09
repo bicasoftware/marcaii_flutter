@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:marcaii_flutter/src/views/widgets/dialogs.dart';
 import 'package:marcaii_flutter/strings.dart';
 
@@ -37,7 +38,7 @@ mixin WillPopForm {
   }) {
     if (formState.validate()) {
       formState.save();
-      Navigator.of(context).pop<Object>(resultData);
+      Get.back(result: resultData);
     }
   }
 }

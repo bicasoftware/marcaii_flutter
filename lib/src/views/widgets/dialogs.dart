@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
+import 'package:marcaii_flutter/src/views/view_empregos/emprego_validate.dart';
 import 'package:marcaii_flutter/src/views/widgets/item_picker.dart';
 import 'package:marcaii_flutter/src/views/widgets/vigencia_picker.dart';
-import 'package:marcaii_flutter/src/views/view_empregos/emprego_validate.dart';
 import 'package:marcaii_flutter/strings.dart';
 
 Future<void> showAwaitingDialog({
@@ -55,13 +56,13 @@ Future<bool> showConfirmationDialog({
             style: Theme.of(context).textTheme.button.copyWith(color: Colors.black87),
           ),
           onPressed: () {
-            Navigator.of(context).pop(false);
+            Get.back(result: false);
           },
         ),
         FlatButton(
           child: Text(positiveCaption),
           onPressed: () {
-            Navigator.of(context).pop(true);
+            Get.back(result: true);
           },
         ),
       ],
@@ -91,11 +92,11 @@ Future<Vigencia> showVigenciaPicker({
             "Cancelar",
             style: Theme.of(context).textTheme.button.copyWith(color: Colors.black87),
           ),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: Get.back,
         ),
         FlatButton(
           child: const Text("Mudar"),
-          onPressed: () => Navigator.of(context).pop(vigencia),
+          onPressed: () => Get.back(result: vigencia),
         ),
       ],
     ),
@@ -123,11 +124,11 @@ Future<int> showFechamentoPicker({
             "Cancelar",
             style: Theme.of(context).textTheme.button.copyWith(color: Colors.black87),
           ),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: Get.back,
         ),
         FlatButton(
           child: const Text("Mudar"),
-          onPressed: () => Navigator.of(context).pop(fechamento + 1),
+          onPressed: () => Get.back(result: fechamento + 1),
         ),
       ],
     ),
@@ -180,7 +181,7 @@ Future<int> showIntegerPickerDialog({
             cancelButton,
             style: Theme.of(context).textTheme.button.copyWith(color: Colors.black87),
           ),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: Get.back,
         ),
         FlatButton(
           child: const Text(Strings.salvar),
@@ -188,7 +189,7 @@ Future<int> showIntegerPickerDialog({
             final state = _formKey.currentState;
             if (state.validate()) {
               state.save();
-              Navigator.of(context).pop(initValue);
+              Get.back(result: initValue);
             }
           },
         ),

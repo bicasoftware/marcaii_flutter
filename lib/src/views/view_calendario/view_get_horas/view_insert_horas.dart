@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:marcaii_flutter/helpers.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
-import 'package:marcaii_flutter/src/views/widgets/config_tiles/time_tile.dart';
 import 'package:marcaii_flutter/src/views/widgets/appbar_save_button.dart';
+import 'package:marcaii_flutter/src/views/widgets/config_tiles/time_tile.dart';
 import 'package:marcaii_flutter/src/views/widgets/dialogs.dart';
 import 'package:marcaii_flutter/src/views/widgets/list_separator.dart';
 import 'package:marcaii_flutter/strings.dart';
-import 'package:marcaii_flutter/helpers.dart';
 
 class ViewInsertHoras extends StatefulWidget {
   const ViewInsertHoras({Key key, this.emprego, this.data}) : super(key: key);
@@ -79,8 +80,8 @@ class _ViewInsertHorasState extends State<ViewInsertHoras> {
   }
 
   void onSave() {
-    Navigator.of(context).pop(
-      Horas(
+    Get.back(
+      result: Horas(
         emprego_id: widget.emprego.id,
         inicio: inicio.toShortString(),
         termino: termino.toShortString(),
@@ -132,7 +133,8 @@ class _ViewInsertHorasState extends State<ViewInsertHoras> {
               onTimeSet: setTermino,
             ),
             const ListSeparator(
-              label: "Tipo de Hora Extra",padding: EdgeInsets.symmetric(horizontal: 16,vertical: 16),
+              label: "Tipo de Hora Extra",
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             ),
             CupertinoSegmentedControl<int>(
               groupValue: tipo,
