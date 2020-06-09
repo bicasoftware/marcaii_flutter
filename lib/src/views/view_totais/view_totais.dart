@@ -38,10 +38,6 @@ class _ViewTotaisState extends State<ViewTotais> {
         subtitle: "Entre ${widget.totais.inicio.asString()} e ${widget.totais.termino.asString()}",
         elevation: 1,
         actions: <Widget>[
-          IconButton(
-            icon: Icon(LineAwesomeIcons.file_pdf_o),
-            onPressed: () {},
-          ),
           StreamObserver<bool>(
             stream: _bhsShowFirst.stream,
             onSuccess: (_, b) => IconButton(

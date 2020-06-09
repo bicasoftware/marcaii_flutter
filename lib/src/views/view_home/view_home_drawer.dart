@@ -23,10 +23,7 @@ class ViewHomeDrawer extends StatelessWidget {
           ListTile(
             leading: Image.asset("assets/images/app_icon.png"),
             title: const Text(Strings.appName),
-            subtitle: FutureObserver<String>(
-              future: Vault().getEmail(),
-              onSuccess: (_, String email) => Text(email),
-            ),
+            subtitle: const Text(Strings.appDescricao),
           ),
           const Divider(),
           const ListSectionDecorator(
