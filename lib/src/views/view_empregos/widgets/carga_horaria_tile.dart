@@ -24,6 +24,8 @@ class CargaHorariaTile extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 16),
               child: CupertinoSegmentedControl<int>(
                 groupValue: carga,
+                selectedColor: Get.theme.primaryColor,
+                unselectedColor: Get.theme.cardColor,
                 onValueChanged: b.setCargaHoraria,
                 children: const <int, Widget>{
                   220: Text("220"),

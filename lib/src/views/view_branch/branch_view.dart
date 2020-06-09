@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
-import 'package:marcaii_flutter/src/utils/vault.dart';
 import 'package:marcaii_flutter/src/views/view_home/view_home.dart';
 import 'package:marcaii_flutter/src/views/view_presentation/view_presentation.dart';
 
@@ -45,11 +44,6 @@ class _ViewBranchState extends State<ViewBranch> {
       );
       return ViewHome();
     }
-  }
-
-  Future<String> findToken() async {
-    final manager = Vault();
-    return manager.getToken();
   }
 
   @override

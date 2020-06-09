@@ -8,6 +8,7 @@ import 'package:marcaii_flutter/src/database/models/diferenciadas.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/database/models/salarios.dart';
+import 'package:marcaii_flutter/src/utils/vault.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
 
 class ViewPresentation extends StatelessWidget {
@@ -31,6 +32,7 @@ class ViewPresentation extends StatelessWidget {
         child: MaterialButton(
           color: Get.theme.primaryColor,
           onPressed: () async {
+            await Vault.setIsDark(false);
             final vigencia = Vigencia.fromString("01/2010");
             final e = await DaoEmpregos.insert(
               Empregos(

@@ -1,77 +1,27 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Vault {
-  Vault();
 
   static const String TOKEN = "token";
   static const String REFRESH_TOKEN = "refresh_token";
   static const String EMAIL = "marcaii_email";
+  static const String ISDARK = "IS_DARK";
 
-  FlutterSecureStorage _getStorage() {
+  static FlutterSecureStorage _getStorage() {
     return const FlutterSecureStorage();
   }
 
-  Future<Map<String, dynamic>> _getAllValues() async {
-    final storage = _getStorage();
-    return await storage.readAll();
-  }
-
-  Future<bool> hasSetToken() async {
-    final allValues = await _getAllValues();
-    return allValues.containsKey(TOKEN);
-  }
-
-  Future<bool> hasSetRefreshToken() async {
-    final v = await _getAllValues();
-    return v.containsKey(REFRESH_TOKEN);
-  }
-
-  Future<void> setToken(String token) async {
+  static Future<void> setIsDark(bool brightness) async {
     final store = _getStorage();
-    return store.write(
-      key: TOKEN,
-      value: token,
-    );
+    return store.write(key: ISDARK, value: brightness ? 'true' : 'false');
   }
 
-  Future<void> setRefreshToken(String refreshToken) {
+  static Future<bool> getIsDark() async {
     final store = _getStorage();
-    return store.write(
-      key: REFRESH_TOKEN,
-      value: refreshToken,
-    );
-  }
-
-  Future<void> setEmail(String email) {
-    final storage = _getStorage();
-    return storage.write(key: EMAIL, value: email);
-  }
-
-  Future<void> setAuthData({
-    @required String email,
-    @required String token,
-    @required String refreshToken,
-  }) async {
-    await Future.wait([
-      setToken(token),
-      setRefreshToken(refreshToken),
-      setEmail(email),
-    ]);
-  }
-
-  Future<String> getToken() async {
-    final store = _getStorage();
-    return await store.read(key: TOKEN) ?? "";
-  }
-
-  Future<String> getRefreshToken() async {
-    final store = _getStorage();
-    return await store.read(key: REFRESH_TOKEN);
-  }
-
-  Future<String> getEmail() async {
-    final store = _getStorage();
-    return await store.read(key: EMAIL);
+    final v = await store.readAll();
+    if (!v.containsKey(ISDARK)) {
+      await setIsDark(false);
+    }
+    return await store.read(key: ISDARK) == "true";
   }
 }

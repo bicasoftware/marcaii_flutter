@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:lib_observer/lib_observer.dart';
+import 'package:get/get.dart';
+import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/src/utils/vault.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/list_section_decorator.dart';
 import 'package:marcaii_flutter/src/views/view_list_empregos/view_list_empregos.dart';
 import 'package:marcaii_flutter/strings.dart';
+import 'package:marcaii_flutter/themes.dart';
 
 class ViewHomeDrawer extends StatelessWidget {
   const ViewHomeDrawer({
@@ -31,7 +33,9 @@ class ViewHomeDrawer extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
           ),
           ViewListEmpregos(),
-          DrawerContainer(
+          Card(
+            elevation: .4,
+            margin: const EdgeInsets.all(8),
             child: ListTile(
               dense: true,
               title: const Text("Adicionar Emprego"),
@@ -40,7 +44,18 @@ class ViewHomeDrawer extends StatelessWidget {
             ),
           ),
           const Divider(),
-          ListTile(leading: Icon(Icons.lightbulb_outline)),
+          ListTile(
+            leading: Icon(Get.isDarkMode ? LineAwesomeIcons.lightbulb_o : Icons.lightbulb_outline),
+            onTap: () async {
+              if (Get.isDarkMode) {
+                Get.changeTheme(lightTheme());
+                await Vault.setIsDark(false);
+              } else {
+                Get.changeTheme(darkTheme());
+                await Vault.setIsDark(true);
+              }
+            },
+          ),
         ],
       ),
     );
@@ -58,7 +73,7 @@ class DrawerContainer extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: Colors.deepPurple[50],
+        color: Get.theme.primaryColor,
         borderRadius: BorderRadius.circular(4),
       ),
       child: child,

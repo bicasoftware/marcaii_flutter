@@ -69,7 +69,6 @@ class _ViewHomeState extends State<ViewHome> {
             transitionType: ContainerTransitionType.fadeThrough,
             openBuilder: (_, __) => ViewTotais(totais: empregos[pos].generateTotais(vigencia)),
             closedBuilder: (_, VoidCallback call) => FloatingActionButton(
-              // label: Text(Strings.verTotais),
               child: Icon(LineAwesomeIcons.money),
               onPressed: call,
             ),

@@ -32,7 +32,7 @@ class DoubleLineAppbar extends StatelessWidget with PreferredSizeWidget {
           ),
           Text(
             subtitle,
-            style: theme.textTheme.caption.copyWith(color: Colors.black45),
+            style: theme.textTheme.caption,
           ),
         ],
       ),
