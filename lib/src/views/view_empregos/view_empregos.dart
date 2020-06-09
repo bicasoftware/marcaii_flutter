@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:marcaii_flutter/src/database/models/empregos.dart';
+import 'package:get/get.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
 import 'package:marcaii_flutter/src/utils/form_view.dart';
-import 'package:marcaii_flutter/src/views/widgets/appbar_save_button.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/banco_horas_tile.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/carga_horaria_tile.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/emprego_ativo_tile.dart';
@@ -14,46 +13,37 @@ import 'package:marcaii_flutter/src/views/view_empregos/widgets/nome_emprego_til
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/porcentagens/porcentagens.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/salario_tile.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/salarios_list_tile/salarios_list_tile.dart';
+import 'package:marcaii_flutter/src/views/widgets/appbar_save_button.dart';
 import 'package:marcaii_flutter/strings.dart';
-import 'package:provider/provider.dart';
 
-//TODO - Remover referências ao provider e usar Get
-
-class ViewEmpregos extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final Empregos emprego = ModalRoute.of(context).settings.arguments;
-    return Provider<BlocEmprego>(
-      create: (_) => BlocEmprego(
-        emprego: emprego,
-      ),
-      dispose: (_, b) => b.dispose(),
-      child: _ViewEmpregos(),
-    );
-  }
-}
-
-class _ViewEmpregos extends StatefulWidget {
+class ViewEmpregos extends StatefulWidget {
   @override
   _ViewEmpregosState createState() => _ViewEmpregosState();
 }
 
-class _ViewEmpregosState extends State<_ViewEmpregos> with WillPopForm {
+class _ViewEmpregosState extends State<ViewEmpregos> {
   GlobalKey<FormState> _formKey;
   BlocEmprego blocEmpregos;
 
   @override
   void initState() {
     _formKey = GlobalKey<FormState>();
+    blocEmpregos = BlocEmprego(emprego: Get.arguments);
+    Get.put<BlocEmprego>(blocEmpregos);
     super.initState();
   }
 
   @override
-  Widget build(BuildContext context) {
-    blocEmpregos = Provider.of<BlocEmprego>(context);
+  void dispose() {
+    blocEmpregos.dispose();
+    Get.delete<BlocEmprego>();
+    super.dispose();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () => willPop(
+      onWillPop: () => WillPopForm.willPop(
         context: context,
         formState: _formKey.currentState,
         hasChanged: blocEmpregos.didChange(),
@@ -69,7 +59,7 @@ class _ViewEmpregosState extends State<_ViewEmpregos> with WillPopForm {
               onPressed: () {
                 final result = blocEmpregos.provideResult();
                 result.salarios.forEach(print);
-                doSave(
+                WillPopForm.doSave(
                   context: context,
                   formState: _formKey.currentState,
                   resultData: result,

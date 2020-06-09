@@ -3,7 +3,7 @@ import 'package:marcaii_flutter/src/views/widgets/dialogs.dart';
 import 'package:marcaii_flutter/strings.dart';
 
 mixin WillPopForm {
-  Future<bool> willPop({
+  static Future<bool> willPop({
     @required BuildContext context,
     @required FormState formState,
     @required bool isCreating,
@@ -30,7 +30,7 @@ mixin WillPopForm {
     return false;
   }
 
-  void doSave({
+  static void doSave({
     @required BuildContext context,
     @required FormState formState,
     @required dynamic resultData,

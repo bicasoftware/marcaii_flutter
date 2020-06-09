@@ -49,7 +49,7 @@ class _ViewInsertSalarioState extends State<ViewInsertSalario> with WillPopForm 
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return WillPopScope(
-      onWillPop: () => willPop(
+      onWillPop: () => WillPopForm.willPop(
         context: context,
         formState: _formKey.currentState,
         hasChanged: !(_vigencia.vigencia == widget.vigencia && _salario == widget.salario),
@@ -60,7 +60,7 @@ class _ViewInsertSalarioState extends State<ViewInsertSalario> with WillPopForm 
           title: const Text(Strings.salario),
           actions: <Widget>[
             AppbarSaveButton(
-              onPressed: () => doSave(
+              onPressed: () => WillPopForm.doSave(
                 context: context,
                 formState: _formKey.currentState,
                 resultData: {

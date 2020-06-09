@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lib_observer/lib_observer.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
 import 'package:marcaii_flutter/src/views/widgets/config_tiles/composed_text_tile.dart';
 import 'package:marcaii_flutter/strings.dart';
-import 'package:provider/provider.dart';
 
 class NomeEmpregoTile extends StatelessWidget {
   const NomeEmpregoTile({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final b = Provider.of<BlocEmprego>(context);
+    final b = Get.find<BlocEmprego>();
     return StreamObserver<String>(
       stream: b.nome,
       onSuccess: (_, nome) {

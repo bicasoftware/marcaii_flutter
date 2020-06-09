@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lib_observer/lib_observer.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/list_section_decorator.dart';
 import 'package:marcaii_flutter/strings.dart';
-import 'package:provider/provider.dart';
 
 class CargaHorariaTile extends StatelessWidget {
   const CargaHorariaTile({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final b = Provider.of<BlocEmprego>(context);
+    final b = Get.find<BlocEmprego>();
     return StreamObserver<int>(
       stream: b.cargaHoraria,
       onAwaiting: (_) => Container(),

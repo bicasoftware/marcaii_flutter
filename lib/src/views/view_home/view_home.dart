@@ -55,7 +55,9 @@ class _ViewHomeState extends State<ViewHome> {
             vigencia: vigencia,
             index: pos,
           ),
-          drawer: ViewHomeDrawer(onNewEmprego: presenter.onNewEmprego),
+          drawer: ViewHomeDrawer(
+            onNewEmprego: presenter.onNewEmprego,
+          ),
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           floatingActionButton: OpenContainer(
             transitionDuration: const Duration(milliseconds: 400),

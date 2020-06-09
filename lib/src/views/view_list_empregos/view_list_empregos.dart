@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:lib_observer/lib_observer.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
+import 'package:marcaii_flutter/src/views/view_empregos/view_empregos.dart';
 import 'package:marcaii_flutter/src/views/view_list_empregos/view_list_empregos_item.dart';
 import 'package:marcaii_flutter/src/views/widgets/dialogs.dart';
 import 'package:marcaii_flutter/strings.dart';
@@ -32,10 +33,7 @@ class ViewListEmpregos extends StatelessWidget {
                   }
                 },
                 onPressed: (Empregos emprego, GlobalKey itemKey) async {
-                  final result = await Navigator.of(context).pushNamed<Object>(
-                    Routes.routeEmpregos,
-                    arguments: emprego,
-                  );
+                  final result = await Get.to<Empregos>(ViewEmpregos(), arguments: emprego);
 
                   if (result != null && result is Empregos) {
                     b.updateEmprego(result);
