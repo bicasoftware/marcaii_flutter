@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
-import 'package:marcaii_flutter/src/utils/form_view.dart';
+import 'package:marcaii_flutter/src/utils/bloc_wrapper.dart';
+import 'package:marcaii_flutter/src/utils/willpop_form.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/banco_horas_tile.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/carga_horaria_tile.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/emprego_ativo_tile.dart';
@@ -21,57 +21,25 @@ class ViewEmpregos extends StatefulWidget {
   _ViewEmpregosState createState() => _ViewEmpregosState();
 }
 
-class _ViewEmpregosState extends State<ViewEmpregos> {
-  GlobalKey<FormState> _formKey;
-  BlocEmprego blocEmpregos;
-
-  @override
-  void initState() {
-    _formKey = GlobalKey<FormState>();
-    blocEmpregos = BlocEmprego(emprego: Get.arguments);
-    Get.put<BlocEmprego>(blocEmpregos);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    blocEmpregos.dispose();
-    Get.delete<BlocEmprego>();
-    super.dispose();
-  }
-
+class _ViewEmpregosState extends State<ViewEmpregos>
+    with BlocWrapper<ViewEmpregos, BlocEmprego>, WillPopForm {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () => WillPopForm.willPop(
-        context: context,
-        formState: _formKey.currentState,
-        hasChanged: blocEmpregos.didChange(),
-        isCreating: blocEmpregos.isCreating,
-      ),
+      onWillPop: () async => willPop(),
       child: Scaffold(
         appBar: AppBar(
           elevation: 4,
           title: const Text(Strings.empregos),
           actions: <Widget>[
             AppbarSaveButton(
-              // onPressed: doSave,
-              onPressed: () {
-                final result = blocEmpregos.provideResult();
-                result.salarios.forEach(print);
-                WillPopForm.doSave(
-                  context: context,
-                  formState: _formKey.currentState,
-                  resultData: result,
-                );
-              },
+              onPressed: () => saveForm(resultData: bloc.provideResult()),
             )
           ],
         ),
         body: Form(
-          key: _formKey,
+          key: formKey,
           child: ListView(
-            // mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               const NomeEmpregoTile(),
               const Divider(indent: 16, endIndent: 16),
@@ -87,7 +55,7 @@ class _ViewEmpregosState extends State<ViewEmpregos> {
               const _ItemDivider(),
               const BancoHorasTile(),
               const Divider(indent: 16, endIndent: 16),
-              blocEmpregos.isCreating ? SalarioTile() : const SalariosListTile(),
+              bloc.isCreating ? SalarioTile() : const SalariosListTile(),
               const ListDiferenciadas(),
             ],
           ),
@@ -95,6 +63,12 @@ class _ViewEmpregosState extends State<ViewEmpregos> {
       ),
     );
   }
+
+  @override
+  bool get checkForChanges => bloc.didChange();
+
+  @override
+  bool get isNewRecord => bloc.isCreating;
 }
 
 class _ItemDivider extends StatelessWidget {

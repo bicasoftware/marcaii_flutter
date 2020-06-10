@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:marcaii_flutter/src/utils/currency_formatter.dart';
 import 'package:marcaii_flutter/src/utils/double_utils.dart';
-import 'package:marcaii_flutter/src/utils/form_view.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
+import 'package:marcaii_flutter/src/utils/willpop_form.dart';
 import 'package:marcaii_flutter/src/views/widgets/appbar_save_button.dart';
 import 'package:marcaii_flutter/src/views/widgets/vigencia_picker.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/emprego_validate.dart';
@@ -49,26 +49,19 @@ class _ViewInsertSalarioState extends State<ViewInsertSalario> with WillPopForm 
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return WillPopScope(
-      onWillPop: () => WillPopForm.willPop(
-        context: context,
-        formState: _formKey.currentState,
-        hasChanged: !(_vigencia.vigencia == widget.vigencia && _salario == widget.salario),
-        isCreating: widget.isCreating,
-      ),
+      onWillPop: willPop,
       child: Scaffold(
         appBar: AppBar(
           title: const Text(Strings.salario),
           actions: <Widget>[
-            AppbarSaveButton(
-              onPressed: () => WillPopForm.doSave(
-                context: context,
-                formState: _formKey.currentState,
+            AppbarSaveButton(onPressed: () {
+              saveForm(
                 resultData: {
                   "vigencia": _vigencia.vigencia,
                   "valor": _salario,
                 },
-              ),
-            ),
+              );
+            }),
           ],
         ),
         body: Padding(
@@ -116,4 +109,12 @@ class _ViewInsertSalarioState extends State<ViewInsertSalario> with WillPopForm 
       ),
     );
   }
+
+  @override
+  bool get checkForChanges {
+    return !(_vigencia.vigencia == widget.vigencia && _salario == widget.salario);
+  }
+
+  @override
+  bool get isNewRecord => widget.isCreating;
 }

@@ -18,7 +18,7 @@ class BlocEmprego with BaseBloc {
     _inCargaHoraria.add(emprego.carga_horaria);
     _inAtivo.add(emprego.ativo);
     _inSaida.add(emprego.saida);
-    _oldEmprego = emprego;
+    _oldEmprego = emprego.copyWith();
     _fillDiferenciadas();
     _fillSalarios();
   }
@@ -31,7 +31,7 @@ class BlocEmprego with BaseBloc {
   bool get isCreating => emprego.id == null;
 
   bool didChange() {
-    if (emprego.id == null) {
+    if (isCreating) {
       return true;
     } else {
       return !_oldEmprego.equals(
@@ -76,9 +76,9 @@ class BlocEmprego with BaseBloc {
     }
   }
 
-  final BehaviorSubject<String> _bhsDesc = BehaviorSubject<String>();
-  Stream<String> get nome => _bhsDesc.stream;
-  Sink<String> get _inNome => _bhsDesc.sink;
+  final BehaviorSubject<String> bhsDesc = BehaviorSubject<String>();
+  Stream<String> get nome => bhsDesc.stream;
+  Sink<String> get _inNome => bhsDesc.sink;
 
   final BehaviorSubject<int> _bhsPorcNormal = BehaviorSubject<int>();
   Stream<int> get porcNormal => _bhsPorcNormal.stream;
@@ -122,7 +122,7 @@ class BlocEmprego with BaseBloc {
 
   @override
   void dispose() {
-    _bhsDesc.close();
+    bhsDesc.close();
     _bhsPorcNormal.close();
     _bhsPorcCompleta.close();
     _bhsFechamento.close();
@@ -137,7 +137,7 @@ class BlocEmprego with BaseBloc {
 
   void setNome(String nome) {
     emprego.nome = nome;
-    _bhsDesc.sink.add(nome);
+    bhsDesc.sink.add(nome);
   }
 
   void setPorcNormal(int porc) {

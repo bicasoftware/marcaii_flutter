@@ -121,6 +121,25 @@ class Empregos {
     };
   }
 
+  Empregos copyWith() {
+    return Empregos(
+      nome: nome,
+      saida: saida,
+      id: id,
+      porc: porc,
+      porc_completa: porc_completa,
+      fechamento: fechamento,
+      carga_horaria: carga_horaria,
+      horas: horas,
+      diferenciadas: diferenciadas,
+      salarios: salarios,
+      calendario: calendario,
+      totais: totais,
+      banco_horas: banco_horas,
+      ativo: ativo,
+    );
+  }
+
   bool equals(Empregos emprego, List<Salarios> salarios, List<Diferenciadas> diferenciadas) {
     final isSameEmprego = nome == emprego.nome &&
         porc == emprego.porc &&
@@ -140,7 +159,6 @@ class Empregos {
   void addHora(Horas hora, Vigencia vigencia) {
     horas.add(hora);
     calendario
-    ///
         .firstWhere((c) => c.vigencia == vigencia.vigencia)
         .items
         .firstWhere((CalendarioChild child) => child.date.isSameDate(hora.data))

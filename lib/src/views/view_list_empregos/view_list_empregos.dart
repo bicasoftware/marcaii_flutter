@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lib_observer/lib_observer.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
+import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/view_empregos.dart';
 import 'package:marcaii_flutter/src/views/view_list_empregos/view_list_empregos_item.dart';
@@ -25,16 +26,17 @@ class ViewListEmpregos extends StatelessWidget {
                 emprego: e,
                 onDelete: (Empregos emprego) async {
                   final r = await showConfirmationDialog(
-                      context: context,
-                      title: Strings.removerEmprego,
-                      message: Strings.removerEmpregoMessage);
+                    context: context,
+                    title: Strings.removerEmprego,
+                    message: Strings.removerEmpregoMessage,
+                  );
                   if (r) {
                     b.removeEmprego(emprego);
                   }
                 },
                 onPressed: (Empregos emprego, GlobalKey itemKey) async {
-                  final result = await Get.to<Empregos>(ViewEmpregos(), arguments: emprego);
-
+                  Get.put<BlocEmprego>(BlocEmprego(emprego: emprego.copyWith()));
+                  final result = await Get.to<Empregos>(ViewEmpregos());
                   if (result != null && result is Empregos) {
                     b.updateEmprego(result);
                   }
