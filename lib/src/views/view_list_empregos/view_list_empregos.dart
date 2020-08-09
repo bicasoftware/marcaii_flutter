@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_utils/async_widgets/async_widget.dart';
+import 'package:flutter_utils/flutter_utils.dart';
 import 'package:get/get.dart';
-import 'package:lib_observer/lib_observer.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/view_empregos.dart';
 import 'package:marcaii_flutter/src/views/view_list_empregos/view_list_empregos_item.dart';
-import 'package:marcaii_flutter/src/views/widgets/dialogs.dart';
 import 'package:marcaii_flutter/strings.dart';
 
 class ViewListEmpregos extends StatelessWidget {
@@ -25,7 +25,7 @@ class ViewListEmpregos extends StatelessWidget {
               return ViewListEmpregosItem(
                 emprego: e,
                 onDelete: (Empregos emprego) async {
-                  final r = await showConfirmationDialog(
+                  final r = await Dialogs.showConfirmationDialog(
                     context: context,
                     title: Strings.removerEmprego,
                     message: Strings.removerEmpregoMessage,

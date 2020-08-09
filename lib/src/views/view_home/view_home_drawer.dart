@@ -39,7 +39,7 @@ class ViewHomeDrawer extends StatelessWidget {
             child: ListTile(
               dense: true,
               title: const Text("Adicionar Emprego"),
-              trailing: Icon(Icons.add),
+              trailing: const Icon(Icons.add),
               onTap: onNewEmprego,
             ),
           ),

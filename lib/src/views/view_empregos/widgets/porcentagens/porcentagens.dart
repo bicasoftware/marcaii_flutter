@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_utils/async_widgets/async_widget.dart';
+import 'package:flutter_utils/flutter_utils.dart';
 import 'package:get/get.dart';
-import 'package:lib_observer/lib_observer.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/list_section_decorator.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/porcentagens/porcentagem_container.dart';
-import 'package:marcaii_flutter/src/views/widgets/dialogs.dart';
 import 'package:marcaii_flutter/strings.dart';
 
 class ViewPorcentagens extends StatelessWidget {
   const ViewPorcentagens({Key key}) : super(key: key);
 
   Future<void> popDialog(BuildContext context, int value, String label, Function(int) onTap) async {
-    final int r = await showIntegerPickerDialog(
+    final String r = await Dialogs.showIntegerDialog(
       context: context,
       label: "Valor",
       title: "Nova Porcentagem",
       confirmButton: Strings.salvar,
-      initValue: value,
+      initValue: value.toString(),
+      maxLength: 3,
     );
 
-    if (r != null && r is int) {
-      onTap(r);
+    if (r != null) {
+      onTap(int.parse(r));
     }
   }
 

@@ -25,7 +25,7 @@ class BtsHorasHeader extends StatelessWidget {
             child: HoraHeaderText(date: date, inicio: inicio, termino: termino),
           ),
           IconButton(
-            icon: Icon(Icons.delete_sweep, color: Colors.red),
+            icon: const Icon(Icons.delete_sweep, color: Colors.red),
             onPressed: () => Get.back(result: true),
           ),
         ],

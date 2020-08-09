@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lib_observer/lib_observer.dart';
-import 'package:marcaii_flutter/src/database/dao/dao_diferencidas.dart';
-import 'package:marcaii_flutter/src/database/dao/dao_empregos.dart';
-import 'package:marcaii_flutter/src/database/dao/dao_horas.dart';
-import 'package:marcaii_flutter/src/database/dao/dao_salarios.dart';
-import 'package:marcaii_flutter/src/database/models/diferenciadas.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
-import 'package:marcaii_flutter/src/database/models/horas.dart';
-import 'package:marcaii_flutter/src/database/models/salarios.dart';
-import 'package:marcaii_flutter/src/utils/vault.dart';
-import 'package:marcaii_flutter/src/utils/vigencia.dart';
+import 'package:marcaii_flutter/src/views/view_presentation/pages/logo_welcome.dart';
+import 'package:marcaii_flutter/src/views/view_presentation/pages/page_cargahoraria.dart';
+import 'package:marcaii_flutter/src/views/view_presentation/pages/page_descricao.dart';
+import 'package:marcaii_flutter/src/views/view_presentation/pages/page_porcentagem.dart';
+import 'package:marcaii_flutter/src/views/view_presentation/pages/page_salario.dart';
 import 'package:marcaii_flutter/src/views/widgets/circle.dart';
-import 'package:rxdart/rxdart.dart';
+
+import 'pages/page_diferenciadas.dart';
 
 class ViewPresentation extends StatefulWidget {
   //TODO - Gerar View com apresentação do app;
@@ -31,23 +27,58 @@ class ViewPresentation extends StatefulWidget {
 
 class _ViewPresentationState extends State<ViewPresentation> with SingleTickerProviderStateMixin {
   TabController controller;
-  final int maxIndex = 7;
-  final BehaviorSubject<int> _bhsPosition = BehaviorSubject<int>();
-  Stream<int> get outPosition => _bhsPosition.stream;
-  Sink<int> get _inPosition => _bhsPosition.sink;
 
-  List<Color> colorList = [
-    Colors.red,
-    Colors.orange,
-    Colors.amber,
-    Colors.teal,
-    Colors.lightBlue,
-    Colors.black,
-    Colors.green
-  ];
+/*
+  final BehaviorSubject<int> _bhsPosition = BehaviorSubject<int>();
+
+  Stream<int> get outPosition => _bhsPosition.stream;
+
+  Sink<int> get _inPosition => _bhsPosition.sink;
+*/
+
+  double _salario;
+  int _cargaHoraria, _porcNormal, _porcCompleta;
+  List<Map<int, int>> _diferenciadas;
+  String _descricao;
+
+  List<Widget> pages = [];
+
+  int maxIndex = 6;
+
+  @override
+  void initState() {
+    super.initState();
+    _salario = 1000;
+    _cargaHoraria = 220;
+    _porcNormal = 50;
+    _porcCompleta = 100;
+    _diferenciadas = <Map<int, int>>[];
+    _descricao = '';
+    controller = TabController(
+      vsync: this,
+      initialIndex: 0,
+      length: maxIndex,
+    );
+  }
+
+  void setSalario(double s) {
+    setState(() => _salario = s);
+  }
+
+  void setCargaHoraria(int c) {
+    setState(() => _cargaHoraria = c);
+  }
+
+  void onPorcNormalSet(int p) {
+    setState(() => _porcNormal = p);
+  }
+
+  void onPorcCompletaSet(int p) {
+    setState(() => _porcCompleta = p);
+  }
 
   void doOnAllSet() async {
-    await Vault.setIsDark(false);
+    /* await Vault.setIsDark(false);
     final vigencia = Vigencia.fromString("01/2010");
     final e = await DaoEmpregos.insert(
       Empregos(
@@ -107,43 +138,19 @@ class _ViewPresentationState extends State<ViewPresentation> with SingleTickerPr
       ..diferenciadas.add(d)
       ..horas.addAll([h1, h2, h3]);
 
-    widget.onAllSet([e]);
+    widget.onAllSet([e]); */
   }
 
   void moveNext() {
     if (controller.index >= 0 && controller.index < maxIndex - 1) {
-      _inPosition.add(_bhsPosition.value += 1);
-      controller.animateTo(_bhsPosition.value);
-      print(_bhsPosition.value);
+      controller.animateTo(controller.index + 1);
     }
   }
 
   void movePrev() {
     if (controller.index > 0 && controller.index <= maxIndex) {
-      _inPosition.add(_bhsPosition.value -= 1);
-      controller.animateTo(_bhsPosition.value);
+      controller.animateTo(controller.index - 1);
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    controller = TabController(
-      vsync: this,
-      initialIndex: 0,
-      length: maxIndex,
-    )..addListener(() {
-        if (!controller.indexIsChanging) {
-          _inPosition.add(controller.index);
-        }
-      });
-    _inPosition.add(0);
-  }
-
-  @override
-  void dispose() {
-    _bhsPosition.close();
-    super.dispose();
   }
 
   @override
@@ -152,51 +159,65 @@ class _ViewPresentationState extends State<ViewPresentation> with SingleTickerPr
       child: Scaffold(
         body: TabBarView(
           controller: controller,
-          children: <Widget>[for (var i = 0; i < maxIndex; i++) Container(color: colorList[i])],
+          children: [
+            const PageLogo(),
+            PageSalario(
+              salario: _salario,
+              onChanged: setSalario,
+            ),
+            PageCargaHoraria(
+              cargaHoraria: _cargaHoraria,
+              onCargaHorariaChanged: setCargaHoraria,
+            ),
+            PagePorcentagem(
+              porcNormal: _porcNormal,
+              porcCompleta: _porcCompleta,
+              onPorcNormalSet: onPorcNormalSet,
+              onPorcCompletaSet: onPorcCompletaSet,
+            ),
+            PageDiferenciadas(
+              diferenciadas: _diferenciadas,
+              onAdd: (_) {},
+            ),
+            PageDescricao(
+              descricao: _descricao,
+            )
+          ],
         ),
-/*       body: Center(
-          child: MaterialButton(
-            color: Get.theme.primaryColor,
-            onPressed: doOnAllSet,
-          ),
-        ), */
         bottomNavigationBar: BottomAppBar(
           color: Get.theme.cardColor,
           elevation: 4,
           child: Container(
             padding: const EdgeInsets.all(8),
-            child: StreamObserver<int>(
-              stream: outPosition,
-              onSuccess: (_, pos) => Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  FlatButton(
-                    child: const Text("Voltar"),
-                    onPressed: pos == 0 ? null : movePrev,
-                  ),
-                  const Spacer(),
-                  for (var i = 0; i < maxIndex; i++)
-                    Container(
-                      margin: const EdgeInsets.all(4),
-                      child: Circle(
-                        color: i == pos ? Get.theme.primaryColorLight : Colors.grey,
-                        size: 12,
-                      ),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                FlatButton(
+                  child: const Text("Voltar"),
+                  onPressed: controller.index == 0 ? null : movePrev,
+                ),
+                const Spacer(),
+                for (var i = 0; i < maxIndex; i++)
+                  Container(
+                    margin: const EdgeInsets.all(4),
+                    child: Circle(
+                      color: i == controller.index ? Get.theme.primaryColorLight : Colors.grey,
+                      size: 12,
                     ),
-                  const Spacer(),
-                  pos < maxIndex - 1
-                      ? FlatButton(
-                          child: const Text("Próximo"),
-                          onPressed: moveNext,
-                        )
-                      : FlatButton(
-                          child: const Text("Finalizar"),
-                          // onPressed: pos < maxIndex -1 ? moveNext : null,
-                          onPressed: doOnAllSet,
-                        ),
-                ],
-              ),
+                  ),
+                const Spacer(),
+                controller.index < maxIndex - 1
+                    ? FlatButton(
+                        child: const Text("Próximo"),
+                        onPressed: moveNext,
+                      )
+                    : FlatButton(
+                        child: const Text("Finalizar"),
+                        // onPressed: pos < maxIndex -1 ? moveNext : null,
+                        onPressed: doOnAllSet,
+                      ),
+              ],
             ),
           ),
         ),

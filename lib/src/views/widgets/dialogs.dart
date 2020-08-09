@@ -1,74 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:marcaii_flutter/src/utils/double_utils.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
-import 'package:marcaii_flutter/src/views/view_empregos/emprego_validate.dart';
 import 'package:marcaii_flutter/src/views/widgets/item_picker.dart';
+import 'package:marcaii_flutter/src/views/widgets/salario_tile.dart';
 import 'package:marcaii_flutter/src/views/widgets/vigencia_picker.dart';
 import 'package:marcaii_flutter/strings.dart';
-
-Future<void> showAwaitingDialog({
-  BuildContext context,
-  GlobalKey key,
-}) async {
-  return showDialog(
-    context: context,
-    barrierDismissible: false,
-    builder: (_) {
-      return WillPopScope(
-        onWillPop: () async => false,
-        child: SimpleDialog(
-          key: key,
-          children: <Widget>[
-            Column(
-              children: const [
-                CircularProgressIndicator(),
-                SizedBox(height: 10),
-                Text("Acessando servidor, aguarde...")
-              ],
-            )
-          ],
-        ),
-      );
-    },
-  );
-}
-
-Future<bool> showConfirmationDialog({
-  @required BuildContext context,
-  String title = Strings.atencao,
-  String message = Strings.descartarAlteracoes,
-  String negativeCaption = "Não",
-  String positiveCaption = "Sim",
-}) async {
-  return await showDialog(
-    context: context,
-    child: AlertDialog(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(16)),
-      ),
-      title: Text(title),
-      content: Text(message),
-      actions: <Widget>[
-        FlatButton(
-          child: Text(
-            negativeCaption,
-            style: Theme.of(context).textTheme.button.copyWith(color: Colors.black87),
-          ),
-          onPressed: () {
-            Get.back(result: false);
-          },
-        ),
-        FlatButton(
-          child: Text(positiveCaption),
-          onPressed: () {
-            Get.back(result: true);
-          },
-        ),
-      ],
-    ),
-  );
-}
 
 Future<Vigencia> showVigenciaPicker({
   @required BuildContext context,
@@ -135,63 +72,32 @@ Future<int> showFechamentoPicker({
   );
 }
 
-Future<int> showIntegerPickerDialog({
+Future<double> showSalarioPicker({
   @required BuildContext context,
-  @required int initValue,
-  @required String label,
-  @required String title,
-  @required String confirmButton,
-  String cancelButton = Strings.cancelar,
+  @required double salario,
 }) async {
-  final _formKey = GlobalKey<FormState>();
-
   return await showDialog(
     context: context,
     barrierDismissible: false,
-    builder: (_) => AlertDialog(
-      title: Text(title),
+    child: AlertDialog(
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-      content: Container(
-        padding: const EdgeInsets.all(16),
-        child: Form(
-          key: _formKey,
-          child: TextFormField(
-            inputFormatters: [
-              WhitelistingTextInputFormatter.digitsOnly,
-              LengthLimitingTextInputFormatter(3),
-            ],
-            decoration: InputDecoration(
-              hintText: "9999",
-              labelText: label,
-            ),
-            keyboardType: TextInputType.number,
-            initialValue: initValue.toString(),
-            onSaved: (s) {
-              initValue = int.tryParse(s) ?? 0;
-            },
-            validator: (s) {
-              return EmpregoValidate.validatePorc(s, 50);
-            },
-          ),
-        ),
+      title: const Text(Strings.salario),
+      content: CurrencyTile(
+        salario: salario,
+        label: Strings.salario,
+        onChanged: (s) => salario = currencyStringToDouble(s),
       ),
       actions: <Widget>[
         FlatButton(
           child: Text(
-            cancelButton,
+            Strings.cancelar,
             style: Theme.of(context).textTheme.button.copyWith(color: Colors.black87),
           ),
           onPressed: Get.back,
         ),
         FlatButton(
           child: const Text(Strings.salvar),
-          onPressed: () {
-            final state = _formKey.currentState;
-            if (state.validate()) {
-              state.save();
-              Get.back(result: initValue);
-            }
-          },
+          onPressed: () => Get.back(result: salario),
         ),
       ],
     ),

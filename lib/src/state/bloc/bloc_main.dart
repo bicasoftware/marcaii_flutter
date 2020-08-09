@@ -1,9 +1,9 @@
 import 'dart:async';
 
+import 'package:flutter_utils/flutter_utils.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/state/app_state.dart';
-import 'package:marcaii_flutter/src/state/bloc/base_bloc.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
 import 'package:rxdart/rxdart.dart';
 

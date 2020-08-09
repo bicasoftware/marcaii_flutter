@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_utils/async_widgets/merged_stream_observer.dart';
+import 'package:flutter_utils/flutter_utils.dart';
 import 'package:get/get.dart';
-import 'package:lib_observer/lib_observer.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/src/database/models/diferenciadas.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
-import 'package:marcaii_flutter/src/views/widgets/dialogs.dart';
 import 'package:marcaii_flutter/src/views/widgets/list_separator.dart';
 import 'package:marcaii_flutter/strings.dart';
 
@@ -34,12 +34,12 @@ class ListDiferenciadas extends StatelessWidget {
                   title: Text(Consts.weekDayExtenso[dif.weekday]),
                   subtitle: Text(dif.porc != 0 ? "${dif.porc} %" : "-"),
                   trailing: IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.close,
                       color: Colors.red,
                     ),
                     onPressed: () async {
-                      final bool r = await showConfirmationDialog(
+                      final bool r = await Dialogs.showConfirmationDialog(
                         context: context,
                         message: "Deseja remover o valor diferencial?",
                         negativeCaption: Strings.cancelar,
@@ -52,16 +52,17 @@ class ListDiferenciadas extends StatelessWidget {
                     },
                   ),
                   onTap: () async {
-                    final int result = await showIntegerPickerDialog(
+                    final String result = await Dialogs.showIntegerDialog(
                       context: context,
                       label: Strings.porcDifer,
                       title: Consts.weekDayExtenso[dif.weekday],
                       confirmButton: Strings.salvar,
-                      initValue: dif.porc,
+                      initValue: dif.porc.toString(),
+                      maxLength: 3,
                     );
 
                     if (result != null && result is int) {
-                      b.setDiferenciada(dif, result);
+                      b.setDiferenciada(dif, int.parse(result));
                     }
                   },
                 ),

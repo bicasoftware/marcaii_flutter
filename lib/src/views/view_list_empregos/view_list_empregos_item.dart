@@ -23,7 +23,7 @@ class ViewListEmpregosItem extends StatelessWidget {
       title: Text(emprego.nome),
       subtitle: Text("${emprego.carga_horaria} | ${emprego.saida} | ${emprego.fechamento}"),
       trailing: IconButton(
-        icon: Icon(Icons.close),
+        icon: const Icon(Icons.close),
         onPressed: () => onDelete(emprego),
       ),
       onTap: () => onPressed(emprego, itemKey),      

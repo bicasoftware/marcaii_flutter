@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_utils/async_widgets/async_widget.dart';
 import 'package:get/get.dart';
-import 'package:lib_observer/lib_observer.dart';
 import 'package:marcaii_flutter/src/database/dao/dao_empregos.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/utils/vault.dart';
@@ -12,7 +12,6 @@ import 'package:marcaii_flutter/themes.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final isDark = await Vault.getIsDark();
-  print(isDark);
   runApp(Marcaii(isDark: isDark));
 }
 
@@ -22,11 +21,12 @@ class Marcaii extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return GetMaterialApp(            
+      defaultTransition: Transition.topLevel,
       supportedLocales: const [Locale('pt', 'BR')],
       title: Strings.appName,
       debugShowCheckedModeBanner: false,
-      localizationsDelegates: [
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
       ],

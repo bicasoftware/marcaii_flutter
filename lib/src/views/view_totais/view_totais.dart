@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:lib_observer/lib_observer.dart';
+import 'package:flutter_utils/async_widgets/async_widget.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/helpers.dart';
 import 'package:marcaii_flutter/src/state/totais/totais.dart';
@@ -41,7 +41,7 @@ class _ViewTotaisState extends State<ViewTotais> {
           StreamObserver<bool>(
             stream: _bhsShowFirst.stream,
             onSuccess: (_, b) => IconButton(
-              icon: b ? Icon(LineAwesomeIcons.list) : Icon(LineAwesomeIcons.th_list),
+              icon: b ? const Icon(LineAwesomeIcons.list) : const Icon(LineAwesomeIcons.th_list),
               onPressed: () => _bhsShowFirst.sink.add(!b),
             ),
           )

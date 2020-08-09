@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_utils/async_widgets/stream_observer.dart';
+import 'package:flutter_utils/config_tiles/time_tile.dart';
 import 'package:get/get.dart';
-import 'package:lib_observer/lib_observer.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
 import 'package:marcaii_flutter/src/utils/helpers/time_helper.dart';
-import 'package:marcaii_flutter/src/views/widgets/config_tiles/time_tile.dart';
 import 'package:marcaii_flutter/strings.dart';
 
 class HorarioSaidaTile extends StatelessWidget {
@@ -17,7 +17,7 @@ class HorarioSaidaTile extends StatelessWidget {
       stream: b.saida,
       onAwaiting: (_) => Container(),
       onSuccess: (_, saida) => TimePickerTile(
-        icon: Icon(
+        icon: const Icon(
           LineAwesomeIcons.sign_out,
           color: Colors.pink,
         ),

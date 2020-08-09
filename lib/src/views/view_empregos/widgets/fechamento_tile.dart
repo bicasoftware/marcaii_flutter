@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_utils/async_widgets/stream_observer.dart';
+import 'package:flutter_utils/config_tiles/config_tiles.dart';
 import 'package:get/get.dart';
-import 'package:lib_observer/stream_observer.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
-import 'package:marcaii_flutter/src/views/widgets/config_tiles/base_config_tile.dart';
 import 'package:marcaii_flutter/src/views/widgets/dialogs.dart';
 import 'package:marcaii_flutter/strings.dart';
 
@@ -25,7 +25,7 @@ class FechamentoTile extends StatelessWidget {
             style: Theme.of(context).textTheme.subtitle1,
           ),
           trailingWidth: 30,
-          icon: Icon(
+          icon: const Icon(
             LineAwesomeIcons.calendar,
             color: Colors.pink,
           ),

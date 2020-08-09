@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:marcaii_flutter/src/utils/currency_formatter.dart';
+import 'package:flutter_utils/flutter_utils.dart';
 import 'package:marcaii_flutter/src/utils/double_utils.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
-import 'package:marcaii_flutter/src/utils/willpop_form.dart';
 import 'package:marcaii_flutter/src/views/widgets/appbar_save_button.dart';
 import 'package:marcaii_flutter/src/views/widgets/vigencia_picker.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/emprego_validate.dart';
 import 'package:marcaii_flutter/strings.dart';
+import 'package:flutter_utils/currency_input_formatter.dart';
 
 class ViewInsertSalario extends StatefulWidget {
   const ViewInsertSalario({
@@ -28,7 +28,6 @@ class ViewInsertSalario extends StatefulWidget {
 class _ViewInsertSalarioState extends State<ViewInsertSalario> with WillPopForm {
   final anos = List.generate(30, (i) => 2010 + i);
   final meses = List.generate(12, (i) => i);
-  final _formKey = GlobalKey<FormState>();
 
   double _salario;
   Vigencia _vigencia;
@@ -49,7 +48,7 @@ class _ViewInsertSalarioState extends State<ViewInsertSalario> with WillPopForm 
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return WillPopScope(
-      onWillPop: willPop,
+      onWillPop: () async => willPop(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text(Strings.salario),
@@ -71,7 +70,7 @@ class _ViewInsertSalarioState extends State<ViewInsertSalario> with WillPopForm 
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Form(
-                key: _formKey,
+                key: formKey,
                 child: TextFormField(
                   initialValue: doubleToCurrency(_salario),
                   inputFormatters: [

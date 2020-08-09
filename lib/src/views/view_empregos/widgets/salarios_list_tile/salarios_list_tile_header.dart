@@ -20,7 +20,7 @@ class SalariosListTileHeader extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(right: 10),
           child: IconButton(
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
             onPressed: onAddTap,
           ),
         ),

@@ -165,3 +165,13 @@ class Consts {
     Colors.yellow,
   ];
 }
+
+class Maps {
+  static const cargaHoraria = <int, Widget>{
+    220: Text("220"),
+    200: Text("200"),
+    180: Text("180"),
+    150: Text("150"),
+    120: Text("120"),
+  };
+}

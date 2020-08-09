@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_utils/flutter_utils.dart';
 import 'package:get/get.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
@@ -8,7 +9,6 @@ import 'package:marcaii_flutter/src/state/calendario/calendario_child.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/bts_horas_info/bts_horas_info.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/view_get_horas/view_insert_horas.dart';
-import 'package:marcaii_flutter/src/views/widgets/dialogs.dart';
 
 class ViewCalendarioPresenter {
   ViewCalendarioPresenter(this.context);
@@ -87,7 +87,7 @@ class ViewCalendarioPresenter {
         child: child,
       );
       if (canDelete) {
-        final confirmRemove = await showConfirmationDialog(
+        final confirmRemove = await Dialogs.showConfirmationDialog(
           context: context,
           title: "Exclusão",
           message: "Deseja apagar a hora extra?",

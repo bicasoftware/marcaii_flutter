@@ -18,14 +18,14 @@ class SalariosListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(
+      leading: const Icon(
         LineAwesomeIcons.money,
         color: Colors.lightGreen,
       ),
       title: Text(Vigencia.fromString(salario.vigencia).vigenciaExtenso),
       subtitle: Text(doubleToCurrency(salario.valor)),
       trailing: IconButton(
-        icon: Icon(Icons.close, color: Colors.red),
+        icon: const Icon(Icons.close, color: Colors.red),
         onPressed: () => onDelete(salario),
       ),
       onTap: () => onPressed(salario),

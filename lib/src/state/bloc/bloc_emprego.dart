@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_utils/flutter_utils.dart';
 import 'package:marcaii_flutter/helpers.dart';
 import 'package:marcaii_flutter/src/database/models/diferenciadas.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/database/models/salarios.dart';
-import 'package:marcaii_flutter/src/state/bloc/base_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
 class BlocEmprego with BaseBloc {
@@ -37,8 +37,7 @@ class BlocEmprego with BaseBloc {
       return !_oldEmprego.equals(
         emprego,
         _salarios,
-        _diferenciadas.where((d) => d.porc != 0).toList()
-          ..sort((a, b) => a.weekday.compareTo(b.weekday)),
+        _diferenciadas.where((d) => d.porc != 0).toList()..sort((a, b) => a.weekday.compareTo(b.weekday)),
       );
     }
   }

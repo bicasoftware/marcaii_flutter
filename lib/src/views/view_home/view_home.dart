@@ -1,12 +1,12 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_utils/flutter_utils.dart';
 import 'package:get/get.dart';
-import 'package:lib_observer/lib_observer.dart';
+import 'package:flutter_utils/async_widgets/async_widget.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/helpers.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
-import 'package:marcaii_flutter/src/utils/bloc_wrapper.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/view_calendario.dart';
 import 'package:marcaii_flutter/src/views/view_home/view_home_drawer.dart';
@@ -20,7 +20,7 @@ class ViewHome extends StatefulWidget {
 }
 
 class _ViewHomeState extends State<ViewHome>
-    with BlocWrapper<ViewHome, BlocMain>, ViewHomePresenter {
+    with BlocWidget<ViewHome, BlocMain>, ViewHomePresenter {
   @override
   Widget build(BuildContext context) {
     return MergedStreamObserver(
@@ -45,16 +45,18 @@ class _ViewHomeState extends State<ViewHome>
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           floatingActionButton: OpenContainer(
-            transitionDuration: const Duration(milliseconds: 400),
-            closedColor: Get.theme.accentColor,
-            openColor: Get.theme.canvasColor,
+            transitionDuration: const Duration(milliseconds: 600),
+            closedColor: Get.theme.canvasColor,
+            closedElevation: 0,
+            openElevation: 0,
+            openColor: Get.theme.primaryColor,
             closedShape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(30)),
             ),
             transitionType: ContainerTransitionType.fadeThrough,
             openBuilder: (_, __) => ViewTotais(totais: empregos[pos].generateTotais(vigencia)),
             closedBuilder: (_, VoidCallback call) => FloatingActionButton(
-              child: Icon(LineAwesomeIcons.money),
+              child: const Icon(LineAwesomeIcons.money),
               onPressed: call,
             ),
           ),

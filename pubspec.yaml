@@ -4,7 +4,7 @@ description: Gerenciador de Horas Extra
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.8.0 <3.0.0"
+  sdk: ">=2.9.0 <3.0.0"
 
 flutter_native_splash:
   image: assets/images/logo.png
@@ -16,15 +16,17 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  get: ^2.11.3
 
-  lib_observer:
-    git:
-      url: "https://github.com/bicasoftware/lib_observer"
+  #  lib_observer:
+  #    git:
+  #      url: "https://github.com/bicasoftware/lib_observer"
+
+  flutter_utils:
+    path: /home/saulo/Fontes/flutter_utils
 
   cupertino_icons: ^0.1.2
   line_awesome_icons: ^1.0.4+2
-  rxdart: ^0.23.1
+  rxdart: ^0.24.1
   dio: ^3.0.8
   retrofit: ^1.0.1+1
   sqflite: ^1.2.0
@@ -36,7 +38,7 @@ dependencies:
   auto_size_text: ^2.1.0
   intl:
   animations: ^1.0.0+5
-  pdf: ^1.8.1
+  get: ^3.2.2
 
 dev_dependencies:
   flutter_test:
@@ -52,6 +54,14 @@ flutter:
   assets:
     - assets/images/logo.png
     - assets/images/app_icon.png
+    - assets/images/salario.png
+    - assets/images/cargahoraria.png
+    - assets/images/calendar.png
+    - assets/images/diferenciadas.png
+    - assets/images/fechamento.png
+    - assets/images/forms.png
+    - assets/images/porcentagens.png
+    - assets/images/descricao.png
 
   fonts:
     - family: Montserrat

@@ -53,13 +53,13 @@ class TotaisContent extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 TotaisInfoRow(
-                  icon: Icon(LineAwesomeIcons.clock_o),
+                  icon: const Icon(LineAwesomeIcons.clock_o),
                   label: Strings.horasExtras,
                   value: MinutesHelper.minutesToHoras(detalhe.minutos),
                 ),
                 const SizedBox(height: 8),
                 TotaisInfoRow(
-                  icon: Icon(LineAwesomeIcons.money),
+                  icon: const Icon(LineAwesomeIcons.money),
                   label: Strings.totalReceber,
                   value: doubleToCurrency(detalhe.total),
                 ),

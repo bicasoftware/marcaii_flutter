@@ -1,13 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_utils/config_tiles/config_tiles.dart';
+import 'package:flutter_utils/flutter_utils.dart';
 import 'package:get/get.dart';
 import 'package:marcaii_flutter/helpers.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/views/widgets/appbar_save_button.dart';
-import 'package:marcaii_flutter/src/views/widgets/config_tiles/time_tile.dart';
-import 'package:marcaii_flutter/src/views/widgets/dialogs.dart';
-import 'package:marcaii_flutter/src/views/widgets/list_separator.dart';
 import 'package:marcaii_flutter/strings.dart';
 
 class ViewInsertHoras extends StatefulWidget {
@@ -69,7 +67,7 @@ class _ViewInsertHorasState extends State<ViewInsertHoras> {
 
   Future<bool> canPop(BuildContext context) async {
     if (hasChanged) {
-      final result = await showConfirmationDialog(
+      final result = await Dialogs.showConfirmationDialog(
         context: context,
       );
 
@@ -93,8 +91,6 @@ class _ViewInsertHorasState extends State<ViewInsertHoras> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     final horasTipo = {
       0: const Text("Normal"),
       1: const Text("Completa"),
@@ -111,39 +107,41 @@ class _ViewInsertHorasState extends State<ViewInsertHoras> {
             )
           ],
         ),
-        body: ListView(
-          shrinkWrap: true,
-          children: <Widget>[
-            TimePickerTile(
-              icon: Icon(
-                Icons.timer,
-                color: Colors.amber,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,          
+            children: <Widget>[
+              TimePickerTile(
+                icon: const Icon(
+                  Icons.timer,
+                  color: Colors.amber,
+                ),
+                initialTime: inicio,
+                label: Strings.inicio,
+                onTimeSet: setInicio,
               ),
-              initialTime: inicio,
-              label: Strings.inicio,
-              onTimeSet: setInicio,
-            ),
-            TimePickerTile(
-              icon: Icon(
-                Icons.timer,
-                color: Colors.pink,
+              const Divider(),
+              TimePickerTile(
+                icon: const Icon(
+                  Icons.timer,
+                  color: Colors.pink,
+                ),
+                initialTime: termino,
+                label: Strings.saida,
+                onTimeSet: setTermino,
               ),
-              initialTime: termino,
-              label: Strings.saida,
-              onTimeSet: setTermino,
-            ),
-            const ListSeparator(
-              label: "Tipo de Hora Extra",
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            ),
-            CupertinoSegmentedControl<int>(
-              groupValue: tipo,
-              selectedColor: Consts.horaColor[tipo],
-              borderColor: theme.dividerColor,
-              onValueChanged: (b) => setState(() => tipo = b),
-              children: horasTipo,
-            ),
-          ],
+              const Divider(),
+              MultiOptionControll(
+                label: Strings.tipoHora,
+                children: horasTipo,
+                initValue: tipo,
+                selectedColor: Consts.horaColor[tipo],
+                borderColor: Get.theme.dividerColor,
+                onValueChanged: (b) => setState(() => tipo = b),
+              )
+            ],
+          ),
         ),
       ),
     );
