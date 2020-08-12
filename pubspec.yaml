@@ -22,7 +22,7 @@ dependencies:
   #      url: "https://github.com/bicasoftware/lib_observer"
 
   flutter_utils:
-    path: /home/saulo/Fontes/flutter_utils
+    path: /home/saulo-desktop/DEV/Fontes/flutter_utils
 
   cupertino_icons: ^0.1.2
   line_awesome_icons: ^1.0.4+2

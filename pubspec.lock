@@ -257,7 +257,7 @@ packages:
   flutter_utils:
     dependency: "direct main"
     description:
-      path: "/home/saulo/Fontes/flutter_utils"
+      path: "/home/saulo-desktop/DEV/Fontes/flutter_utils"
       relative: false
     source: path
     version: "0.0.1"

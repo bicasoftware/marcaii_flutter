@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_utils/flutter_utils.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/porcentagens/porcentagem_container.dart';
 import 'package:marcaii_flutter/src/views/view_presentation/descricao_item_container.dart';
+import 'package:marcaii_flutter/src/views/widgets/light_container.dart';
 import 'package:marcaii_flutter/strings.dart';
 
 class PagePorcentagem extends StatelessWidget {
@@ -40,37 +41,44 @@ class PagePorcentagem extends StatelessWidget {
       descricao:
           "As porcentagens em dias da semana, por padrão são 50% e em domingos e feriados são 100%. Caso no seu contrato seja diferente, é só atualizar.",
       widget: Container(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            PorcentagemContainer(
-              label: Strings.porc,
-              porc: porcNormal,
-              iconColor: Consts.horaColor[0],
-              onTap: () async {
-                await popDialog(
-                  context,
-                  porcNormal,
-                  Strings.porc,
-                  onPorcNormalSet,
-                );
-              },
-            ),
-            PorcentagemContainer(
-              label: Strings.porcCompleta,
-              porc: porcCompleta,
-              iconColor: Consts.horaColor[1],
-              onTap: () async {
-                await popDialog(
-                  context,
-                  porcCompleta,
-                  Strings.porcCompleta,
-                  onPorcCompletaSet,
-                );
-              },
-            ),
-          ],
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: LightContainer(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              PorcentagemContainer(
+                label: Strings.porc,
+                porc: porcNormal,
+                iconColor: Consts.horaColor[0],
+                onTap: () async {
+                  await popDialog(
+                    context,
+                    porcNormal,
+                    Strings.porc,
+                    onPorcNormalSet,
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 56,
+                child: VerticalDivider(),
+              ),
+              PorcentagemContainer(
+                label: Strings.porcCompleta,
+                porc: porcCompleta,
+                iconColor: Consts.horaColor[1],
+                onTap: () async {
+                  await popDialog(
+                    context,
+                    porcCompleta,
+                    Strings.porcCompleta,
+                    onPorcCompletaSet,
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/views/view_presentation/pages/logo_welcome.dart';
 import 'package:marcaii_flutter/src/views/view_presentation/pages/page_cargahoraria.dart';
@@ -8,12 +7,7 @@ import 'package:marcaii_flutter/src/views/view_presentation/pages/page_porcentag
 import 'package:marcaii_flutter/src/views/view_presentation/pages/page_salario.dart';
 import 'package:marcaii_flutter/src/views/widgets/circle.dart';
 
-import 'pages/page_diferenciadas.dart';
-
 class ViewPresentation extends StatefulWidget {
-  //TODO - Gerar View com apresentação do app;
-  //Pedindo Salario, nome do emprego, carga horária, hora de saída, valor das porcentagens e valores diferenciais
-
   const ViewPresentation({
     this.onAllSet,
     Key key,
@@ -27,23 +21,13 @@ class ViewPresentation extends StatefulWidget {
 
 class _ViewPresentationState extends State<ViewPresentation> with SingleTickerProviderStateMixin {
   TabController controller;
-
-/*
-  final BehaviorSubject<int> _bhsPosition = BehaviorSubject<int>();
-
-  Stream<int> get outPosition => _bhsPosition.stream;
-
-  Sink<int> get _inPosition => _bhsPosition.sink;
-*/
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   double _salario;
   int _cargaHoraria, _porcNormal, _porcCompleta;
-  List<Map<int, int>> _diferenciadas;
   String _descricao;
 
-  List<Widget> pages = [];
-
-  int maxIndex = 6;
+  int maxIndex = 5;
 
   @override
   void initState() {
@@ -52,13 +36,18 @@ class _ViewPresentationState extends State<ViewPresentation> with SingleTickerPr
     _cargaHoraria = 220;
     _porcNormal = 50;
     _porcCompleta = 100;
-    _diferenciadas = <Map<int, int>>[];
     _descricao = '';
     controller = TabController(
       vsync: this,
       initialIndex: 0,
       length: maxIndex,
-    );
+    )..addListener(
+        () {
+          if (!controller.indexIsChanging) {
+            setState(() => controller.index);
+          }
+        },
+      );
   }
 
   void setSalario(double s) {
@@ -77,7 +66,24 @@ class _ViewPresentationState extends State<ViewPresentation> with SingleTickerPr
     setState(() => _porcCompleta = p);
   }
 
+  String validate(String s) {
+    return s.isEmpty ? "Falta o nome do seu cargo" : null;
+  }
+
+  void setDescricao(String s) {
+    setState(() => _descricao = s);
+  }
+
   void doOnAllSet() async {
+    if (controller.index == maxIndex - 1) {
+      if (_salario == 0) {
+        controller.animateTo(1);
+        _formKey.currentState.validate();
+      } else if (_descricao.isEmpty) {
+        controller.animateTo(maxIndex - 1);
+        _formKey.currentState.validate();
+      }
+    }
     /* await Vault.setIsDark(false);
     final vigencia = Vigencia.fromString("01/2010");
     final e = await DaoEmpregos.insert(
@@ -155,40 +161,42 @@ class _ViewPresentationState extends State<ViewPresentation> with SingleTickerPr
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return SafeArea(
       child: Scaffold(
-        body: TabBarView(
-          controller: controller,
-          children: [
-            const PageLogo(),
-            PageSalario(
-              salario: _salario,
-              onChanged: setSalario,
-            ),
-            PageCargaHoraria(
-              cargaHoraria: _cargaHoraria,
-              onCargaHorariaChanged: setCargaHoraria,
-            ),
-            PagePorcentagem(
-              porcNormal: _porcNormal,
-              porcCompleta: _porcCompleta,
-              onPorcNormalSet: onPorcNormalSet,
-              onPorcCompletaSet: onPorcCompletaSet,
-            ),
-            PageDiferenciadas(
-              diferenciadas: _diferenciadas,
-              onAdd: (_) {},
-            ),
-            PageDescricao(
-              descricao: _descricao,
-            )
-          ],
+        body: Form(
+          key: _formKey,
+          child: TabBarView(
+            controller: controller,
+            children: [
+              const PageLogo(),
+              PageSalario(
+                salario: _salario,
+                onChanged: setSalario,
+              ),
+              PageCargaHoraria(
+                cargaHoraria: _cargaHoraria,
+                onCargaHorariaChanged: setCargaHoraria,
+              ),
+              PagePorcentagem(
+                porcNormal: _porcNormal,
+                porcCompleta: _porcCompleta,
+                onPorcNormalSet: onPorcNormalSet,
+                onPorcCompletaSet: onPorcCompletaSet,
+              ),
+              PageDescricao(
+                descricao: _descricao,
+                onChanged: setDescricao,
+                validate: validate,
+              )
+            ],
+          ),
         ),
         bottomNavigationBar: BottomAppBar(
-          color: Get.theme.cardColor,
-          elevation: 4,
+          color: theme.cardColor,
+          elevation: 2,
           child: Container(
-            padding: const EdgeInsets.all(8),
+            height: 56,
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -202,7 +210,7 @@ class _ViewPresentationState extends State<ViewPresentation> with SingleTickerPr
                   Container(
                     margin: const EdgeInsets.all(4),
                     child: Circle(
-                      color: i == controller.index ? Get.theme.primaryColorLight : Colors.grey,
+                      color: i == controller.index ? theme.primaryColorLight : Colors.grey,
                       size: 12,
                     ),
                   ),
@@ -214,7 +222,6 @@ class _ViewPresentationState extends State<ViewPresentation> with SingleTickerPr
                       )
                     : FlatButton(
                         child: const Text("Finalizar"),
-                        // onPressed: pos < maxIndex -1 ? moveNext : null,
                         onPressed: doOnAllSet,
                       ),
               ],
