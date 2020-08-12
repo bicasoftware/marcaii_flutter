@@ -20,7 +20,12 @@ class PageLogo extends StatelessWidget {
             height: 200,
           ),
           Text(Strings.appName, style: theme.textTheme.headline4),
-          Text("Para começar, me fale mais sobre seu trabalho...", style: theme.textTheme.caption),
+          Text("O Marcaii é um organizador de horas extras. Com ele você poderá adicionar, remover e ficar ligado em quantas horas você fez e quanto vai receber no mês seguinte.",
+              style: theme.textTheme.caption.copyWith(fontWeight: FontWeight.bold)),
+          Text(
+            'Arrasta pro lado e vamos começar!',
+            style: theme.textTheme.caption,
+          )
         ],
       ),
     );

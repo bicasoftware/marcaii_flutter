@@ -107,7 +107,6 @@ class Empregos {
   ///Usar com Sqlite
   Map<String, Object> toMap() {
     return {
-      ID: id,
       NOME: nome,
       SAIDA: saida,
       PORC: porc,

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:marcaii_flutter/helpers.dart';
 import 'package:marcaii_flutter/src/database/models/salarios.dart';

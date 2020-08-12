@@ -22,18 +22,15 @@ class PageCargaHoraria extends StatelessWidget {
       title: "E sua carga horária?",
       descricao:
           "A carga horária padrão é de 220 horas por mês, ou 8 horas diárias. Se tiver dúvidas, converse com seu contrante :)",
-      widget: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: LightContainer(
-          padding: const EdgeInsets.symmetric(horizontal:8),
-          child: MultiOptionControll(
-            label: Strings.cargaHoraria,
-            initValue: cargaHoraria,
-            selectedColor: theme.accentColor,
-            onValueChanged: onCargaHorariaChanged,
-            borderColor: theme.accentColor,
-            children: Maps.cargaHoraria,
-          ),
+      widget: LightContainer(
+        padding: const EdgeInsets.symmetric(horizontal:8),
+        child: MultiOptionControll(
+          label: Strings.cargaHoraria,
+          initValue: cargaHoraria,
+          selectedColor: theme.accentColor,
+          onValueChanged: onCargaHorariaChanged,
+          borderColor: theme.accentColor,
+          children: Maps.cargaHoraria,
         ),
       ),
     );

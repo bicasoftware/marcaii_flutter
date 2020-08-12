@@ -19,24 +19,21 @@ class PageDescricao extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: PresentationItemContainer(
-        title: "E qual sua profissão?",
-        descricao: "Use um nome fácil pra descrever seu cargo, tipo Auxiliar de Escritório ou Contador",
-        asset: 'assets/images/descricao.png',
-        widget: LightContainer(
-          padding: const EdgeInsets.all(8),
-          child: ComposedTextTile(
-            icon: Icon(Icons.work, color: theme.accentColor),
-            maxLength: null,
-            inputType: TextInputType.name,
-            onChanged: onChanged,
-            initialValue: descricao,
-            hint: "Contador",
-            label: "Descrição Cargo",
-            validator: validate,
-          ),
+    return PresentationItemContainer(
+      title: "E qual sua profissão?",
+      descricao: "Use um nome fácil pra descrever seu cargo. \nPor exemplo: Auxiliar de Escritório ou Contador.",
+      asset: 'assets/images/emprego.png',
+      widget: LightContainer(
+        padding: const EdgeInsets.all(8),
+        child: ComposedTextTile(
+          icon: Icon(Icons.work, color: theme.accentColor),
+          maxLength: null,
+          inputType: TextInputType.name,
+          onChanged: onChanged,
+          initialValue: descricao,
+          hint: "Contador",
+          label: "Descrição Cargo",
+          validator: validate,
         ),
       ),
     );

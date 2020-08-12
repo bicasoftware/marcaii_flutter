@@ -62,6 +62,7 @@ flutter:
     - assets/images/forms.png
     - assets/images/porcentagens.png
     - assets/images/descricao.png
+    - assets/images/emprego.png
 
   fonts:
     - family: Montserrat

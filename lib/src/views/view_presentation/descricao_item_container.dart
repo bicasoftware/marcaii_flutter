@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:marcaii_flutter/src/views/widgets/light_container.dart';
 
 class PresentationItemContainer extends StatelessWidget {
   const PresentationItemContainer({
@@ -18,37 +19,36 @@ class PresentationItemContainer extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
     final actualHeight = height - kToolbarHeight - 56;
 
-    return SingleChildScrollView(
-      child: SizedBox(
-        //altura da view é o tamanho da tela, menos altura do toolbar menos a altura do container com os botões de next/prev
-        height: actualHeight,
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Expanded(
-              flex: 2,
-              child: Padding(
+    return LightContainer(
+      padding: const EdgeInsets.all(8),
+      child: SingleChildScrollView(
+        child: SizedBox(
+          height: actualHeight,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: AutoSizeText(title, style: theme.textTheme.headline4),
+                child: AutoSizeText(title, style: theme.textTheme.headline5),
               ),
-            ),
-            Expanded(
-              flex: 4,
-              child: Image.asset(
+              Image.asset(
                 asset,
-                fit: BoxFit.fitWidth,
-                height: 150,
+                fit: BoxFit.contain,
+                height: 200,
+                width: 200,
               ),
-            ),
-            const SizedBox(height: 16),
-            widget,
-            const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(descricao, style: theme.textTheme.caption),
-            )
-          ],
+              const Spacer(),
+              const SizedBox(height: 8),
+              widget,
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Text(descricao, style: theme.textTheme.caption.copyWith(fontWeight: FontWeight.bold)),
+              ),
+              const SizedBox(height: 8),
+            ],
+          ),
         ),
       ),
     );
