@@ -61,7 +61,7 @@ class ListDiferenciadas extends StatelessWidget {
                       maxLength: 3,
                     );
 
-                    if (result != null && result is int) {
+                    if (result != null) {
                       b.setDiferenciada(dif, int.parse(result));
                     }
                   },
