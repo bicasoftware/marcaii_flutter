@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
+import 'package:marcaii_flutter/context_helper.dart';
 import 'package:marcaii_flutter/src/utils/vault.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/list_section_decorator.dart';
 import 'package:marcaii_flutter/src/views/view_list_empregos/view_list_empregos.dart';
@@ -45,9 +46,12 @@ class ViewHomeDrawer extends StatelessWidget {
           ),
           const Divider(),
           ListTile(
-            leading: Icon(Get.isDarkMode ? LineAwesomeIcons.lightbulb_o : Icons.lightbulb_outline),
+            leading: Icon(
+              context.theme.brightness == Brightness.dark ? LineAwesomeIcons.lightbulb_o : Icons.lightbulb_outline,
+            ),
             onTap: () async {
-              if (Get.isDarkMode) {
+              if (context.isDarkMode) {
+                //TODO - verificar como mudar o tema
                 Get.changeTheme(lightTheme());
                 await Vault.setIsDark(false);
               } else {
@@ -73,7 +77,7 @@ class DrawerContainer extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: Get.theme.primaryColor,
+        color: context.theme.primaryColor,
         borderRadius: BorderRadius.circular(4),
       ),
       child: child,

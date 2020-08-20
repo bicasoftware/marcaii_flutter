@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:marcaii_flutter/context_helper.dart';
 import 'package:marcaii_flutter/src/utils/double_utils.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
 import 'package:marcaii_flutter/src/views/widgets/item_picker.dart';
@@ -29,11 +29,11 @@ Future<Vigencia> showVigenciaPicker({
             "Cancelar",
             style: Theme.of(context).textTheme.button.copyWith(color: Colors.black87),
           ),
-          onPressed: Get.back,
+          onPressed: () => context.goBack<Object>(),
         ),
         FlatButton(
           child: const Text("Mudar"),
-          onPressed: () => Get.back(result: vigencia),
+          onPressed: () => context.goBack<Object>(vigencia),
         ),
       ],
     ),
@@ -59,13 +59,13 @@ Future<int> showFechamentoPicker({
         FlatButton(
           child: Text(
             "Cancelar",
-            style: Theme.of(context).textTheme.button.copyWith(color: Colors.black87),
+            style: context.textTheme.button.copyWith(color: Colors.black87),
           ),
-          onPressed: Get.back,
+          onPressed: () => context.goBack<Object>(),
         ),
         FlatButton(
           child: const Text("Mudar"),
-          onPressed: () => Get.back(result: fechamento + 1),
+          onPressed: () => context.goBack<int>(fechamento + 1),
         ),
       ],
     ),
@@ -91,13 +91,13 @@ Future<double> showSalarioPicker({
         FlatButton(
           child: Text(
             Strings.cancelar,
-            style: Theme.of(context).textTheme.button.copyWith(color: Colors.black87),
+            style: context.textTheme.button.copyWith(color: Colors.black87),
           ),
-          onPressed: Get.back,
+          onPressed: () => context.goBack<Object>(),
         ),
         FlatButton(
           child: const Text(Strings.salvar),
-          onPressed: () => Get.back(result: salario),
+          onPressed: () => context.goBack(salario),
         ),
       ],
     ),

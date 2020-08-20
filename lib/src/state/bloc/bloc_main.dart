@@ -85,7 +85,7 @@ class BlocMain with BaseBloc {
     _inEmpregos.add(state.empregos);
   }
 
-  void removeHora({Horas hora, int emprego_id}) async {
+  void removeHora(Horas hora, int emprego_id) async {
     await state.removeHora(hora: hora, emprego_id: emprego_id);
     _inEmpregos.add(state.empregos);
   }

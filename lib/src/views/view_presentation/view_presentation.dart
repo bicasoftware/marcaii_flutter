@@ -44,13 +44,13 @@ class _ViewPresentationState extends State<ViewPresentation> with SingleTickerPr
       vsync: this,
       initialIndex: 0,
       length: maxIndex,
-    )..addListener(
+    )/* ..addListener(
         () {
           if (!controller.indexIsChanging) {
             setState(() => controller.index);
           }
         },
-      );
+      ) */;
   }
 
   void setSalario(double s) {

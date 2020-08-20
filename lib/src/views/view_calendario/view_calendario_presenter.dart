@@ -1,10 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_utils/flutter_utils.dart';
-import 'package:get/get.dart';
+import 'package:marcaii_flutter/context_helper.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
-import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
 import 'package:marcaii_flutter/src/state/calendario/calendario_child.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/bts_horas_info/bts_horas_info.dart';
@@ -46,15 +45,6 @@ class ViewCalendarioPresenter {
     return shouldDelete ?? false;
   }
 
-  Future<Horas> showViewGetHoras({
-    @required Empregos emprego,
-    @required DateTime date,
-  }) async {
-    return await Get.to<Horas>(
-      ViewInsertHoras(emprego: emprego, data: date),
-    );
-  }
-
   TabController provideController({
     @required TickerProvider ticker,
     @required int initialIndex,
@@ -68,18 +58,16 @@ class ViewCalendarioPresenter {
   }
 
   void onItemTap({
+    @required void Function(Horas hora, Vigencia vigencia) onAddHora,
+    @required void Function(Horas hora, int idEmprego) onRemoveHora,
     CalendarioChild child,
     Empregos emprego,
     Vigencia vigencia,
   }) async {
-    final b = Get.find<BlocMain>();
     if (child.hora == null) {
-      final hora = await showViewGetHoras(
-        emprego: emprego,
-        date: child.date,
-      );
+      final hora = await context.navigate<Horas>(ViewInsertHoras(emprego: emprego, data: child.date));
       if (hora != null && hora is Horas) {
-        b.addHora(hora, vigencia);
+        onAddHora(hora, vigencia);
       }
     } else {
       final canDelete = await showViewInfoHoras(
@@ -96,7 +84,7 @@ class ViewCalendarioPresenter {
         );
 
         if (confirmRemove == true) {
-          b.removeHora(hora: child.hora, emprego_id: emprego.id);
+          onRemoveHora(child.hora, emprego.id);
         }
       }
     }

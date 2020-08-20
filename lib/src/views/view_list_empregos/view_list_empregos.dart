@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_utils/async_widgets/async_widget.dart';
 import 'package:flutter_utils/flutter_utils.dart';
-import 'package:get/get.dart';
+import 'package:marcaii_flutter/context_helper.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
-import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/view_empregos.dart';
 import 'package:marcaii_flutter/src/views/view_list_empregos/view_list_empregos_item.dart';
 import 'package:marcaii_flutter/strings.dart';
+import 'package:provider/provider.dart';
 
 class ViewListEmpregos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final b = Get.find<BlocMain>();
+    final b = Provider.of<BlocMain>(context);
     return Expanded(
       child: StreamObserver<List<Empregos>>(
         stream: b.empregos,
@@ -35,8 +35,10 @@ class ViewListEmpregos extends StatelessWidget {
                   }
                 },
                 onPressed: (Empregos emprego, GlobalKey itemKey) async {
-                  Get.put<BlocEmprego>(BlocEmprego(emprego: emprego.copyWith()));
-                  final result = await Get.to<Empregos>(ViewEmpregos());
+                  final result = await context.navigate<Empregos>(
+                    ViewEmpregos(),
+                    arguments: emprego.copyWith(),
+                  );
                   if (result != null && result is Empregos) {
                     b.updateEmprego(result);
                   }

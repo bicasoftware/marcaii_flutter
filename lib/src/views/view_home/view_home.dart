@@ -1,9 +1,9 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_utils/flutter_utils.dart';
-import 'package:get/get.dart';
 import 'package:flutter_utils/async_widgets/async_widget.dart';
+import 'package:flutter_utils/flutter_utils.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
+import 'package:marcaii_flutter/context_helper.dart';
 import 'package:marcaii_flutter/helpers.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
@@ -13,16 +13,18 @@ import 'package:marcaii_flutter/src/views/view_home/view_home_drawer.dart';
 import 'package:marcaii_flutter/src/views/view_home/view_home_presenter.dart';
 import 'package:marcaii_flutter/src/views/view_totais/view_totais.dart';
 import 'package:marcaii_flutter/strings.dart';
+import 'package:provider/provider.dart';
 
 class ViewHome extends StatefulWidget {
   @override
   _ViewHomeState createState() => _ViewHomeState();
 }
 
-class _ViewHomeState extends State<ViewHome>
-    with BlocWidget<ViewHome, BlocMain>, ViewHomePresenter {
+class _ViewHomeState extends State<ViewHome> with ViewHomePresenter {
   @override
   Widget build(BuildContext context) {
+    final bloc = Provider.of<BlocMain>(context);
+
     return MergedStreamObserver(
       streams: [bloc.empregos, bloc.outVigencia, bloc.outNavPosition],
       onSuccess: (BuildContext context, List<Object> data) {
@@ -41,15 +43,15 @@ class _ViewHomeState extends State<ViewHome>
             index: pos,
           ),
           drawer: ViewHomeDrawer(
-            onNewEmprego: onNewEmprego,
+            onNewEmprego: () => onNewEmprego(context),
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           floatingActionButton: OpenContainer(
             transitionDuration: const Duration(milliseconds: 600),
-            closedColor: Get.theme.canvasColor,
+            closedColor: context.theme.canvasColor,
             closedElevation: 0,
             openElevation: 0,
-            openColor: Get.theme.primaryColor,
+            openColor: context.theme.primaryColor,
             closedShape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(30)),
             ),

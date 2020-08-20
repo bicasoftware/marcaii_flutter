@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_utils/async_widgets/async_widget.dart';
-import 'package:get/get.dart';
 import 'package:marcaii_flutter/helpers.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
@@ -8,6 +7,7 @@ import 'package:marcaii_flutter/src/state/calendario/calendario_child.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/calendario/calendario_item.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/calendario/calendario_item_empty.dart';
+import 'package:provider/provider.dart';
 
 class CalendarioPage extends StatelessWidget {
   const CalendarioPage({
@@ -21,7 +21,7 @@ class CalendarioPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final b = Get.find<BlocMain>();
+    final b = Provider.of<BlocMain>(context);
     final today = DateTime.now();
 
     return StreamObserver<Vigencia>(

@@ -14,15 +14,44 @@ import 'package:marcaii_flutter/src/views/view_empregos/widgets/view_emprego_sal
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/salarios_list_tile/salarios_list_tile.dart';
 import 'package:marcaii_flutter/src/views/widgets/appbar_save_button.dart';
 import 'package:marcaii_flutter/strings.dart';
+import 'package:provider/provider.dart';
 
 class ViewEmpregos extends StatefulWidget {
   @override
-  _ViewEmpregosState createState() => _ViewEmpregosState();
+  _ViewEmpregos createState() => _ViewEmpregos();
 }
 
-class _ViewEmpregosState extends State<ViewEmpregos> with BlocWidget<ViewEmpregos, BlocEmprego>, WillPopForm {
+class _ViewEmpregos extends State<ViewEmpregos> {
   @override
   Widget build(BuildContext context) {
+    return Container(
+      child: Provider<BlocEmprego>(
+        create: (_) => BlocEmprego(
+          emprego: ModalRoute.of(context).settings.arguments,
+        ),
+        dispose: (BuildContext _, b) => b.dispose(),
+        child: _ViewEmpregosChild(),
+      ),
+    );
+  }
+}
+
+class _ViewEmpregosChild extends StatefulWidget {
+  @override
+  _ViewEmpregosChildState createState() => _ViewEmpregosChildState();
+}
+
+class _ViewEmpregosChildState extends State<_ViewEmpregosChild> with WillPopForm {
+  BlocEmprego bloc;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    bloc = Provider.of<BlocEmprego>(context);
     return WillPopScope(
       onWillPop: () async => willPop(),
       child: Scaffold(

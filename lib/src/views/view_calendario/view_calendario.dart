@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
 import 'package:marcaii_flutter/src/state/calendario/calendario_child.dart';
@@ -8,6 +7,7 @@ import 'package:marcaii_flutter/src/views/view_calendario/calendario/calendario_
 import 'package:marcaii_flutter/src/views/view_calendario/calendario/calendario_page.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/calendario_navigator.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/view_calendario_presenter.dart';
+import 'package:provider/provider.dart';
 
 class ViewCalendario extends StatefulWidget {
   const ViewCalendario({
@@ -30,7 +30,7 @@ class _ViewCalendarioState extends State<ViewCalendario> with TickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    final b = Get.find<BlocMain>();
+    final b = Provider.of<BlocMain>(context, listen: false);
     final theme = Theme.of(context);
     final presenter = ViewCalendarioPresenter(context);
 
@@ -69,6 +69,8 @@ class _ViewCalendarioState extends State<ViewCalendario> with TickerProviderStat
                     child: child,
                     vigencia: widget.vigencia,
                     emprego: e,
+                    onAddHora: b.addHora,
+                    onRemoveHora: b.removeHora,
                   ),
                 ),
             ],

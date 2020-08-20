@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:marcaii_flutter/context_helper.dart';
 import 'package:marcaii_flutter/helpers.dart';
 import 'package:marcaii_flutter/src/state/calendario/calendario_child.dart';
 
@@ -15,15 +15,15 @@ class CalendarioItem extends StatelessWidget {
   final bool isToday;
   final CalendarioChild childContent;
 
-  Color getHighlightColor() {
-    return isToday ? Get.theme.highlightColor : null;
+  Color getHighlightColor(BuildContext context) {
+    return isToday ? context.theme.highlightColor : null;
   }
 
   @override
   Widget build(BuildContext context) {
     if (childContent.date != null) {
       return Ink(
-        color: getHighlightColor(),
+        color: getHighlightColor(context),
         child: InkWell(
           onTap: () {
             onTap(childContent);

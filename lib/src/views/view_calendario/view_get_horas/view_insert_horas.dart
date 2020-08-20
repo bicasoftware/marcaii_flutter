@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_utils/config_tiles/config_tiles.dart';
 import 'package:flutter_utils/flutter_utils.dart';
-import 'package:get/get.dart';
+// import 'package:get/get.dart';
 import 'package:marcaii_flutter/helpers.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/views/widgets/appbar_save_button.dart';
 import 'package:marcaii_flutter/strings.dart';
+import 'package:marcaii_flutter/context_helper.dart';
 
 class ViewInsertHoras extends StatefulWidget {
   const ViewInsertHoras({Key key, this.emprego, this.data}) : super(key: key);
@@ -77,9 +78,9 @@ class _ViewInsertHorasState extends State<ViewInsertHoras> {
     return true;
   }
 
-  void onSave() {
-    Get.back(
-      result: Horas(
+  void onSave(BuildContext context) {
+    context.goBack(
+      Horas(
         emprego_id: widget.emprego.id,
         inicio: inicio.toShortString(),
         termino: termino.toShortString(),
@@ -103,14 +104,14 @@ class _ViewInsertHorasState extends State<ViewInsertHoras> {
         appBar: AppBar(
           actions: <Widget>[
             AppbarSaveButton(
-              onPressed: onSave,
+              onPressed: () => onSave(context),
             )
           ],
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
-            mainAxisSize: MainAxisSize.max,          
+            mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               TimePickerTile(
                 icon: const Icon(
@@ -137,7 +138,7 @@ class _ViewInsertHorasState extends State<ViewInsertHoras> {
                 children: horasTipo,
                 initValue: tipo,
                 selectedColor: Consts.horaColor[tipo],
-                borderColor: Get.theme.dividerColor,
+                borderColor: context.theme.dividerColor,
                 onValueChanged: (b) => setState(() => tipo = b),
               )
             ],

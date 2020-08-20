@@ -6,9 +6,9 @@ import 'package:marcaii_flutter/strings.dart';
 
 class PageCargaHoraria extends StatelessWidget {
   const PageCargaHoraria({
+    @required this.cargaHoraria,
+    @required this.onCargaHorariaChanged,
     Key key,
-    this.cargaHoraria,
-    this.onCargaHorariaChanged,
   }) : super(key: key);
 
   final int cargaHoraria;
@@ -23,7 +23,7 @@ class PageCargaHoraria extends StatelessWidget {
       descricao:
           "A carga horária padrão é de 220 horas por mês, ou 8 horas diárias. Se tiver dúvidas, converse com seu contrante :)",
       widget: LightContainer(
-        padding: const EdgeInsets.symmetric(horizontal:8),
+        padding: const EdgeInsets.symmetric(horizontal: 8),
         child: MultiOptionControll(
           label: Strings.cargaHoraria,
           initValue: cargaHoraria,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_utils/async_widgets/async_widget.dart';
-import 'package:get/get.dart';
 import 'package:marcaii_flutter/src/database/dao/dao_empregos.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/utils/vault.dart';
@@ -11,18 +10,29 @@ import 'package:marcaii_flutter/themes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final isDark = await Vault.getIsDark();
-  runApp(Marcaii(isDark: isDark));
+
+  final List<Object> data = await Future.wait([
+    DaoEmpregos.fetchAll(),
+    Vault.getIsDark(),
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]),
+  ]);
+
+  runApp(
+    Marcaii(
+      empregos: data[0] as List<Empregos>,
+      isDark: data[1] as bool,
+    ),
+  );
 }
 
 class Marcaii extends StatelessWidget {
-  const Marcaii({Key key, this.isDark}) : super(key: key);
+  const Marcaii({Key key, this.empregos, this.isDark}) : super(key: key);
+  final List<Empregos> empregos;
   final bool isDark;
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(            
-      defaultTransition: Transition.topLevel,
+    return MaterialApp(
       supportedLocales: const [Locale('pt', 'BR')],
       title: Strings.appName,
       debugShowCheckedModeBanner: false,
@@ -31,12 +41,7 @@ class Marcaii extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate
       ],
       theme: isDark ? darkTheme() : lightTheme(),
-      home: FutureObserver<List<Empregos>>(
-        future: DaoEmpregos.fetchAll(),
-        onSuccess: (BuildContext context, List<Empregos> empregos) {
-          return ViewBranch(empregos: empregos);
-        },
-      ),
+      home: ViewBranch(empregos: empregos),
     );
   }
 }

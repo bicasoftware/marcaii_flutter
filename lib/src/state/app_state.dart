@@ -7,13 +7,11 @@ import 'package:marcaii_flutter/src/utils/vigencia.dart';
 
 class AppState {
   AppState({
-    this.token,
-    this.empregos,
+    @required this.empregos,
   }) {
     vigencia = Vigencia.fromDateTime(DateTime.now());
   }
 
-  String token;
   Vigencia vigencia;
   int navPosition = 0;
   List<Empregos> empregos;

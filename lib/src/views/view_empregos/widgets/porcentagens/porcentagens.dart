@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_utils/async_widgets/async_widget.dart';
 import 'package:flutter_utils/flutter_utils.dart';
-import 'package:get/get.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/list_section_decorator.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/porcentagens/porcentagem_container.dart';
 import 'package:marcaii_flutter/strings.dart';
+import 'package:provider/provider.dart';
 
 class ViewPorcentagens extends StatelessWidget {
   const ViewPorcentagens({Key key}) : super(key: key);
@@ -27,7 +27,7 @@ class ViewPorcentagens extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final b = Get.find<BlocEmprego>();
+    final b = Provider.of<BlocEmprego>(context);
 
     return MergedStreamObserver(
       streams: [b.porcNormal, b.porcCompleta],
