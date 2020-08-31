@@ -10,14 +10,14 @@ class DaoDiferenciadas {
   static Future<List<Diferenciadas>> fetchAll() async {
     final db = await getDB();
     final result = await db.query(Diferenciadas.tableName);
-    return result.map(Diferenciadas.fromJson).toList();
+    return result.map((d) => Diferenciadas.fromMap(d)).toList();
   }
 
   static Future<Diferenciadas> fetchById(int id) async {
     final db = await getDB();
     final result =
         await db.query(Diferenciadas.tableName, where: "id = ?", whereArgs: <Object>[id]);
-    return Diferenciadas.fromJson(result[0]);
+    return Diferenciadas.fromMap(result[0]);
   }
 
   static Future<Diferenciadas> insert(Diferenciadas model) async {
@@ -26,11 +26,11 @@ class DaoDiferenciadas {
     return model..id = result;
   }
 
-  static  Future<void> update(Diferenciadas model) async {
+  static Future<void> update(Diferenciadas model) async {
     final db = await getDB();
     return await db.update(
       Diferenciadas.tableName,
-      model.toJson(),
+      model.toMap(),
       where: "id = ?",
       whereArgs: <Object>[model.id],
     );

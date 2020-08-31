@@ -52,10 +52,6 @@ class CalendarioItem extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // Circle(
-                    //   color: childContent.hora.getColor(),
-                    //   size: 8,
-                    // ),
                     const Spacer(),
                   ],
                 )

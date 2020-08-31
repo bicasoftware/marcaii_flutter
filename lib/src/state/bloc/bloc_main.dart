@@ -20,11 +20,11 @@ class BlocMain with BaseBloc {
 
   AppState state;
 
-  final BehaviorSubject<List<Empregos>> _bhsEmpregos = BehaviorSubject<List<Empregos>>();
+  final _bhsEmpregos = BehaviorSubject<List<Empregos>>();
   Stream<List<Empregos>> get empregos => _bhsEmpregos.stream;
   Sink<List<Empregos>> get _inEmpregos => _bhsEmpregos.sink;
 
-  final BehaviorSubject<Vigencia> _bhsVigencia = BehaviorSubject<Vigencia>();
+  final _bhsVigencia = BehaviorSubject<Vigencia>();
   Stream<Vigencia> get outVigencia => _bhsVigencia.stream;
   Sink<Vigencia> get _inVigencia => _bhsVigencia.sink;
 

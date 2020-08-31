@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_utils/config_tiles/config_tiles.dart';
 import 'package:flutter_utils/flutter_utils.dart';
-// import 'package:get/get.dart';
+import 'package:line_awesome_icons/line_awesome_icons.dart';
+import 'package:marcaii_flutter/context_helper.dart';
 import 'package:marcaii_flutter/helpers.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/views/widgets/appbar_save_button.dart';
 import 'package:marcaii_flutter/strings.dart';
-import 'package:marcaii_flutter/context_helper.dart';
 
 class ViewInsertHoras extends StatefulWidget {
   const ViewInsertHoras({Key key, this.emprego, this.data}) : super(key: key);
@@ -115,7 +115,7 @@ class _ViewInsertHorasState extends State<ViewInsertHoras> {
             children: <Widget>[
               TimePickerTile(
                 icon: const Icon(
-                  Icons.timer,
+                  LineAwesomeIcons.clock_o,
                   color: Colors.amber,
                 ),
                 initialTime: inicio,
@@ -125,7 +125,7 @@ class _ViewInsertHorasState extends State<ViewInsertHoras> {
               const Divider(),
               TimePickerTile(
                 icon: const Icon(
-                  Icons.timer,
+                  LineAwesomeIcons.clock_o,
                   color: Colors.pink,
                 ),
                 initialTime: termino,

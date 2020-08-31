@@ -39,7 +39,11 @@ extension EmpregoHelper on Empregos {
     if (index < 0) {
       final c = Calendario(
         vigencia: vigencia.vigencia,
-        items: CalendarGenerator.generate(vigencia.ano, vigencia.mes, horas),
+        items: CalendarGenerator.generate(
+          ano: vigencia.ano,
+          mes: vigencia.mes,
+          horas: horas,
+        ),
       );
       calendario.add(c);
       return c;

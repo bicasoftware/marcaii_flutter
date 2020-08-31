@@ -1,11 +1,7 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:flutter_utils/sqlite_generator/sqlite_generator.dart';
 import 'package:marcaii_flutter/src/utils/json_utils.dart';
 
-part 'diferenciadas.g.dart';
-
-@JsonSerializable(nullable: true)
 class Diferenciadas {
   Diferenciadas({
     this.id,
@@ -60,12 +56,6 @@ class Diferenciadas {
   ).makeCreateQuery();
 
   static String tableName = "diferenciadas";
-
-  static Diferenciadas fromJson(Map<String, Object> json) {
-    return _$DiferenciadasFromJson(json);
-  }
-
-  Map<String, Object> toJson() => _$DiferenciadasToJson(this);
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{

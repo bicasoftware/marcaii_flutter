@@ -1,10 +1,7 @@
-import 'package:json_annotation/json_annotation.dart';
-import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:flutter_utils/sqlite_generator/sqlite_generator.dart';
+import 'package:intl/intl.dart';
+import 'package:marcaii_flutter/src/database/models/empregos.dart';
 
-part 'horas.g.dart';
-
-@JsonSerializable(nullable: true)
 class Horas {
   Horas({
     this.emprego_id,
@@ -15,8 +12,26 @@ class Horas {
     this.termino = "18:00",
   });
 
-  int id, emprego_id, tipo;
-  String inicio, termino;
+  factory Horas.fromMap(Map<String, dynamic> map) {
+    if (map == null) {
+      return null;
+    }
+
+    return Horas(
+      id: map['id'] as int,
+      emprego_id: map['emprego_id'] as int,
+      tipo: map['tipo'] as int,
+      inicio: map['inicio'] as String,
+      termino: map['termino'] as String,
+      data: DateFormat('yyyy-MM-dd').parse(map['data']),
+    );
+  }
+
+  int id;
+  int emprego_id;
+  int tipo;
+  String inicio;
+  String termino;
   DateTime data;
 
   static const ID = "id";
@@ -54,11 +69,16 @@ class Horas {
     return "id: $id, emprego_id: $emprego_id, tipo: $tipo, inicio: $inicio, termino: $termino, data: $data";
   }
 
-  static Horas fromJson(Map<String, Object> json) {
-    return _$HorasFromJson(json);
-  }
-
   static String get tableName => "horas";
 
-  Map<String, Object> toJson() => _$HorasToJson(this);
+  Map<String, Object> toMap() {
+    return {
+      ID: id,
+      EMPREGO_ID: emprego_id,
+      TIPO: tipo,
+      INICIO: inicio,
+      TERMINO: termino,
+      DATA: DateFormat('yyyy-MM-dd').format(data),
+    };
+  }
 }

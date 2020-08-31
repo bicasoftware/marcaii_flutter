@@ -31,6 +31,7 @@ class _ViewPresentationState extends State<ViewPresentation> with SingleTickerPr
   int _cargaHoraria, _porcNormal, _porcCompleta;
   String _descricao;
   int maxIndex = 5;
+  int _navPos = 0;
 
   @override
   void initState() {
@@ -44,13 +45,13 @@ class _ViewPresentationState extends State<ViewPresentation> with SingleTickerPr
       vsync: this,
       initialIndex: 0,
       length: maxIndex,
-    )/* ..addListener(
+    )..addListener(
         () {
           if (!controller.indexIsChanging) {
-            setState(() => controller.index);
+            setState(() => _navPos = controller.index);
           }
         },
-      ) */;
+      );
   }
 
   void setSalario(double s) {
@@ -172,7 +173,7 @@ class _ViewPresentationState extends State<ViewPresentation> with SingleTickerPr
                   Container(
                     margin: const EdgeInsets.all(4),
                     child: Circle(
-                      color: i == controller.index ? theme.primaryColorLight : Colors.grey,
+                      color: i == _navPos ? theme.primaryColorLight : Colors.grey,
                       size: 12,
                     ),
                   ),

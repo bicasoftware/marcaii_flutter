@@ -1,14 +1,11 @@
-import 'package:marcaii_flutter/helpers.dart';
 import 'package:marcaii_flutter/src/database/dao/dao_diferencidas.dart';
 import 'package:marcaii_flutter/src/database/dao/dao_horas.dart';
 import 'package:marcaii_flutter/src/database/dao/dao_salarios.dart';
 import 'package:marcaii_flutter/src/database/db_helper.dart';
 import 'package:marcaii_flutter/src/database/models/diferenciadas.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
+import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/database/models/salarios.dart';
-import 'package:marcaii_flutter/src/state/calendario/calendario.dart';
-import 'package:marcaii_flutter/src/utils/calendar_generator.dart';
-import 'package:marcaii_flutter/src/utils/vigencia.dart';
 
 class DaoEmpregos {
   static Future<void> delete(int i) async {
@@ -21,9 +18,9 @@ class DaoEmpregos {
   }
 
   static Future<List<Empregos>> fetchAll() async {
-    final dt = DateTime.now();
     final db = await getDB();
     final result = await db.query(Empregos.tableName);
+
     return result.map((e) => Empregos.fromMap(e)).toList()
       ..forEach(
         (e) async {
@@ -34,16 +31,14 @@ class DaoEmpregos {
               DaoDiferenciadas.fetchByEmprego(e.id),
             ],
           );
+          final List<Horas> horas = children[0] as List<Horas>;
+          final List<Salarios> salarios = children[1] as List<Salarios>;
+          final List<Diferenciadas> diferenciadas = children[2] as List<Diferenciadas>;
           e
-            ..horas = children[0]
-            ..salarios = children[1]
-            ..diferenciadas = children[2]
-            ..calendario = [
-              Calendario(
-                vigencia: Vigencia.fromDateTime(dt).vigencia,
-                items: CalendarGenerator.generate(dt.year, dt.month, children[0]),
-              ),
-            ];
+            ..horas = horas
+            ..salarios = salarios
+            ..diferenciadas = diferenciadas
+            ..calendario = [];
         },
       );
   }
@@ -51,7 +46,7 @@ class DaoEmpregos {
   static Future<Empregos> fetchById(int id) async {
     final db = await getDB();
     final result = await db.query(Empregos.tableName, where: "id = ?", whereArgs: <Object>[id]);
-    return Empregos.fromJson(result[0]);
+    return Empregos.fromMap(result[0]);
   }
 
   static Future<Empregos> insertWithChildren(Empregos model) async {
@@ -110,23 +105,5 @@ class DaoEmpregos {
   static Future<int> truncate() async {
     final db = await getDB();
     return await db.delete(Empregos.tableName);
-  }
-
-  static Future<void> syncFromServer(List<Empregos> empregos) async {
-    for (final emprego in empregos) {
-      final e = await insert(emprego.forFirstSync());
-
-      for (final hora in emprego.horas) {
-        await DaoHoras.insert(hora.forFirstSync(e.id));
-      }
-
-      for (final salario in emprego.salarios) {
-        await DaoSalarios.insert(salario.forFirstSync(e.id));
-      }
-
-      for (final difer in emprego.diferenciadas) {
-        await DaoDiferenciadas.insert(difer.forFirstSync(e.id));
-      }
-    }
   }
 }

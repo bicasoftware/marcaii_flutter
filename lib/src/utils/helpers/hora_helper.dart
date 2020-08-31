@@ -36,16 +36,5 @@ extension HoraHelper on Horas {
 
   bool hasValidDates() => inicioAsDate.isBefore(terminoAsDate);
 
-  Horas forFirstSync(int emprego_id) {
-    return Horas(
-      id: null,
-      emprego_id: emprego_id,
-      tipo: tipo,
-      inicio: inicio,
-      termino: termino,
-      data: data,
-    );
-  }
-
   Color get color => Consts.horaColor[tipo];
 }

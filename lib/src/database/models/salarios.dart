@@ -1,11 +1,7 @@
 import 'package:flutter_utils/sqlite_generator/sqlite_generator.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/utils/json_utils.dart';
 
-part 'salarios.g.dart';
-
-@JsonSerializable(nullable: true)
 class Salarios {
   Salarios({
     this.id,
@@ -25,8 +21,8 @@ class Salarios {
     );
   }
 
-  int id, emprego_id;
-  @JsonKey(fromJson: double.tryParse)
+  int id;
+  int emprego_id;
   double valor;
   String vigencia;
   bool ativo;
@@ -58,14 +54,6 @@ class Salarios {
       onUpdate: ConstraintTypes.CASCADE,
     ),
   ).makeCreateQuery();
-
-  static Salarios fromJson(Map<String, Object> json) {
-    return _$SalariosFromJson(json);
-  }
-
-  Map<String, Object> toJson() {
-    return _$SalariosToJson(this);
-  }
 
   Map<String, Object> toMap() {
     return {

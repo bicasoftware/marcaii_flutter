@@ -44,7 +44,12 @@ class DaoSalarios {
   static Future<void> updateSalario(Salarios salario) async {
     assert(salario.id.isNotNull);
     final db = await DbHelper().db;
-    await db.update(Salarios.tableName, salario.toJson(), where: "id = ?", whereArgs: <Object>[salario.id]);
+    await db.update(
+      Salarios.tableName,
+      salario.toMap(),
+      where: "id = ?",
+      whereArgs: <Object>[salario.id],
+    );
   }
 
   static Future<List<Salarios>> fetchByEmprego(int empregoId) async {

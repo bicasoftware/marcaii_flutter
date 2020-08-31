@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:marcaii_flutter/helpers.dart';
 import 'package:marcaii_flutter/src/database/models/diferenciadas.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
@@ -11,9 +10,6 @@ import 'package:marcaii_flutter/src/state/totais/totais.dart';
 import 'package:marcaii_flutter/src/utils/json_utils.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
 
-part 'empregos.g.dart';
-
-@JsonSerializable(nullable: true)
 class Empregos {
   Empregos({
     this.id,
@@ -43,6 +39,10 @@ class Empregos {
       saida: map['saida'] as String,
       carga_horaria: map['carga_horaria'] as int,
       ativo: intToBool(map['ativo'] as int),
+      calendario: [],
+      diferenciadas: [],
+      horas: [],
+      salarios: [],
     );
   }
 
@@ -51,9 +51,7 @@ class Empregos {
   List<Horas> horas;
   List<Diferenciadas> diferenciadas;
   List<Salarios> salarios;
-  @JsonKey(ignore: true)
   List<Calendario> calendario;
-  @JsonKey(ignore: true)
   Totais totais;
   bool banco_horas;
   bool ativo;
@@ -96,13 +94,7 @@ class Empregos {
     fk: null,
   ).makeCreateQuery();
 
-  static Empregos fromJson(Map<String, Object> json) {
-    return _$EmpregosFromJson(json);
-  }
-
   static const String tableName = "empregos";
-
-  Map<String, Object> toJson() => _$EmpregosToJson(this);
 
   ///Usar com Sqlite
   Map<String, Object> toMap() {
