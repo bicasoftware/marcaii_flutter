@@ -108,41 +108,38 @@ class _ViewInsertHorasState extends State<ViewInsertHoras> {
             )
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              TimePickerTile(
-                icon: const Icon(
-                  LineAwesomeIcons.clock_o,
-                  color: Colors.amber,
-                ),
-                initialTime: inicio,
-                label: Strings.inicio,
-                onTimeSet: setInicio,
+        body: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            TimePickerTile(
+              icon: const Icon(
+                LineAwesomeIcons.clock_o,
+                color: Colors.amber,
               ),
-              const Divider(),
-              TimePickerTile(
-                icon: const Icon(
-                  LineAwesomeIcons.clock_o,
-                  color: Colors.pink,
-                ),
-                initialTime: termino,
-                label: Strings.saida,
-                onTimeSet: setTermino,
+              initialTime: inicio,
+              label: Strings.inicio,
+              onTimeSet: setInicio,
+            ),
+            const Divider(),
+            TimePickerTile(
+              icon: const Icon(
+                LineAwesomeIcons.clock_o,
+                color: Colors.pink,
               ),
-              const Divider(),
-              MultiOptionControll(
-                label: Strings.tipoHora,
-                children: horasTipo,
-                initValue: tipo,
-                selectedColor: Consts.horaColor[tipo],
-                borderColor: context.theme.dividerColor,
-                onValueChanged: (b) => setState(() => tipo = b),
-              )
-            ],
-          ),
+              initialTime: termino,
+              label: Strings.saida,
+              onTimeSet: setTermino,
+            ),
+            const Divider(),
+            MultiOptionControll(
+              label: Strings.tipoHora,
+              children: horasTipo,
+              initValue: tipo,
+              selectedColor: Consts.horaColor[tipo],
+              borderColor: context.theme.dividerColor,
+              onValueChanged: (b) => setState(() => tipo = b),
+            )
+          ],
         ),
       ),
     );

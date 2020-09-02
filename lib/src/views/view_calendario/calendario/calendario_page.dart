@@ -29,7 +29,7 @@ class CalendarioPage extends StatelessWidget {
       onSuccess: (_, Vigencia vigencia) {
         final calendario = emprego.getCalendario(vigencia);
         return Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(4.0),
           child: GridView.count(
             crossAxisCount: 7,
             shrinkWrap: true,
