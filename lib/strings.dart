@@ -175,3 +175,7 @@ class Maps {
     120: Text("120"),
   };
 }
+
+class AppConstants {
+  static const Duration animationDuration = Duration(milliseconds: 300);
+}

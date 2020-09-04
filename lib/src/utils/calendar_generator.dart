@@ -11,9 +11,6 @@ class CalendarGenerator {
   }) {
     var initDate = DateTime(ano, mes, 1);
     final items = <CalendarioChild>[];
-    print("Total horas: ${horas.length}");
-
-    print("dateMonth: ${initDate.month}, mes: $mes");
     while (initDate.month == mes) {
       items.add(
         CalendarioChild(
