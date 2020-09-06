@@ -28,19 +28,4 @@ class TotaisDetalhe {
       ),
     );
   }
-
-  void addMinutos(int minutos) => this.minutos += minutos;
-
-  void addTotal(double total) => this.total += total;
-
-  void addHoras(Horas hora, double valor, int minutos) {
-    horas.add(
-      TotaisHoras(
-        date: hora.data,
-        minutes: minutos,
-        tipohora: hora.tipo,
-        valor: valor,
-      ),
-    );
-  }
 }

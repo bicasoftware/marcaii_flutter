@@ -32,7 +32,6 @@ class Salarios {
   static const String VALOR = "valor";
   static const String VIGENCIA = "vigencia";
   static const String ATIVO = "ativo";
-
   static const String tableName = "salarios";
 
   static const List<String> columns = [ID, EMPREGO_ID, VALOR, VIGENCIA, ATIVO];

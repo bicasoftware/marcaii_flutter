@@ -96,7 +96,6 @@ class Empregos {
 
   static const String tableName = "empregos";
 
-  ///Usar com Sqlite
   Map<String, Object> toMap() {
     return {
       NOME: nome,
@@ -154,22 +153,7 @@ class Empregos {
         .setHora(hora);
   }
 
-  void updateHora(Horas hora) {
-    horas.firstWhere((Horas h) => h.id == hora.id)
-      ..tipo = hora.tipo
-      ..inicio = hora.inicio
-      ..termino = hora.termino;
-  }
-
   void removeHora(Horas hora) {
     horas.removeWhere((h) => h.id == hora.id);
-  }
-
-  void addSalario(Salarios salario) {
-    salarios.add(salario);
-  }
-
-  void addDiferenciada(Diferenciadas dif) {
-    diferenciadas.add(dif);
   }
 }
