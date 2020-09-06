@@ -21,7 +21,7 @@ class _CalendarioNavigatorState extends State<CalendarioNavigator>
   void initState() {
     super.initState();
     controller = AnimationController(
-      duration: AppConstants.animationDuration,
+      duration: Consts.animationDuration,
       vsync: this,
     );
 

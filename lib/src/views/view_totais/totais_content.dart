@@ -22,7 +22,7 @@ class TotaisContent extends StatelessWidget {
     if (tipo == 2 && detalhe.weekday != null) {
       return Consts.weekDayExtenso[detalhe.weekday];
     } else {
-      return Consts.tipoHora[tipo];
+      return Consts.tipoHoraPlural[tipo];
     }
   }
 

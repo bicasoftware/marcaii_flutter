@@ -54,7 +54,7 @@ class ListDiferenciadas extends StatelessWidget {
                   onTap: () async {
                     final String result = await Dialogs.showIntegerDialog(
                       context: context,
-                      label: Strings.porcDifer,
+                      label: Strings.porcentagemDiferencial,
                       title: Consts.weekDayExtenso[dif.weekday],
                       confirmButton: Strings.salvar,
                       initValue: dif.porc.toString(),

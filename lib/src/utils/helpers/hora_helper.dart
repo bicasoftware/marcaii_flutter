@@ -4,7 +4,7 @@ import 'package:marcaii_flutter/strings.dart';
 
 extension HoraHelper on Horas {
   Color getColor() => Consts.horaColor[tipo];
-  String getTipo() => Consts.tipoHora[tipo];
+  String getTipo() => Consts.tipoHoraPlural[tipo];
 
   int difMinutes() {
     final iniMinutes = int.parse(inicio.substring(0, 2)) * 60 + int.parse(inicio.substring(3, 5));

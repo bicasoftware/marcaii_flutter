@@ -102,44 +102,64 @@ class _ViewInsertHorasState extends State<ViewInsertHoras> {
       onWillPop: () => canPop(context),
       child: Scaffold(
         appBar: AppBar(
+          title: Text(Strings.novaHorasExtra),
           actions: <Widget>[
             AppbarSaveButton(
-              onPressed: () => onSave(context),
+              onPressed: () {
+                onSave(context);
+              },
             )
           ],
         ),
-        body: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            TimePickerTile(
-              icon: const Icon(
-                LineAwesomeIcons.clock_o,
-                color: Colors.amber,
-              ),
-              initialTime: inicio,
-              label: Strings.inicio,
-              onTimeSet: setInicio,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                /* TimePickerTile(
+                  icon: const Icon(
+                    LineAwesomeIcons.clock_o,
+                    color: Colors.amber,
+                  ),
+                  initialTime: inicio,
+                  label: Strings.inicio,
+                  onTimeSet: setInicio,
+                ),
+                const Divider(),
+                TimePickerTile(
+                  icon: const Icon(
+                    LineAwesomeIcons.clock_o,
+                    color: Colors.pink,
+                  ),
+                  initialTime: termino,
+                  label: Strings.saida,
+                  onTimeSet: setTermino,
+                ), */
+                TimeTile(
+                  beginLabel: Strings.inicio,
+                  endLabel: Strings.termino,
+                  initialTime: inicio,
+                  onSaved: setInicio,
+                ),
+                TimeTile(
+                  beginLabel: Strings.inicio,
+                  endLabel: Strings.termino,
+                  initialTime: termino,
+                  onSaved: setTermino,
+                ),
+                const Divider(),
+                MultiOptionControll(
+                  label: Strings.tipoHora,
+                  children: horasTipo,
+                  initValue: tipo,
+                  selectedColor: Consts.horaColor[tipo],
+                  borderColor: context.theme.dividerColor,
+                  onValueChanged: (b) => setState(() => tipo = b),
+                )
+              ],
             ),
-            const Divider(),
-            TimePickerTile(
-              icon: const Icon(
-                LineAwesomeIcons.clock_o,
-                color: Colors.pink,
-              ),
-              initialTime: termino,
-              label: Strings.saida,
-              onTimeSet: setTermino,
-            ),
-            const Divider(),
-            MultiOptionControll(
-              label: Strings.tipoHora,
-              children: horasTipo,
-              initValue: tipo,
-              selectedColor: Consts.horaColor[tipo],
-              borderColor: context.theme.dividerColor,
-              onValueChanged: (b) => setState(() => tipo = b),
-            )
-          ],
+          ),
         ),
       ),
     );

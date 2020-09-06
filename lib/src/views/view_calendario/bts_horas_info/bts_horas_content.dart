@@ -41,7 +41,7 @@ class BtsHorasContent extends StatelessWidget {
         ListTile(
           isThreeLine: true,
           leading: CircleAvatar(backgroundColor: calendarChild.hora.color),
-          title: Text(Consts.tipoHora[calendarChild.hora.tipo]),
+          title: Text(Consts.tipoHoraPlural[calendarChild.hora.tipo]),
           subtitle: Text("$valorPorcentagem\n${calendarChild.hora.difEstenso()}"),
           trailing: Text(
             actualPorcentagem,

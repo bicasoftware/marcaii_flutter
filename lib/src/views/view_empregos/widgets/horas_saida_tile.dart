@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_utils/async_widgets/stream_observer.dart';
-import 'package:flutter_utils/config_tiles/time_tile.dart';
+import 'package:flutter_utils/config_tiles/config_tiles.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_emprego.dart';
 import 'package:marcaii_flutter/src/utils/helpers/time_helper.dart';

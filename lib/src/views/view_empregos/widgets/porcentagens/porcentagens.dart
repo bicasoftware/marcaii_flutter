@@ -43,27 +43,27 @@ class ViewPorcentagens extends StatelessWidget {
               child: Row(
                 children: <Widget>[
                   PorcentagemContainer(
-                    label: Strings.porc,
+                    label: Strings.porcentagemNormal,
                     porc: porcNormal,
                     iconColor: Consts.horaColor[0],
                     onTap: () async {
                       await popDialog(
                         context,
                         porcNormal,
-                        Strings.porc,
+                        Strings.porcentagemNormal,
                         b.setPorcNormal,
                       );
                     },
                   ),
                   PorcentagemContainer(
-                    label: Strings.porcCompleta,
+                    label: Strings.porcentagemCompleta,
                     porc: porcCompleta,
                     iconColor: Consts.horaColor[1],
                     onTap: () async {
                       await popDialog(
                         context,
                         porcCompleta,
-                        Strings.porcCompleta,
+                        Strings.porcentagemCompleta,
                         b.setPorcCompleta,
                       );
                     },

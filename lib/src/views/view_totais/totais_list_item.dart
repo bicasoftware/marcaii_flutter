@@ -22,7 +22,7 @@ class TotaisListItem extends StatelessWidget {
       leading: Icon(LineAwesomeIcons.calendar, color: color),
       title: Text(hora.date.asString()),
       subtitle: Text(
-        "${MinutesHelper.minutesToHoras(hora.minutes)} | ${Consts.tipoHoraPlural[hora.tipohora]}",
+        "${MinutesHelper.minutesToHoras(hora.minutes)} | ${Consts.tipoHoraSingular[hora.tipohora]}",
       ),
       trailing: Text(
         doubleToCurrency(hora.valor),

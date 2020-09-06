@@ -30,7 +30,7 @@ class PageCargaHoraria extends StatelessWidget {
           selectedColor: theme.accentColor,
           onValueChanged: onCargaHorariaChanged,
           borderColor: theme.accentColor,
-          children: Maps.cargaHoraria,
+          children: Consts.cargaHoraria,
         ),
       ),
     );

@@ -22,7 +22,7 @@ class CargaHorariaTile extends StatelessWidget {
           selectedColor: context.theme.accentColor,
           onValueChanged: b.setCargaHoraria,
           borderColor: context.theme.accentColor,
-          children: Maps.cargaHoraria,
+          children: Consts.cargaHoraria,
         );
       },
     );

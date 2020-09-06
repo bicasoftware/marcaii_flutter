@@ -48,14 +48,14 @@ class PagePorcentagem extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: [
               PorcentagemContainer(
-                label: Strings.porc,
+                label: Strings.porcentagemNormal,
                 porc: porcNormal,
                 iconColor: Consts.horaColor[0],
                 onTap: () async {
                   await popDialog(
                     context,
                     porcNormal,
-                    Strings.porc,
+                    Strings.porcentagemNormal,
                     onPorcNormalSet,
                   );
                 },
@@ -65,14 +65,14 @@ class PagePorcentagem extends StatelessWidget {
                 child: VerticalDivider(),
               ),
               PorcentagemContainer(
-                label: Strings.porcCompleta,
+                label: Strings.porcentagemCompleta,
                 porc: porcCompleta,
                 iconColor: Consts.horaColor[1],
                 onTap: () async {
                   await popDialog(
                     context,
                     porcCompleta,
-                    Strings.porcCompleta,
+                    Strings.porcentagemCompleta,
                     onPorcCompletaSet,
                   );
                 },
