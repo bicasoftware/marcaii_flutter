@@ -43,12 +43,6 @@ class DaoEmpregos {
       );
   }
 
-  static Future<Empregos> fetchById(int id) async {
-    final db = await getDB();
-    final result = await db.query(Empregos.tableName, where: "id = ?", whereArgs: <Object>[id]);
-    return Empregos.fromMap(result[0]);
-  }
-
   static Future<Empregos> insertWithChildren(Empregos model) async {
     final db = await getDB();
     final empregoId = await db.insert(Empregos.tableName, model.toMap());
@@ -74,13 +68,6 @@ class DaoEmpregos {
       ..horas = [];
   }
 
-  static Future<Empregos> insert(Empregos emprego) async {
-    final db = await getDB();
-    final emprego_id = await db.insert(Empregos.tableName, emprego.toMap());
-
-    return emprego..id = emprego_id;
-  }
-
   static Future<void> update(Empregos model) async {
     final db = await getDB();
     await db.update(
@@ -100,10 +87,5 @@ class DaoEmpregos {
     for (final difer in model.diferenciadas) {
       await DaoDiferenciadas.insert(difer..emprego_id = model.id);
     }
-  }
-
-  static Future<int> truncate() async {
-    final db = await getDB();
-    return await db.delete(Empregos.tableName);
   }
 }

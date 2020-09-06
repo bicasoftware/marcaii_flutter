@@ -11,32 +11,10 @@ class DaoHoras {
     );
   }
 
-  static Future<List<Horas>> fetchAll() async {
-    final db = await getDB();
-    final result = await db.query(Horas.tableName);
-    return result.map((h) => Horas.fromMap(h)).toList();
-  }
-
-  static Future<Horas> fetchById(int id) async {
-    final db = await getDB();
-    final result = await db.query(Horas.tableName, where: "id = ?", whereArgs: <Object>[id]);
-    return Horas.fromMap(result[0]);
-  }
-
   static Future<Horas> insert(Horas model) async {
     final db = await getDB();
     final id = await db.insert(Horas.tableName, model.toMap());
     return model..id = id;
-  }
-
-  static Future<void> update(Horas model) async {
-    final db = await getDB();
-    return await db.update(
-      Horas.tableName,
-      model.toMap(),
-      where: "id = ?",
-      whereArgs: <Object>[model.id],
-    );
   }
 
   static Future<List<Horas>> fetchByEmprego(int empregoId) async {
@@ -48,10 +26,5 @@ class DaoHoras {
     );
 
     return result.map((h) => Horas.fromMap(h)).toList();
-  }
-
-  static Future<int> truncate() async {
-    final db = await getDB();
-    return await db.delete(Horas.tableName);
   }
 }
