@@ -56,7 +56,7 @@ class _ViewInsertSalarioState extends State<ViewInsertSalario> with WillPopForm 
             AppbarSaveButton(onPressed: () {
               saveForm(
                 resultData: {
-                  "vigencia": _vigencia.vigencia,
+                  "vigencia": _vigencia.value,
                   "valor": _salario,
                 },
               );
@@ -111,7 +111,7 @@ class _ViewInsertSalarioState extends State<ViewInsertSalario> with WillPopForm 
 
   @override
   bool get checkForChanges {
-    return !(_vigencia.vigencia == widget.vigencia && _salario == widget.salario);
+    return !(_vigencia.value == widget.vigencia && _salario == widget.salario);
   }
 
   @override

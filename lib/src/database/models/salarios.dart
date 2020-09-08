@@ -1,6 +1,6 @@
 import 'package:flutter_utils/sqlite_generator/sqlite_generator.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
-import 'package:marcaii_flutter/src/utils/json_utils.dart';
+import 'package:flutter_utils/sugarmap/sugarmap.dart';
 
 class Salarios {
   Salarios({
@@ -13,11 +13,11 @@ class Salarios {
 
   factory Salarios.fromMap(Map<String, dynamic> map) {
     return Salarios(
-      id: map['id'] as int,
-      emprego_id: map['emprego_id'] as int,
-      valor: map['valor'] as double,
-      vigencia: map['vigencia'] as String,
-      ativo: intToBool(map['ativo'] as int),
+      id: map.asInt('id'),
+      emprego_id: map.asInt('emprego_id'),
+      valor: map.asDouble('valor'),
+      vigencia: map.asString('vigencia'),
+      ativo: map.asBoolFromInt('ativo'),
     );
   }
 

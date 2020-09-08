@@ -1,7 +1,8 @@
-import 'package:marcaii_flutter/helpers.dart';
+import 'package:marcaii_flutter/src/utils/helpers/date_helper.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/database/models/salarios.dart';
+import 'package:marcaii_flutter/src/utils/helpers/salarios_helper.dart';
 
 class CalcHelper {
   static int getPorcentagem(Horas hora, Empregos emprego) {
@@ -35,41 +36,6 @@ class CalcHelper {
       throw Exception("Salário não encontrado");
     }
     return sal.valor;
-  }
-
-  static double getSalarioHora(double salario, int cargaHoraria) {
-    return salario / cargaHoraria;
-  }
-
-  static double getValorPorcentagem(double salarioHora, int porcentagem) {
-    return salarioHora * (porcentagem / 100);
-  }
-
-  static double provideValorPorcentagem(
-    Empregos emprego,
-    int tipoHora,
-    DateTime inicio,
-    int weekday,
-  ) {
-    int porcentagem = 0;
-    switch (tipoHora) {
-      case 0:
-        porcentagem = emprego.porc;
-        break;
-      case 1:
-        porcentagem = emprego.porc_completa;
-        break;
-      case 2:
-        porcentagem = emprego.diferenciadas.firstWhere((d) => d.weekday == weekday).porc;
-        break;
-      default:
-        porcentagem = emprego.porc;
-    }
-
-    final salario = CalcHelper.getActualSalario(emprego.fechamento, inicio, emprego.salarios);
-
-    final salarioHora = salario / (emprego.carga_horaria);
-    return salarioHora * (porcentagem / 100);
   }
 
   static double getSalarioMinuto(

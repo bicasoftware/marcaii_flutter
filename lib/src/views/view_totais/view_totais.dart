@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_utils/async_widgets/async_widget.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
-import 'package:marcaii_flutter/helpers.dart';
+import 'package:marcaii_flutter/src/utils/helpers/date_helper.dart';
 import 'package:marcaii_flutter/src/state/totais/totais.dart';
 import 'package:marcaii_flutter/src/views/widgets/doubleline_appbar.dart';
 import 'package:marcaii_flutter/src/views/view_totais/totais_content.dart';

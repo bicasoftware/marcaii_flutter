@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_utils/config_tiles/config_tiles.dart';
 import 'package:flutter_utils/flutter_utils.dart';
-import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/context_helper.dart';
-import 'package:marcaii_flutter/helpers.dart';
+import 'package:marcaii_flutter/src/utils/helpers/time_helper.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/views/widgets/appbar_save_button.dart';
 import 'package:marcaii_flutter/strings.dart';
+import 'package:marcaii_flutter/src/utils/helpers/date_helper.dart';
+import 'package:marcaii_flutter/src/utils/helpers/empregos_helper.dart';
 
 class ViewInsertHoras extends StatefulWidget {
   const ViewInsertHoras({Key key, this.emprego, this.data}) : super(key: key);
@@ -102,7 +103,7 @@ class _ViewInsertHorasState extends State<ViewInsertHoras> {
       onWillPop: () => canPop(context),
       child: Scaffold(
         appBar: AppBar(
-          title: Text(Strings.novaHorasExtra),
+          title: const Text(Strings.novaHorasExtra),
           actions: <Widget>[
             AppbarSaveButton(
               onPressed: () {

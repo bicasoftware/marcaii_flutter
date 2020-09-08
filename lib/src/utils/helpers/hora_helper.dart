@@ -4,7 +4,7 @@ import 'package:marcaii_flutter/strings.dart';
 
 extension HoraHelper on Horas {
   Color getColor() => Consts.horaColor[tipo];
-  String getTipo() => Consts.tipoHoraPlural[tipo];
+  // String getTipo() => Consts.tipoHoraPlural[tipo];
 
   int difMinutes() {
     final iniMinutes = int.parse(inicio.substring(0, 2)) * 60 + int.parse(inicio.substring(3, 5));
@@ -33,8 +33,6 @@ extension HoraHelper on Horas {
 
   DateTime get inicioAsDate => mergeTimeNDateTime(inicio, data);
   DateTime get terminoAsDate => mergeTimeNDateTime(inicio, data);
-
-  bool hasValidDates() => inicioAsDate.isBefore(terminoAsDate);
 
   Color get color => Consts.horaColor[tipo];
 }

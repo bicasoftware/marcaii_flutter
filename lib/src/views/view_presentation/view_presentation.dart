@@ -98,7 +98,7 @@ class _ViewPresentationState extends State<ViewPresentation> with SingleTickerPr
           saida: "18:00",
           porc: _porcNormal,
           porc_completa: _porcCompleta,
-          salarios: [Salarios(valor: _salario, vigencia: vigencia.vigencia, ativo: true)],
+          salarios: [Salarios(valor: _salario, vigencia: vigencia.value, ativo: true)],
           horas: [],
           diferenciadas: [],
           calendario: [],

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:marcaii_flutter/src/utils/double_utils.dart';
 import 'package:marcaii_flutter/src/views/view_presentation/descricao_item_container.dart';
 import 'package:marcaii_flutter/src/views/widgets/light_container.dart';
-import 'package:marcaii_flutter/src/views/widgets/salario_tile.dart';
+import 'package:marcaii_flutter/src/views/view_presentation/salario_tile.dart';
 import 'package:marcaii_flutter/strings.dart';
 
 class PageSalario extends StatelessWidget {

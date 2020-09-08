@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:marcaii_flutter/helpers.dart';
+import 'package:marcaii_flutter/src/utils/helpers/hora_helper.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/state/calendario/calendario.dart';
@@ -10,6 +10,7 @@ import 'package:marcaii_flutter/src/utils/calendar_generator.dart';
 import 'package:marcaii_flutter/src/utils/helpers/time_helper.dart';
 import 'package:marcaii_flutter/src/utils/hora_calc.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
+import 'package:marcaii_flutter/src/utils/helpers/date_helper.dart';
 
 extension EmpregoHelper on Empregos {
   Empregos forFirstSync() {
@@ -38,7 +39,7 @@ extension EmpregoHelper on Empregos {
     ///Se não houver, faz a relação dos dias do mes com a [Horas] conforme a [Vigencia]
     if (index < 0) {
       final c = Calendario(
-        vigencia: vigencia.vigencia,
+        vigencia: vigencia.value,
         items: CalendarGenerator.generate(
           ano: vigencia.ano,
           mes: vigencia.mes,

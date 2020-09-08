@@ -1,6 +1,6 @@
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:flutter_utils/sqlite_generator/sqlite_generator.dart';
-import 'package:marcaii_flutter/src/utils/json_utils.dart';
+import 'package:flutter_utils/sugarmap/sugarmap.dart';
 
 class Diferenciadas {
   Diferenciadas({
@@ -14,12 +14,12 @@ class Diferenciadas {
 
   factory Diferenciadas.fromMap(Map<String, dynamic> map) {
     return Diferenciadas(
-      id: map['id'] as int,
-      emprego_id: map['emprego_id'] as int,
-      porc: map['porc'] as int,
-      weekday: map['weekday'] as int,
+      id: map.asInt('id'),
+      emprego_id: map.asInt('emprego_id'),
+      porc: map.asInt('porc'),
+      weekday: map.asInt('weekday'),
       vigencia: map['vigencia'] as String,
-      ativo: intToBool(map['ativo'] as int),
+      ativo: map.asBoolFromInt('ativo'),
     );
   }
 

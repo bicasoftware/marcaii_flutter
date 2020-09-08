@@ -46,16 +46,16 @@ class _CalendarioNavigatorState extends State<CalendarioNavigator>
               child: StreamObserver<Vigencia>(
                 stream: b.outVigencia,
                 onSuccess: (_, vig) {
-                  if (_oldVigencia != vig.vigencia) {
+                  if (_oldVigencia != vig.value) {
                     controller.reset();
                     controller.forward();
                   }
 
-                  _oldVigencia = vig.vigencia;
+                  _oldVigencia = vig.value;
                   return FlatButton.icon(
                     icon: const Icon(LineAwesomeIcons.calendar_o),
                     label: Text(
-                      vig.vigenciaExtenso,
+                      vig.fullValue,
                       style:
                           Theme.of(context).textTheme.button.copyWith(fontStyle: FontStyle.italic),
                     ),

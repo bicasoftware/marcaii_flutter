@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_utils/async_widgets/async_widget.dart';
-import 'package:marcaii_flutter/helpers.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
 import 'package:marcaii_flutter/src/state/calendario/calendario_child.dart';
+import 'package:marcaii_flutter/src/utils/helpers/date_helper.dart';
+import 'package:marcaii_flutter/src/utils/helpers/empregos_helper.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/calendario/calendario_item.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/calendario/calendario_item_empty.dart';
@@ -52,11 +53,11 @@ class _CalendarioPageState extends State<CalendarioPage> with SingleTickerProvid
         child: StreamObserver<Vigencia>(
           stream: b.outVigencia,
           onSuccess: (_, Vigencia vigencia) {
-            if (_oldVigencia != vigencia.vigencia) {
+            if (_oldVigencia != vigencia.value) {
               controller.reset();
               controller.forward();
             }
-            _oldVigencia = vigencia.vigencia;
+            _oldVigencia = vigencia.value;
             final calendario = widget.emprego.getCalendario(vigencia);
             return Padding(
               padding: const EdgeInsets.all(4.0),

@@ -161,10 +161,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: b49374d4db844f9c809e09fea20ba0b7c553b1a3
+      resolved-ref: "3f1a60f035eaea3593d88409358985905f2303e6"
       url: "https://github.com/bicasoftware/flutter_utill"
     source: git
-    version: "0.0.1"
+    version: "0.0.2"
   glob:
     dependency: transitive
     description:

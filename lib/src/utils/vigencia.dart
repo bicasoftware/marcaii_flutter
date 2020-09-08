@@ -8,7 +8,7 @@ class Vigencia {
   }
 
   Vigencia.fromString(String vigencia) {
-    final vig = parseVigencia(vigencia);
+    final vig = _parseVigencia(vigencia);
     mes = vig[0];
     ano = vig[1];
   }
@@ -16,12 +16,6 @@ class Vigencia {
   Vigencia.fromDateTime(DateTime date) {
     ano = date.year;
     mes = date.month;
-  }
-
-  Vigencia.forNow() {
-    final now = DateTime.now();
-    ano = now.year;
-    mes = now.month;
   }
 
   int ano, mes;
@@ -53,14 +47,14 @@ class Vigencia {
     return <DateTime>[inicio.dateTime, termino];
   }
 
-  String get vigencia => formatVigencia(ano, mes);
-  String get vigenciaExtenso => "${Consts.meses[mes - 1]}/$ano";
+  String get value => _formatVigencia(ano, mes);
+  String get fullValue => "${Consts.meses[mes - 1]}/$ano";
 
-  static String formatVigencia(int ano, int mes) {
+  static String _formatVigencia(int ano, int mes) {
     return "${_rightIndexMonth(mes)}/$ano";
   }
 
-  static List<int> parseVigencia(String vigencia) {
+  static List<int> _parseVigencia(String vigencia) {
     return vigencia.split("/").map(int.parse).toList();
   }
 
@@ -68,13 +62,13 @@ class Vigencia {
     return (mes).toString().padLeft(2, "0");
   }
 
-  bool compare<T>(T other) {
+  bool compare(Object other) {
     if (hashCode == other.hashCode) {
       return true;
     } else if (other is String) {
-      return vigencia == other;
+      return value == other;
     } else if (other is Vigencia) {
-      return vigencia == other.vigencia;
+      return value == other.value;
     }
 
     return false;

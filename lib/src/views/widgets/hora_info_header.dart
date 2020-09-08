@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:marcaii_flutter/helpers.dart';
+import 'package:marcaii_flutter/src/utils/helpers/date_helper.dart';
 import 'package:marcaii_flutter/strings.dart';
 
 class HoraHeaderText extends StatelessWidget {

@@ -1,6 +1,7 @@
 import 'package:flutter_utils/sqlite_generator/sqlite_generator.dart';
 import 'package:intl/intl.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
+import 'package:flutter_utils/sugarmap/sugarmap.dart';
 
 class Horas {
   Horas({
@@ -18,12 +19,12 @@ class Horas {
     }
 
     return Horas(
-      id: map['id'] as int,
-      emprego_id: map['emprego_id'] as int,
-      tipo: map['tipo'] as int,
-      inicio: map['inicio'] as String,
-      termino: map['termino'] as String,
-      data: DateFormat('yyyy-MM-dd').parse(map['data']),
+      id: map.asInt('id'),
+      emprego_id: map.asInt('emprego_id'),
+      tipo: map.asInt('tipo'),
+      inicio: map.asString('inicio'),
+      termino: map.asString('termino'),
+      data: map.asDateTime('data'),
     );
   }
 

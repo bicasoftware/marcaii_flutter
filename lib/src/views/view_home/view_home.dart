@@ -4,7 +4,7 @@ import 'package:flutter_utils/async_widgets/async_widget.dart';
 import 'package:flutter_utils/flutter_utils.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/context_helper.dart';
-import 'package:marcaii_flutter/helpers.dart';
+import 'package:marcaii_flutter/src/utils/helpers/empregos_helper.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';

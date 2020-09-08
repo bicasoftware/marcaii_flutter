@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:marcaii_flutter/helpers.dart';
+import 'package:marcaii_flutter/src/utils/helpers/date_helper.dart';
 import 'package:marcaii_flutter/src/database/models/diferenciadas.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/database/models/salarios.dart';
@@ -7,8 +7,8 @@ import 'package:flutter_utils/sqlite_generator/sqlite_generator.dart';
 import 'package:marcaii_flutter/src/state/calendario/calendario.dart';
 import 'package:marcaii_flutter/src/state/calendario/calendario_child.dart';
 import 'package:marcaii_flutter/src/state/totais/totais.dart';
-import 'package:marcaii_flutter/src/utils/json_utils.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
+import 'package:flutter_utils/sugarmap/sugarmap.dart';
 
 class Empregos {
   Empregos({
@@ -28,17 +28,17 @@ class Empregos {
     this.totais,
   });
 
-  factory Empregos.fromMap(Map<String, dynamic> map) {
+  factory Empregos.fromMap(Map<String, Object> map) {
     return Empregos(
-      id: map['id'] as int,
-      nome: map['nome'] as String,
-      porc: map['porc'] as int,
-      porc_completa: map['porc_completa'] as int,
-      fechamento: map['fechamento'] as int,
-      banco_horas: intToBool(map['banco_horas'] as int),
-      saida: map['saida'] as String,
-      carga_horaria: map['carga_horaria'] as int,
-      ativo: intToBool(map['ativo'] as int),
+      id: map.asInt('id'),
+      nome: map.asString('nome'),
+      porc: map.asInt('porc'),
+      porc_completa: map.asInt('porc_completa'),
+      fechamento: map.asInt('fechamento'),      
+      banco_horas: map.asBoolFromInt('banco_horas'),
+      saida: map.asString('saida'),
+      carga_horaria: map.asInt('carga_horaria'),
+      ativo: map.asBoolFromInt('ativo'),
       calendario: [],
       diferenciadas: [],
       horas: [],
@@ -147,7 +147,7 @@ class Empregos {
   void addHora(Horas hora, Vigencia vigencia) {
     horas.add(hora);
     calendario
-        .firstWhere((c) => c.vigencia == vigencia.vigencia)
+        .firstWhere((c) => c.vigencia == vigencia.value)
         .items
         .firstWhere((CalendarioChild child) => child.date.isSameDate(hora.data))
         .setHora(hora);

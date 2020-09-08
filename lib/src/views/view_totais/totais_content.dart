@@ -6,7 +6,7 @@ import 'package:marcaii_flutter/src/views/view_totais/totais_info_header.dart';
 import 'package:marcaii_flutter/src/views/view_totais/totais_info_row.dart';
 import 'package:marcaii_flutter/src/views/view_totais/totais_list_item.dart';
 import 'package:marcaii_flutter/strings.dart';
-import 'package:marcaii_flutter/helpers.dart';
+import 'package:marcaii_flutter/src/utils/helpers/minutes_helper.dart';
 
 class TotaisContent extends StatelessWidget {
   const TotaisContent({

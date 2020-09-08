@@ -2,9 +2,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Vault {
 
-  static const String TOKEN = "token";
-  static const String REFRESH_TOKEN = "refresh_token";
-  static const String EMAIL = "marcaii_email";
   static const String ISDARK = "IS_DARK";
 
   static FlutterSecureStorage _getStorage() {

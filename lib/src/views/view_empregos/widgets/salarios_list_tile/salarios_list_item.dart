@@ -22,7 +22,7 @@ class SalariosListItem extends StatelessWidget {
         LineAwesomeIcons.money,
         color: Colors.lightGreen,
       ),
-      title: Text(Vigencia.fromString(salario.vigencia).vigenciaExtenso),
+      title: Text(Vigencia.fromString(salario.vigencia).fullValue),
       subtitle: Text(doubleToCurrency(salario.valor)),
       trailing: IconButton(
         icon: const Icon(Icons.close, color: Colors.red),

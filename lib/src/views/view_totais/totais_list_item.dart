@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
-import 'package:marcaii_flutter/helpers.dart';
+import 'package:marcaii_flutter/src/utils/helpers/minutes_helper.dart';
 import 'package:marcaii_flutter/src/state/totais/totais_horas.dart';
 import 'package:marcaii_flutter/src/utils/double_utils.dart';
 import 'package:marcaii_flutter/strings.dart';
+import 'package:marcaii_flutter/src/utils/helpers/date_helper.dart';
 
 class TotaisListItem extends StatelessWidget {
   const TotaisListItem({

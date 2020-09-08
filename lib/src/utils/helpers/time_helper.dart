@@ -7,12 +7,12 @@ extension TimeHelper on TimeOfDay {
     return "$h:$m";
   }
 
-  bool isBefore(TimeOfDay otherTime) {
+/*   bool isBefore(TimeOfDay otherTime) {
     final init = hour + minute;
     final end = otherTime.hour + otherTime.minute;
 
     return end - init < 0;
-  }
+  } */
 
   TimeOfDay addHour(int len) {
     final hora = hour + len;
