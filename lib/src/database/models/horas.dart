@@ -19,11 +19,11 @@ class Horas {
     }
 
     return Horas(
-      id: map.asInt('id'),
-      emprego_id: map.asInt('emprego_id'),
-      tipo: map.asInt('tipo'),
-      inicio: map.asString('inicio'),
-      termino: map.asString('termino'),
+      id: map['id'] as int,
+      emprego_id: map['emprego_id'] as int,
+      tipo: map['tipo'] as int,
+      inicio: map['inicio'] as String,
+      termino: map['termino'] as String,
       data: map.asDateTime('data'),
     );
   }

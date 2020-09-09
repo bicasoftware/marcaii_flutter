@@ -14,12 +14,12 @@ class Diferenciadas {
 
   factory Diferenciadas.fromMap(Map<String, dynamic> map) {
     return Diferenciadas(
-      id: map.asInt('id'),
-      emprego_id: map.asInt('emprego_id'),
-      porc: map.asInt('porc'),
-      weekday: map.asInt('weekday'),
+      id: map['id'] as int,
+      emprego_id: map['emprego_id'] as int,
+      porc: map['porc'] as int,
+      weekday: map['weekday'] as int,
       vigencia: map['vigencia'] as String,
-      ativo: map.asBoolFromInt('ativo'),
+      ativo: intToBool(map['ativo'] as int),
     );
   }
 

@@ -8,6 +8,7 @@ import 'package:marcaii_flutter/src/utils/helpers/empregos_helper.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/calendario/calendario_item.dart';
 import 'package:marcaii_flutter/src/views/view_calendario/calendario/calendario_item_empty.dart';
+import 'package:marcaii_flutter/strings.dart';
 import 'package:provider/provider.dart';
 
 class CalendarioPage extends StatefulWidget {
@@ -32,13 +33,8 @@ class _CalendarioPageState extends State<CalendarioPage> with SingleTickerProvid
   @override
   void initState() {
     super.initState();
-    controller = AnimationController(duration: const Duration(milliseconds: 300), vsync: this);
+    controller = AnimationController(duration: Consts.animationDuration, vsync: this);
     _oldVigencia = "";
-
-    slide = Tween<Offset>(
-      begin: const Offset(0.1, 0),
-      end: Offset.zero,
-    ).animate(controller);
   }
 
   @override
@@ -46,42 +42,39 @@ class _CalendarioPageState extends State<CalendarioPage> with SingleTickerProvid
     final b = Provider.of<BlocMain>(context);
     final today = DateTime.now();
 
-    return SlideTransition(
-      position: slide,
-      child: FadeTransition(
-        opacity: controller,
-        child: StreamObserver<Vigencia>(
-          stream: b.outVigencia,
-          onSuccess: (_, Vigencia vigencia) {
-            if (_oldVigencia != vigencia.value) {
-              controller.reset();
-              controller.forward();
-            }
-            _oldVigencia = vigencia.value;
-            final calendario = widget.emprego.getCalendario(vigencia);
-            return Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: GridView.count(
-                crossAxisCount: 7,
-                shrinkWrap: true,
-                mainAxisSpacing: 1,
-                crossAxisSpacing: 1,
-                childAspectRatio: 1.1,
-                children: <Widget>[
-                  ...CalendarioEmptyCells.atBegin(initialDate: calendario.items.first.date),
-                  ...List.generate(calendario.items.length, (i) {
-                    return CalendarioItem(
-                      isToday: calendario.items[i].date.isSameDate(today),
-                      childContent: calendario.items[i],
-                      onTap: widget.onItemTap,
-                    );
-                  }),
-                  ...CalendarioEmptyCells.atEnd(lastDate: calendario.items.last.date)
-                ],
-              ),
-            );
-          },
-        ),
+    return FadeTransition(
+      opacity: controller,
+      child: StreamObserver<Vigencia>(
+        stream: b.outVigencia,
+        onSuccess: (_, Vigencia vigencia) {
+          if (_oldVigencia != vigencia.value) {
+            controller.reset();
+            controller.forward();
+          }
+          _oldVigencia = vigencia.value;
+          final calendario = widget.emprego.getCalendario(vigencia);
+          return Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: GridView.count(
+              crossAxisCount: 7,
+              shrinkWrap: true,
+              mainAxisSpacing: 1,
+              crossAxisSpacing: 1,
+              childAspectRatio: 1.1,
+              children: <Widget>[
+                ...CalendarioEmptyCells.atBegin(initialDate: calendario.items.first.date),
+                ...List.generate(calendario.items.length, (i) {
+                  return CalendarioItem(
+                    isToday: calendario.items[i].date.isSameDate(today),
+                    childContent: calendario.items[i],
+                    onTap: widget.onItemTap,
+                  );
+                }),
+                ...CalendarioEmptyCells.atEnd(lastDate: calendario.items.last.date)
+              ],
+            ),
+          );
+        },
       ),
     );
   }
