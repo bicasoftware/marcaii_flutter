@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/state/calendario/calendario_child.dart';
-import 'package:marcaii_flutter/src/views/view_calendario/bts_horas_info/bts_horas_content.dart';
-import 'package:marcaii_flutter/src/views/view_calendario/bts_horas_info/bts_horas_header.dart';
+import 'package:marcaii_flutter/src/utils/double_utils.dart';
+import 'package:marcaii_flutter/src/utils/hora_calc.dart';
+import 'package:marcaii_flutter/src/views/widgets/bottomsheeet_header.dart';
+import 'package:marcaii_flutter/src/utils/helpers/date_helper.dart';
+import 'package:marcaii_flutter/src/utils/helpers/hora_helper.dart';
+import 'package:flutter_utils/context_helper.dart';
+import 'package:marcaii_flutter/src/views/widgets/light_container.dart';
+import 'package:marcaii_flutter/strings.dart';
 
 class BtsHorasInfo extends StatelessWidget {
   const BtsHorasInfo({
@@ -23,18 +29,57 @@ class BtsHorasInfo extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          BtsHorasHeader(
-            date: calendarioChild.date,
-            inicio: calendarioChild.hora.inicio,
-            termino: calendarioChild.hora.termino,
+          BottomsheetHeader(
+            title: "Dia: ${calendarioChild.date.asString()}",
+            onPressed: () => context.goBack(true),
+            icon: const Icon(Icons.delete_sweep, color: Colors.red),
+            hasDivider: false,
           ),
-          const Divider(height: 0, endIndent: 16, indent: 16),
-          BtsHorasContent(
-            calendarChild: calendarioChild,
-            emprego: emprego,
+          LightContainer(
+            padding: EdgeInsets.zero,
+            margin: const EdgeInsets.symmetric(horizontal: 8),
+            child: ListTile(
+              leading: CircleAvatar(
+                backgroundColor: Consts.horaColor[calendarioChild.hora.tipo],
+              ),
+              title: _getTitle(),
+              subtitle: Text("${calendarioChild.hora.difEstenso()} | $valorPorcentagem"),
+              trailing: Text(
+                actualPorcentagem,
+                style: context.textTheme.button.copyWith(
+                  color: Consts.horaColor[calendarioChild.hora.tipo],
+                ),
+              ),
+            ),
           ),
         ],
       ),
+    );
+  }
+
+  String get actualPorcentagem {
+    final porcentagem = CalcHelper.getPorcentagem(calendarioChild.hora, emprego);
+    return "$porcentagem %";
+  }
+
+  String get valorPorcentagem {
+    final porcentagem = CalcHelper.getPorcentagem(calendarioChild.hora, emprego);
+    final salario = CalcHelper.getActualSalario(
+      emprego.fechamento,
+      calendarioChild.date,
+      emprego.salarios,
+    );
+
+    final salarioHora = salario / (emprego.carga_horaria);
+    final valorPorc = salarioHora * (porcentagem / 100);
+    final total = (valorPorc / 60) * calendarioChild.hora.difMinutes();
+
+    return doubleToCurrency(total);
+  }
+
+  Widget _getTitle() {
+    return Text(
+      "${Strings.das} ${calendarioChild.hora.inicio} ${Strings.ate} ${calendarioChild.hora.termino}",
     );
   }
 }

@@ -13,6 +13,7 @@ import 'package:marcaii_flutter/src/views/view_empregos/view_empregos.dart';
 import 'package:marcaii_flutter/src/views/view_home/view_home_drawer.dart';
 import 'package:marcaii_flutter/src/views/view_totais/view_totais.dart';
 import 'package:marcaii_flutter/strings.dart';
+import 'package:marcaii_flutter/themes.dart';
 import 'package:provider/provider.dart';
 
 class ViewHome extends StatefulWidget {
@@ -56,14 +57,10 @@ class _ViewHomeState extends State<ViewHome> {
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           floatingActionButton: OpenContainer(
-            transitionDuration: const Duration(milliseconds: 600),
-            closedColor: context.theme.canvasColor,
-            closedElevation: 0,
-            openElevation: 0,
-            openColor: context.theme.primaryColor,
-            closedShape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(30)),
-            ),
+            transitionDuration: Consts.animationDuration,
+            closedColor: context.theme.primaryColor,
+            openColor: context.isDarkMode ? darkTheme().canvasColor : lightTheme().canvasColor,
+            closedShape: const CircleBorder(),
             transitionType: ContainerTransitionType.fadeThrough,
             openBuilder: (_, __) => ViewTotais(totais: empregos[pos].generateTotais(vigencia)),
             closedBuilder: (_, VoidCallback call) => FloatingActionButton(

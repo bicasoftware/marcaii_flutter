@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_utils/flutter_utils.dart';
-import 'package:marcaii_flutter/context_helper.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/state/calendario/calendario_child.dart';
@@ -65,7 +64,16 @@ class ViewCalendarioPresenter {
     Vigencia vigencia,
   }) async {
     if (child.hora == null) {
-      final hora = await context.navigate<Horas>(ViewInsertHoras(emprego: emprego, data: child.date));
+      final Horas hora = await showModalBottomSheet<Horas>(
+        context: context,
+        builder: (_) => ViewInsertHoras(emprego: emprego, data: child.date),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16),
+            topRight: Radius.circular(16),
+          ),
+        ),
+      );
       if (hora != null && hora is Horas) {
         onAddHora(hora, vigencia);
       }

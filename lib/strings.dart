@@ -46,6 +46,8 @@ class Validations {
   static const String salarioRequerido = "Salário obrigatório";
   static const String fechamentoRequerido = "Dia obrigatório";
   static const String fechamentoInvalido = "Apenas dia entre 1 e 30";
+  static const String horaInvalida = "Horas Inválidas";
+
 }
 
 class Consts {

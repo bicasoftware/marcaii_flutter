@@ -55,8 +55,8 @@ ThemeData darkTheme() {
   return ThemeData(
     visualDensity: VisualDensity.adaptivePlatformDensity,
     brightness: Brightness.dark,
-    primarySwatch: Colors.teal,
-    primaryColor: Colors.teal,
+    primarySwatch: Colors.deepOrange,
+    primaryColor: Colors.deepOrange,
     accentColor: Colors.lightBlue,
     fontFamily: "Montserrat",
     highlightColor: Colors.blueGrey,
