@@ -3,6 +3,8 @@ analyzer:
   strong-mode:
     implicit-casts: true
     implicit-dynamic: false
+  # enable-experiment:
+  #   - non-nullable
 
 linter:
   rules:

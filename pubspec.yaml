@@ -4,7 +4,7 @@ description: Gerenciador de Horas Extra
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.9.2 <3.0.0"
+  sdk: ">=2.10.0 <3.0.0"
 
 flutter_native_splash:
   image: assets/images/logo.png

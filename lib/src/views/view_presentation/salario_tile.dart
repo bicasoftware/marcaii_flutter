@@ -21,12 +21,11 @@ class CurrencyTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ComposedTextTile(      
       inputFormatters: [
-        WhitelistingTextInputFormatter.digitsOnly,
+        FilteringTextInputFormatter.digitsOnly,
         CurrencyInputFormatter(maxDigits: 8),
       ],
       initialValue: doubleToCurrency(salario),
       maxLength: null,
-      // trailingWidth: 110,
       icon: const Icon(Icons.monetization_on, color: Colors.indigo),
       label: label,
       hint: "R\$ 1000,00",

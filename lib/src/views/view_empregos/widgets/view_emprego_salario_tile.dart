@@ -18,7 +18,7 @@ class ViewEmpregoSalarioTile extends StatelessWidget {
       onSuccess: (_, double salario) {
         return TextTile(
           inputFormatters: [
-            WhitelistingTextInputFormatter.digitsOnly,
+            FilteringTextInputFormatter.digitsOnly,
             CurrencyInputFormatter(maxDigits: 8),
           ],
           initialValue: doubleToCurrency(salario),

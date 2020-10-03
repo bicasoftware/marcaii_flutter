@@ -74,7 +74,7 @@ class _ViewInsertSalarioState extends State<ViewInsertSalario> with WillPopForm 
                 child: TextFormField(
                   initialValue: doubleToCurrency(_salario),
                   inputFormatters: [
-                    WhitelistingTextInputFormatter.digitsOnly,
+                    FilteringTextInputFormatter.digitsOnly,
                     CurrencyInputFormatter(maxDigits: 8),
                   ],
                   decoration: InputDecoration(
