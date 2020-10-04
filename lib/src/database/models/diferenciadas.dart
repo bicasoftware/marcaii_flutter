@@ -1,6 +1,7 @@
-import 'package:marcaii_flutter/src/database/models/empregos.dart';
+import 'dart:convert';
+
 import 'package:flutter_utils/sqlite_generator/sqlite_generator.dart';
-import 'package:flutter_utils/sugarmap/sugarmap.dart';
+import 'package:marcaii_flutter/src/database/models/empregos.dart';
 
 class Diferenciadas {
   Diferenciadas({
@@ -12,18 +13,27 @@ class Diferenciadas {
     this.ativo = true,
   });
 
+  factory Diferenciadas.fromJson(String source) => Diferenciadas.fromMap(json.decode(source));
+
   factory Diferenciadas.fromMap(Map<String, dynamic> map) {
+    if (map == null) {
+      return null;
+    }
+
     return Diferenciadas(
-      id: map['id'] as int,
-      emprego_id: map['emprego_id'] as int,
-      porc: map['porc'] as int,
-      weekday: map['weekday'] as int,
-      vigencia: map['vigencia'] as String,
-      ativo: intToBool(map['ativo'] as int),
+      id: map['id'],
+      emprego_id: map['emprego_id'],
+      porc: map['porc'],
+      weekday: map['weekday'],
+      vigencia: map['vigencia'],
+      ativo: map['ativo'],
     );
   }
 
-  int id, emprego_id, porc, weekday;
+  int id;
+  int emprego_id;
+  int porc;
+  int weekday;
   String vigencia;
   bool ativo;
 
@@ -57,14 +67,14 @@ class Diferenciadas {
 
   static String tableName = "diferenciadas";
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      ID: id,
-      EMPREGO_ID: emprego_id,
-      PORC: porc,
-      WEEKDAY: weekday,
-      VIGENCIA: vigencia,
-      ATIVO: boolToInt(ativo),
+  Map<String, Object> toMap() {
+    return {
+      'id': id,
+      'emprego_id': emprego_id,
+      'porc': porc,
+      'weekday': weekday,
+      'vigencia': vigencia,
+      'ativo': ativo,
     };
   }
 
@@ -80,4 +90,6 @@ class Diferenciadas {
       return false;
     }
   }
+
+  String toJson() => json.encode(toMap());
 }

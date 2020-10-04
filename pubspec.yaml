@@ -33,11 +33,15 @@ dependencies:
   intl: ^0.16.1
   animations: ^1.1.2
   provider: ^4.3.2+1
+  retrofit: ^1.3.4+1
+  connectivity: ^0.4.9+3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   test: any
+  build_runner: null
+  retrofit_generator: ^1.3.8+3
 
 flutter:
   uses-material-design: true

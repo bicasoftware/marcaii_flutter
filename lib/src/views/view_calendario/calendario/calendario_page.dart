@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_utils/async_widgets/async_widget.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
 import 'package:marcaii_flutter/src/state/bloc/bloc_main.dart';
-import 'package:marcaii_flutter/src/state/calendario/calendario_child.dart';
+import 'package:marcaii_flutter/src/views/view_calendario/models/calendario_child.dart';
 import 'package:marcaii_flutter/src/utils/helpers/date_helper.dart';
 import 'package:marcaii_flutter/src/utils/helpers/empregos_helper.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';

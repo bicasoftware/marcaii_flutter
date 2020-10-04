@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Strings {
+  // static const String baseUrl = "10.0.2.2:3333";
+  // static const String baseUrl = "http://192.168.15.3:3333";
+  static const String baseUrl = "http://localhost:3333";
+
   static const String appName = "Marcaii";
   static const String appDescricao = "Gerenciador de Horas Extras";
   static const String salvar = "Salvar";
@@ -47,7 +51,6 @@ class Validations {
   static const String fechamentoRequerido = "Dia obrigatório";
   static const String fechamentoInvalido = "Apenas dia entre 1 e 30";
   static const String horaInvalida = "Horas Inválidas";
-
 }
 
 class Consts {

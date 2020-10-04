@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:marcaii_flutter/context_helper.dart';
-import 'package:marcaii_flutter/src/state/app_brightness.dart';
+import 'package:marcaii_flutter/src/state/notifiers/app_brightness.dart';
 import 'package:marcaii_flutter/src/utils/vault.dart';
 import 'package:marcaii_flutter/src/views/view_empregos/widgets/list_section_decorator.dart';
 import 'package:marcaii_flutter/src/views/view_list_empregos/view_list_empregos.dart';

@@ -1,7 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter_utils/sqlite_generator/sqlite_generator.dart';
 import 'package:intl/intl.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
-import 'package:flutter_utils/sugarmap/sugarmap.dart';
 
 class Horas {
   Horas({
@@ -13,18 +14,20 @@ class Horas {
     this.termino = "18:00",
   });
 
-  factory Horas.fromMap(Map<String, dynamic> map) {
+  factory Horas.fromJson(String source) => Horas.fromMap(json.decode(source));
+
+  factory Horas.fromMap(Map<String, Object> map) {
     if (map == null) {
       return null;
     }
 
     return Horas(
-      id: map['id'] as int,
-      emprego_id: map['emprego_id'] as int,
-      tipo: map['tipo'] as int,
-      inicio: map['inicio'] as String,
-      termino: map['termino'] as String,
-      data: map.asDateTime('data'),
+      id: map['id'],
+      emprego_id: map['emprego_id'],
+      tipo: map['tipo'],
+      inicio: map['inicio'],
+      termino: map['termino'],
+      data: DateFormat('yyyy-MM-dd').parse(map['data']),
     );
   }
 
@@ -74,12 +77,22 @@ class Horas {
 
   Map<String, Object> toMap() {
     return {
-      ID: id,
-      EMPREGO_ID: emprego_id,
-      TIPO: tipo,
-      INICIO: inicio,
-      TERMINO: termino,
-      DATA: DateFormat('yyyy-MM-dd').format(data),
+      'id': id,
+      'emprego_id': emprego_id,
+      'tipo': tipo,
+      'inicio': inicio,
+      'termino': termino,
+      'data': DateFormat("yyyy-MM-dd").format(data),
     };
+  }
+
+  String toJson() => json.encode(toMap());
+
+  static List<Horas> fromJsonList(List<Object> data) {
+    return List<Horas>.from(
+      data.map<Object>(
+        (Object h) => Horas.fromJson(json.encode(h)),
+      ),
+    );
   }
 }

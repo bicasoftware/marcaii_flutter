@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
-import 'package:marcaii_flutter/src/state/calendario/calendario_child.dart';
+import 'package:marcaii_flutter/src/views/view_calendario/models/calendario_child.dart';
 import 'package:marcaii_flutter/src/utils/helpers/date_helper.dart';
 
 class CalendarGenerator {

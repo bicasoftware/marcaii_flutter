@@ -1,6 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter_utils/sqlite_generator/sqlite_generator.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
-import 'package:flutter_utils/sugarmap/sugarmap.dart';
 
 class Salarios {
   Salarios({
@@ -11,13 +12,19 @@ class Salarios {
     this.ativo,
   });
 
+  factory Salarios.fromJson(String source) => Salarios.fromMap(json.decode(source));
+
   factory Salarios.fromMap(Map<String, dynamic> map) {
+    if (map == null) {
+      return null;
+    }
+
     return Salarios(
-      id: map['id'] as int,
-      emprego_id: map['emprego_id'] as int,
-      valor: map['valor'] as double,
-      vigencia: map['vigencia'] as String,
-      ativo: intToBool(map['ativo'] as int),
+      id: map['id'],
+      emprego_id: map['emprego_id'],
+      valor: (map['valor'] as int).toDouble(),
+      vigencia: map['vigencia'],
+      ativo: map['ativo'],
     );
   }
 
@@ -56,11 +63,11 @@ class Salarios {
 
   Map<String, Object> toMap() {
     return {
-      ID: id,
-      EMPREGO_ID: emprego_id,
-      VALOR: valor,
-      VIGENCIA: vigencia,
-      ATIVO: boolToInt(ativo),
+      'id': id,
+      'emprego_id': emprego_id,
+      'valor': valor,
+      'vigencia': vigencia,
+      'ativo': ativo,
     };
   }
 
@@ -79,4 +86,6 @@ class Salarios {
   String toString() {
     return """ id: $id, emprego_id: $emprego_id, valor: $valor, vigencia: $vigencia ativo:$ativo """;
   }
+
+  String toJson() => json.encode(toMap());
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:marcaii_flutter/src/state/totais/totais_detalhes.dart';
+import 'package:marcaii_flutter/src/views/view_totais/models/totais_detalhes.dart';
 
 @immutable
 class Totais {

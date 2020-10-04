@@ -1,14 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
-import 'package:marcaii_flutter/src/utils/helpers/date_helper.dart';
+import 'package:flutter_utils/sqlite_generator/sqlite_generator.dart';
 import 'package:marcaii_flutter/src/database/models/diferenciadas.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
 import 'package:marcaii_flutter/src/database/models/salarios.dart';
-import 'package:flutter_utils/sqlite_generator/sqlite_generator.dart';
-import 'package:marcaii_flutter/src/state/calendario/calendario.dart';
-import 'package:marcaii_flutter/src/state/calendario/calendario_child.dart';
-import 'package:marcaii_flutter/src/state/totais/totais.dart';
+import 'package:marcaii_flutter/src/views/view_calendario/models/calendario.dart';
+import 'package:marcaii_flutter/src/views/view_calendario/models/calendario_child.dart';
+import 'package:marcaii_flutter/src/views/view_totais/models/totais.dart';
+import 'package:marcaii_flutter/src/utils/helpers/date_helper.dart';
 import 'package:marcaii_flutter/src/utils/vigencia.dart';
-import 'package:flutter_utils/sugarmap/sugarmap.dart';
 
 class Empregos {
   Empregos({
@@ -28,26 +29,55 @@ class Empregos {
     this.totais,
   });
 
-  factory Empregos.fromMap(Map<String, Object> map) {
+  factory Empregos.fromJson(String source) => Empregos.fromMap(json.decode(source));
+
+  factory Empregos.fromMap(Map<String, dynamic> map) {
+    if (map == null) {
+      return null;
+    }
+
     return Empregos(
-      id: map['id'] as int,
-      nome: map['nome'] as String,
-      porc: map['porc'] as int,
-      porc_completa: map['porc_completa'] as int,
-      fechamento: map['fechamento'] as int,
-      banco_horas: intToBool(map['banco_horas']),
-      saida: map['saida'] as String,
-      carga_horaria: map['carga_horaria'] as int,
-      ativo: intToBool(map['ativo']),
-      calendario: [],
-      diferenciadas: [],
-      horas: [],
-      salarios: [],
+      nome: map['nome'],
+      saida: map['saida'],
+      id: map['id'],
+      porc: map['porc'],
+      porc_completa: map['porc_completa'],
+      fechamento: map['fechamento'],
+      carga_horaria: map['carga_horaria'],
+      horas: List<Horas>.from(
+        map['horas']?.map(
+          (Object x) => Horas.fromMap(
+            json.decode(json.encode(x)),
+          ),
+        ),
+      ),
+      diferenciadas: List<Diferenciadas>.from(
+        map['diferenciadas']?.map(
+          (Object x) => Diferenciadas.fromMap(
+            json.decode(json.encode(x)),
+          ),
+        ),
+      ),
+      salarios: List<Salarios>.from(
+        map['salarios']?.map(
+          (Object x) => Salarios.fromMap(
+            json.decode(json.encode(x)),
+          ),
+        ),
+      ),
+      banco_horas: map['banco_horas'],
+      ativo: map['ativo'],
     );
   }
 
-  String nome, saida;
-  int id, porc, porc_completa, fechamento, carga_horaria;
+  String nome;
+  String saida;
+  int id;
+  int porc;
+  int porc_completa;
+  int fechamento;
+  int carga_horaria;
+
   List<Horas> horas;
   List<Diferenciadas> diferenciadas;
   List<Salarios> salarios;
@@ -98,14 +128,18 @@ class Empregos {
 
   Map<String, Object> toMap() {
     return {
-      NOME: nome,
-      SAIDA: saida,
-      PORC: porc,
-      PORC_COMPLETA: porc_completa,
-      FECHAMENTO: fechamento,
-      CARGA_HORARIA: carga_horaria,
-      BANCO_HORAS: boolToInt(banco_horas),
-      ATIVO: boolToInt(ativo),
+      'nome': nome,
+      'saida': saida,
+      'id': id,
+      'porc': porc,
+      'porc_completa': porc_completa,
+      'fechamento': fechamento,
+      'carga_horaria': carga_horaria,
+      'horas': horas?.map((Horas x) => x?.toMap())?.toList(),
+      'diferenciadas': diferenciadas?.map((Diferenciadas x) => x?.toMap())?.toList(),
+      'salarios': salarios?.map((Salarios x) => x?.toMap())?.toList(),
+      'banco_horas': banco_horas,
+      'ativo': ativo,
     };
   }
 
@@ -155,5 +189,15 @@ class Empregos {
 
   void removeHora(Horas hora) {
     horas.removeWhere((h) => h.id == hora.id);
+  }
+
+  String toJson() => json.encode(toMap());
+
+  static List<Empregos> fromJsonList(List<Object> data) {
+    return List<Empregos>.from(
+      data.map<Object>(
+        (Object e) => Empregos.fromJson(json.encode(e)),
+      ),
+    );
   }
 }

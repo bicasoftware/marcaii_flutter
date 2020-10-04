@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:marcaii_flutter/src/database/dao/dao_empregos.dart';
 import 'package:marcaii_flutter/src/database/models/empregos.dart';
-import 'package:marcaii_flutter/src/state/app_brightness.dart';
+import 'package:marcaii_flutter/src/state/notifiers/app_brightness.dart';
 import 'package:marcaii_flutter/src/utils/vault.dart';
 import 'package:marcaii_flutter/src/views/view_branch/branch_view.dart';
 import 'package:marcaii_flutter/strings.dart';

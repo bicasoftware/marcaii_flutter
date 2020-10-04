@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:marcaii_flutter/src/database/models/horas.dart';
-import 'package:marcaii_flutter/src/state/totais/totais_horas.dart';
+import 'package:marcaii_flutter/src/views/view_totais/models/totais_horas.dart';
 
 class TotaisDetalhe {
   TotaisDetalhe({
